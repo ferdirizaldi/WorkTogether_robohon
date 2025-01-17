@@ -21,6 +21,11 @@ import jp.co.sharp.android.voiceui.VoiceUIVariable;
 /**
  * 音声UIを利用した最低限の機能だけ実装したActivity.
  */
+
+/**
+ * Test
+ */
+
 public class MainActivity extends Activity implements VoiceUIListenerImpl.ScenarioCallback {
     public static final String TAG = MainActivity.class.getSimpleName();
 
