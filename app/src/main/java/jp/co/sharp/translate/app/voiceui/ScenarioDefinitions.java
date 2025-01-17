@@ -55,7 +55,6 @@ public class ScenarioDefinitions {
     /**
      * シナリオ：speakシナリオ
      */
-
     public static final String SPEAK =  ScenarioDefinitions.PACKAGE + ".speak";
     /**
      * シナリオ名：listenシナリオ
