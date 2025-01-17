@@ -19,85 +19,88 @@
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"
+                android:background="#666666" />
+
             <TextView
                 android:id="@+id/test_value"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="20dp"
-                android:background="#666666" />
             <TextView
-                android:text="@string/recog_label_text"
-                android:id="@+id/recog_label_text"
+                android:text="@string/input_text"
+                android:id="@+id/input_text"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/input_text_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/default_input_text"
+                android:textSize="18sp"
+                android:background="@drawable/text_box_border" />
+
+            <Button
+                android:id="@+id/voice_translate_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:singleLine="false"
+                android:text="@string/button_voice_translate"
+                android:textSize="32sp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/test_value2"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="@string/default_text"
-                android:id="@+id/recog_text"
+                android:text="@string/output_text"
+                android:id="@+id/output_text"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/output_text_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/default_output_text"
+                android:textSize="18sp"
+                android:background="@drawable/text_box_border" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="20dp"
                 android:background="#666666" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_voice_accost"
-                android:id="@+id/voice_accost_button"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginTop="20dp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_resolve_variable"
-                android:id="@+id/resolve_variable_button"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginTop="20dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_set_memoryP"
-                android:id="@+id/set_memoryP"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginTop="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="32sp"
-                android:id="@+id/ViewTime" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_get_memoryP"
-                android:id="@+id/get_memoryP"
-                android:singleLine="false"
-                android:textSize="32sp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_finish_app"
-                android:id="@+id/finish_app_button"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginTop="20dp" />
+                <Button
+                    android:id="@+id/finish_app_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_finish_app"
+                    android:singleLine="false"
+                    android:textSize="32sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
