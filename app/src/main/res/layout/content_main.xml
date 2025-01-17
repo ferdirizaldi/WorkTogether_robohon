@@ -40,13 +40,13 @@
                 android:layout_height="wrap_content" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/input_text_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/default_input_text"
+                android:hint="Enter text here"
                 android:textSize="18sp"
+                android:padding="8dp"
                 android:background="@drawable/text_box_border" />
 
             <Button
