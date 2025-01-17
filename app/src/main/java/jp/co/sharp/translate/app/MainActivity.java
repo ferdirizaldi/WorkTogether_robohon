@@ -55,6 +55,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
+
+        //
+        //ボタン等を作る
+        //
     }
 
     @Override
@@ -150,4 +154,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
     }
+
+    //
+    //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
+    //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない
+    //
+
+
+
 }
