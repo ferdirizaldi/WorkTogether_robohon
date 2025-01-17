@@ -63,7 +63,7 @@ public class ScenarioDefinitions {
     /**
      * 関数名：send_word
      */
-    public static final String FUNK_SEND_wORD = "send_word";
+    public static final String FUNC_SEND_WORD = "send_word";
     /**
      * キー：lvcsr_basic
      */

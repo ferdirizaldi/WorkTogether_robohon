@@ -6,17 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;//追加1/17 multilingualからのコピペ
 import android.util.Log;
+import android.view.View;//追加1/17 multilingualからのコピペ
+import android.widget.Button;//追加1/17 multilingualからのコピペ
+import android.widget.TextView;
 import android.widget.Toolbar;
 
-import jp.co.sharp.translate.app.voiceui.ScenarioDefinitions;
-import jp.co.sharp.translate.app.voiceui.VoiceUIListenerImpl;
-import jp.co.sharp.translate.app.voiceui.VoiceUIManagerUtil;
-
 import java.util.List;
+import java.util.Locale;//追加1/17 multilingualからのコピペ
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
+import jp.co.sharp.translate.app.voiceui.ScenarioDefinitions;
+import jp.co.sharp.translate.app.voiceui.VoiceUIListenerImpl;
+import jp.co.sharp.translate.app.voiceui.VoiceUIManagerUtil;
+import jp.co.sharp.translate.app.voiceui.VoiceUIVariableUtil;//追加1/17 multilingualからのコピペ
+
 
 /**
  * 音声UIを利用した最低限の機能だけ実装したActivity.
