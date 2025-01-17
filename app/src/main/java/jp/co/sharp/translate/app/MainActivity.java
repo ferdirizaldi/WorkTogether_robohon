@@ -124,9 +124,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     public void onScenarioEvent(int event, List<VoiceUIVariable> variables) {
         Log.v(TAG, "onScenarioEvent() : " + event);
         switch (event) {
-            //必要なイベント毎に実装.
-            //シナリオから文字を受け取り表示する部分まで試験的に実装　1/17sakata
             case VoiceUIListenerImpl.ACTION_END:
+                //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
+                //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない（シナリオ中は別シナリオは起動しないっぽいので必要ないかも？）
+                //シナリオから文字を受け取り表示する部分まで試験的に実装　1/17sakata
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {
                     final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);
@@ -170,10 +171,5 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
     }
-
-    //
-    //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
-    //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない
-    //onscenarioイベントの中に書くのがいいかも
 
 }
