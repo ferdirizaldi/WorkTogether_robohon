@@ -23,7 +23,7 @@ import jp.co.sharp.android.voiceui.VoiceUIVariable;
  */
 
 /**
- * Test
+ * Test 追加ふぇるでぃ
  */
 
 public class MainActivity extends Activity implements VoiceUIListenerImpl.ScenarioCallback {
