@@ -150,12 +150,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
     }
-
-
-
-
-
-
 }
 /**
  * 衝突テスト
