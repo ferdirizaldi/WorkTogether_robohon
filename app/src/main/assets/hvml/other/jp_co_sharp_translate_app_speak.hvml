@@ -5,7 +5,7 @@
         <description>英単語を発話するシナリオ</description>
         <scene value="jp.co.sharp.translate.app.scene_common"/>
         <version value="1.0"/>
-        <situation priority="75" topic_id="reply" trigger="user-word">
+        <situation priority="74" topic_id="reply" trigger="user-word">
             ${Lvcsr:Basic} include [おはよう,こんにちは,こんばんは]
         </situation>
         <accost priority="75" topic_id="say" word="jp.co.sharp.translate.app.speak"/>
