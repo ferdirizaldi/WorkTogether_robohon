@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">テンプレ</string>
+    <string name="hello">Hello RoBoHoN!!</string>
+    <string name="default_mode_text">起動したよ</string>
+    <string name="recog_label_text">今から喋るよていってね</string>
+    <string name="default_text">--RECOG_TEXT--</string>
+    <string name="button_voice_accost">ACCOST</string>
+    <string name="button_resolve_variable">RESOLVE VARIABLE</string>
+    <string name="button_set_memoryP">SET_Memory_p</string>
+    <string name="button_get_memoryP">Get_memory_p</string>
+    <string name="button_finish_app">Finish_app</string>
+</resources>
