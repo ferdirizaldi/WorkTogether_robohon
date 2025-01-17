@@ -152,3 +152,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     }
 
 }
+/**
+ * 衝突テスト
+ */
