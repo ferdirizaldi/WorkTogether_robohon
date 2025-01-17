@@ -49,8 +49,13 @@ public class ScenarioDefinitions {
      */
     public static final String SCENE_COMMON = PACKAGE + ".scene_common";
     /**
+     * accost名: アプリ開始時の発話
+     */
+    public static final String ACC_HELLO = PACKAGE + ".hello.say";
+    /**
      * シナリオ：speakシナリオ
      */
+
     public static final String SPEAK =  ScenarioDefinitions.PACKAGE + ".speak";
     /**
      * シナリオ名：listenシナリオ
