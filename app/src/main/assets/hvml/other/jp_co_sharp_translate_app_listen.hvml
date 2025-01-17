@@ -8,38 +8,21 @@
         <situation priority="75" topic_id="t1" trigger="user-word">
             ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic}
         </situation>
-        <accost priority="75" topic_id="say" word="jp.co.sharp.translate.app.speak"/>
+        <accost priority="75" topic_id="test" word="jp.co.sharp.translate.app.speak"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>聞き取った言葉は　${Lvcsr:Basic}　だよ</speech>
-                <behavior id="assign" type="normal"/>
                 <control function="" target="jp.co.sharp.translate.app">
                     <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
                 </control>
             </action>
         </topic>
+        <topic id="test" listen="false">
+            <action index="1">
+                <speech>聞き取った言葉は　${Lvcsr:Basic}　だよ</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
     </body>
 </hvml>
-
-
-
-<head>
-<producer>jp.co.sharp.sample.multilingual</producer>
-<description>音声認識した結果をオウム返しする(共通)</description>
-<scene value="jp.co.sharp.sample.multilingual.scene_common"/>
-<version value="1.0"/>
-<situation priority="75" topic_id="recog" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic}</situation>
-</head>
-<body>
-<topic id="recog" listen="false">
-    <action index="1">
-        <speech>${Lvcsr:Basic}</speech>
-        <behavior id="assign" type="normal"/>
-        <control function="recog_talk" target="jp.co.sharp.sample.multilingual">
-            <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
-        </control>
-    </action>
-</topic>
-</body>
