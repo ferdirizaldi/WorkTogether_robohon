@@ -22,10 +22,6 @@ import jp.co.sharp.android.voiceui.VoiceUIVariable;
  * 音声UIを利用した最低限の機能だけ実装したActivity.
  */
 
-/**
- * Test 追加ふぇるでぃ
- */
-
 public class MainActivity extends Activity implements VoiceUIListenerImpl.ScenarioCallback {
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -159,7 +155,5 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
     //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない
     //
-
-
 
 }
