@@ -11,7 +11,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <control function="" target="jp.co.sharp.translate.app">
+                <control function="send_word" target="jp.co.sharp.translate.app">
                     <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
                 </control>
             </action>
@@ -20,6 +20,9 @@
             <action index="1">
                 <speech>聞き取った言葉は${Lvcsr:Basic}だよ</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="send_word" target="jp.co.sharp.translate.app">
+                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
+                </control>
             </action>
         </topic>
     </body>

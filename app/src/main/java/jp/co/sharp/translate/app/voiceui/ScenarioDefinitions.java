@@ -60,4 +60,15 @@ public class ScenarioDefinitions {
      * シナリオ名：listenシナリオ
      */
     public static final String LISTEN =  ScenarioDefinitions.PACKAGE + ".listen";
+    /**
+     * 関数名：send_word
+     */
+    public static final String FUNK_SEND_wORD = "send_word";
+    /**
+     * キー：lvcsr_basic
+     */
+    public static final String KEY_LVCSR_BASIC = "Lvcsr_Basic";
+
+
+
 }
