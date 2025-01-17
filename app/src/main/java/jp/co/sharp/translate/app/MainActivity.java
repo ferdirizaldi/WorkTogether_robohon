@@ -151,6 +151,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         setActionBar(toolbar);
     }
 
+
+
+
+
+
 }
 /**
  * 衝突テスト

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">テンプレ</string>
+    <string name="app_name">翻訳アプリ</string>
     <string name="hello">Hello RoBoHoN!!</string>
     <string name="default_mode_text">起動したよ</string>
     <string name="recog_label_text">今から喋るよていってね</string>
