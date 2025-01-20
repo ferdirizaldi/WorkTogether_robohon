@@ -10,7 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>${memory_p:jp.co.sharp.translate.app.jp_word}は英語で${memory_p:jp.co.sharp.translate.app.en_word}っていうらしいよ</speech>
+                <speech>${memory_p:jp.co.sharp.translate.app.original_word}は英語で${memory_p:jp.co.sharp.translate.app.translated_word}っていうらしいよ</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#t2" type="default"/>

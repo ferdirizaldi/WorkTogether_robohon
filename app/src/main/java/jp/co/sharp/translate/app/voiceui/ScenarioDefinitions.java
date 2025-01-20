@@ -80,9 +80,9 @@ public class ScenarioDefinitions {
     /**
      * 日本語の単語
      */
-    public static final String MEM_P_JP_WORD = ScenarioDefinitions.PACKAGE + ".jp_word";
+    public static final String MEM_P_ORIGINAL_WORD = ScenarioDefinitions.PACKAGE + ".original_word";
     /**
      * 英語の単語
      */
-    public static final String MEM_P_EN_WORD = ScenarioDefinitions.PACKAGE + ".en_word";
+    public static final String MEM_P_TRANSLATED_WORD = ScenarioDefinitions.PACKAGE + ".translated_word";
 }
