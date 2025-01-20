@@ -224,7 +224,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         LibreTranslateAPI translateService = new LibreTranslateAPI();
 
         // 翻訳関数呼び出し
-        String targetLanguage = "en"; // Example: Spanish
+        String targetLanguage = "en"; // Example: English
         String translatedText = translateService.translate(original_word, targetLanguage);
 
         // 出力表示
