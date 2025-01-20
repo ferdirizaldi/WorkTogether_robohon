@@ -191,6 +191,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);
                     VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);
                 }
+                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    finish();
+                }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
