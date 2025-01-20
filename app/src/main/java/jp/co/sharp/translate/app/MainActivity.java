@@ -176,8 +176,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     startSpeakScenario(jp_word);//speakシナリオを開始させる
                 }
                 if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
-                    speak_flag = 0;
-                    //speakフラグをオフにする
+                    speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -199,12 +198,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private void startSpeakScenario(final String jp_word){
         if(speak_flag == 1)return;//すでにspeakシナリオが実行中の場合はリターン
-        if(jp_word == null || jp_word.length() > 1000)return;//jp_wordが不正な場合はリターン
+        if(jp_word == null || jp_word.length() > 100)return;//jp_wordが不正な場合はリターン
 
         speak_flag = 1;//speakシナリオを開始したら立てる
 
         final String en_word = translate(jp_word);//jp_wordを英訳したen_wordを作成する
-        if(en_word == null || en_word.length() > 1000){//en_wordが不正な場合はフラグを下げてからリターン
+        if(en_word == null || en_word.length() > 100){//en_wordが不正な場合はフラグを下げてからリターン
             speak_flag = 0;
             return;
         }
