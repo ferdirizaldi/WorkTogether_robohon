@@ -128,17 +128,19 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
                 //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない（シナリオ中は別シナリオは起動しないっぽいので必要ないかも？）
                 //シナリオから文字を受け取り表示する部分まで試験的に実装　1/17sakata
+                //表示部分はいったんコメントアウト　1/20sakata
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {
                     final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);
-                    mHandler.post(new Runnable() {
+                    /*mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             if(!isFinishing()) {
+                                //出力バーにlvcsrを表示
                                 ((TextView) findViewById(R.id.recog_text)).setText("Lvcsr:"+lvcsr);
                             }
                         }
-                    });
+                    });*/
                 }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
