@@ -172,7 +172,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {
                     final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);
-                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, lvcsr);
+                    //VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, lvcsr);
                     /*mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -201,6 +201,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 break;
         }
     }
+
+    public void translate(string jp_word) {
+
+    }
+
 
     /**
      * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>
