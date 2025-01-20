@@ -201,6 +201,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
+    //日本語から英語に翻訳
     private String translate(String jp_word) {
         if (jp_word.isEmpty()) {
             outputTextValue.setText("Please enter some text!");
