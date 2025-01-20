@@ -10,7 +10,7 @@ import jp.co.sharp.android.voiceui.VoiceUIVariable;
 /**
  * VoiceUIVariable関連のUtilityクラス.
  */
-public final class VoiceUIVariableUtil {
+public final class jp_wordVoiceUIVariableUtil {
 
     //static クラスとして使用する.
     private VoiceUIVariableUtil(){}

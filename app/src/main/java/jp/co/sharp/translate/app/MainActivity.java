@@ -172,15 +172,26 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {
                     final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);//テスト用
+                    setActionBar(toolbar);//
+                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, lvcsr);
                     /*mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             if(!isFinishing()) {
-                                //出力バーにlvcsrを表示
+                                //入力バーにlvcsrを表示
                                 ((TextView) findViewById(R.id.recog_text)).setText("Lvcsr:"+lvcsr);
                             }
                         }
                     });*/
+                    //
+                    //ここらへんで英訳
+                    //おそらく、英訳以降は別の関数で定義しないと手打ち入力した際の挙動が面倒になる
+                    //
+                    //今はテスト用に日本語をそのまま使用する
+                    //
+                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);
                 }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:

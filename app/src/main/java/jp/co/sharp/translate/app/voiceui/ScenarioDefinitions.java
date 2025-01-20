@@ -55,11 +55,11 @@ public class ScenarioDefinitions {
     /**
      * シナリオ：speakシナリオ
      */
-    public static final String SPEAK =  ScenarioDefinitions.PACKAGE + ".speak";
+    public static final String ACC_SPEAK =  ScenarioDefinitions.PACKAGE + ".speak";
     /**
      * シナリオ名：listenシナリオ
      */
-    public static final String LISTEN =  ScenarioDefinitions.PACKAGE + ".listen";
+    public static final String ACC_LISTEN =  ScenarioDefinitions.PACKAGE + ".listen";
     /**
      * 関数名：send_word
      */
@@ -68,7 +68,12 @@ public class ScenarioDefinitions {
      * キー：lvcsr_basic
      */
     public static final String KEY_LVCSR_BASIC = "Lvcsr_Basic";
-
-
-
+    /**
+     * 日本語の単語
+     */
+    public static final String MEM_P_JP_WORD = "jp.co.sharp.translate.app.speak.jp_word";
+    /**
+     * 英語の単語
+     */
+    public static final String MEM_P_EN_WORD = "jp.co.sharp.translate.app.speak.en_word";
 }

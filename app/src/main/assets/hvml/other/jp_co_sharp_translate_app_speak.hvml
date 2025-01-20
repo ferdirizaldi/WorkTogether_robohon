@@ -5,15 +5,13 @@
         <description>英単語を発話するシナリオ</description>
         <scene value="jp.co.sharp.translate.app.scene_common"/>
         <version value="1.0"/>
-        <situation priority="74" topic_id="reply" trigger="user-word">
-            ${Lvcsr:Basic} include [おはよう,こんにちは,こんばんは]
-        </situation>
-        <accost priority="75" topic_id="say" word="jp.co.sharp.translate.app.speak"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.translate.app.speak"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>こんにちは！僕、ロボホン。おはようとか、こんにちはとか話しかけてみてね！！</speech>
+                <speech>翻訳できたよ</speech>
+                <speech>${memory_p:jp.co.sharp.translate.app.jp_word}は、英語で${memory_p:jp.co.sharp.translate.app.en_word}っていうらしいよ</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
