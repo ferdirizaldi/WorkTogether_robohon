@@ -91,15 +91,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/finish_app_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_finish_app"
-                    android:singleLine="false"
-                    android:textSize="32sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_alignParentEnd="true" />
+            <Button
+                android:id="@+id/finish_app_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_finish_app"
+                android:singleLine="false"
+                android:textSize="32sp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

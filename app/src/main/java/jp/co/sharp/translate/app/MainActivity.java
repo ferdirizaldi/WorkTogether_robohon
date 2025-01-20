@@ -10,6 +10,7 @@ import android.os.Handler;//追加1/17 multilingualからのコピペ
 import android.util.Log;
 import android.view.View;//追加1/17 multilingualからのコピペ
 import android.widget.Button;//追加1/17 multilingualからのコピペ
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -44,6 +45,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private HomeEventReceiver mHomeEventReceiver;
 
+    private EditText inputTextValue;
+    private TextView outputTextValue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +65,42 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //
         //ボタン等を作る
         //
+
+        // 単語変数を取得
+        inputTextValue = (EditText) findViewById(R.id.input_text_value);
+        outputTextValue = (TextView) findViewById(R.id.output_text_value);
+
+        // 翻訳ボタン表示
+        Button voiceTranslateButton = (Button) findViewById(R.id.voice_translate_button);
+        voiceTranslateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleTextProcessing();
+            }
+        });
+
+    }
+
+    /**
+     * Handle the text processing when the button is clicked.
+     */
+    private void handleTextProcessing() {
+        // Get the input text
+        String inputText = inputTextValue.getText().toString().trim();
+
+        // Perform text processing (e.g., mock translation or processing)
+        String processedText = processText(inputText);
+
+        // Display the processed text in the output box
+        outputTextValue.setText(processedText);
+    }
+
+    private String processText(String input) {
+        if (input.isEmpty()) {
+            return "Please enter some text!";
+        }
+        // Example: Reverse the input text (replace with your logic)
+        return new StringBuilder(input).reverse().toString();
     }
 
     @Override
