@@ -71,9 +71,13 @@ public class ScenarioDefinitions {
     /**
      * 日本語の単語
      */
-    public static final String MEM_P_JP_WORD = "jp.co.sharp.translate.app.speak.jp_word";
+    public static final String MEM_P_JP_WORD = "jp.co.sharp.translate.app.speak.jpWord";
     /**
      * 英語の単語
      */
-    public static final String MEM_P_EN_WORD = "jp.co.sharp.translate.app.speak.en_word";
+    public static final String MEM_P_EN_WORD = "jp.co.sharp.translate.app.speak.enWord";
+    /**
+     * テスト用
+     */
+    public static final String TEST = "jp.co.sharp.translate.app.speak.test";
 }

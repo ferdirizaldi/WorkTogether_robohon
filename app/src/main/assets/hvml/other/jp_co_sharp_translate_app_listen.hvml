@@ -5,8 +5,8 @@
         <description>言葉を聞き取りアプリに送るシナリオ(聞き取りテスト)</description>
         <scene value="jp.co.sharp.translate.app.scene_common"/>
         <version value="1.0"/>
-        <situation priority="72" topic_id="test" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic}</situation>
-        <accost priority="72" topic_id="test" word="jp.co.sharp.translate.app.listen"/>
+        <situation priority="74" topic_id="test" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic}</situation>
+        <accost priority="74" topic_id="test" word="jp.co.sharp.translate.app.listen"/>
     </head>
     <body>
         <topic id="t1" listen="false">

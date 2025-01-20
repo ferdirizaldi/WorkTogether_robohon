@@ -189,6 +189,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     //今はテスト用に日本語をそのまま使用する
                     //
                     VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);
+                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.TEST, "翻訳できたよ");
                     VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);
                 }
                 break;
