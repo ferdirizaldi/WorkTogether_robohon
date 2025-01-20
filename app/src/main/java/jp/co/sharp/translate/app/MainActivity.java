@@ -165,31 +165,16 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Log.v(TAG, "onScenarioEvent() : " + event);
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
-                //listenシナリオか入力バーから単語を受け取って翻訳し、speakシナリオに単語を渡す
-                //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない（シナリオ中は別シナリオは起動しないっぽいので必要ないかも？）
-                //シナリオから文字を受け取り表示する部分まで試験的に実装　1/17sakata
-                //表示部分はいったんコメントアウト　1/20sakata
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
-                    final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数lvcsrに格納
-                    //VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, lvcsr);
-                    /*mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!isFinishing()) {
-                                //入力バーにlvcsrを表示
-                                ((TextView) findViewById(R.id.recog_text)).setText("Lvcsr:"+lvcsr);
-                            }
-                        }
-                    });*/
+                    final String jp_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
                     //
-                    //ここらへんで英訳
-                    //おそらく、英訳以降は別の関数で定義しないと手打ち入力した際の挙動が面倒になる
+                    //以下と同じ内容が入力バーの「確定」を押したときにも実行されるー＞関数でひとまとめにしたほうがいい
                     //
-                    //今はテスト用に日本語をそのまま使用する
+                    //入力バーにjp_wordの内容を表示する
                     //
-                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);//翻訳済みの単語をspeakシナリオの手が届くpメモリに送る
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
+                    final String en_word = translate(jp_word);//jp_wordを英訳したen_wordを作成する
+                    startSpeakScenario(jp_word,en_word);//speakシナリオを開始させる
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -204,6 +189,17 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 break;
         }
     }
+
+
+    /**
+     * 日本語と英語の2単語をspeakシナリオで発話させる関数
+     */
+    private void startSpeakScenario(final String jp_word,final String en_word){
+        VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, jp_word);
+        VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, en_word);//翻訳前と済みの単語をspeakシナリオの手が届くpメモリに送る
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
+    }
+
 
     //日本語から英語に翻訳
     private String translate(String jp_word) {
