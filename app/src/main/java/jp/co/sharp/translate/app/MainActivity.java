@@ -171,7 +171,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
                     final String original_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
                     //
-                    //入力バーにjp_wordの内容を表示する
+                    //入力バーにoriginal_wordの内容を表示する
                     //
                     startSpeakScenario(original_word);//speakシナリオを開始させる
                 }
@@ -198,11 +198,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private void startSpeakScenario(final String original_word){
         if(speak_flag == 1)return;//すでにspeakシナリオが実行中の場合はリターン
-        if(original_word == null || original_word.length() > 100)return;//jp_wordが不正な場合はリターン
+        if(original_word == null || original_word.length() > 100)return;//original_wordが不正な場合はリターン
 
         speak_flag = 1;//speakシナリオを開始したら立てる
 
-        final String translated_word = translate(original_word);//jp_wordを英訳したen_wordを作成する
+        final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
         if(translated_word == null || translated_word.length() > 100){//en_wordが不正な場合はフラグを下げてからリターン
             speak_flag = 0;
             return;
