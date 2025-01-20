@@ -169,9 +169,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 //speakシナリオから終了の通知があるまでlistenシナリオや入力バーから受け取らない（シナリオ中は別シナリオは起動しないっぽいので必要ないかも？）
                 //シナリオから文字を受け取り表示する部分まで試験的に実装　1/17sakata
                 //表示部分はいったんコメントアウト　1/20sakata
-                String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
-                if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {
-                    final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);
+                String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
+                if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
+                    final String lvcsr = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数lvcsrに格納
                     //VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_JP_WORD, lvcsr);
                     /*mHandler.post(new Runnable() {
                         @Override
@@ -188,12 +188,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     //
                     //今はテスト用に日本語をそのまま使用する
                     //
-                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);
+                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_EN_WORD, lvcsr);//翻訳済みの単語をspeakシナリオの手が届くpメモリに送る
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
                 }
-                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){
+                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
-                    finish();
+                    finish();//アプリを終了する
                 }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
