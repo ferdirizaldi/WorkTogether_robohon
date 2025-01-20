@@ -10,27 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <memory type="permanent" key="jp.co.sharp.translate.app.test" value="翻訳できたよ"/>
-            </action>
-            <next href="#t2" type="default"/>
-        </topic>
-        <topic id="t2" listen="false">
-            <action index="1">
-                <speech>${memory_p:jp.co.sharp.translate.app.test}</speech>
-                <behavior id="assign" type="normal"/>
-            </action>
-            <next href="#t3" type="default"/>
-        </topic>
-        <topic id="t3" listen="false">
-            <action index="1">
-                <speech>${memory_p:jp.co.sharp.translate.app.jp_word}は</speech>
-                <behavior id="assign" type="normal"/>
-            </action>
-            <next href="#t4" type="default"/>
-        </topic>
-        <topic id="t4" listen="false">
-            <action index="1">
-                <speech>英語で${memory_p:jp.co.sharp.translate.app.en_word}っていうらしいよ</speech>
+                <speech>${memory_p:jp.co.sharp.translate.app.jp_word}は英語で${memory_p:jp.co.sharp.translate.app.en_word}っていうらしいよ</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
