@@ -13,6 +13,12 @@
                 <speech>${memory_p:jp.co.sharp.translate.app.jp_word}は英語で${memory_p:jp.co.sharp.translate.app.en_word}っていうらしいよ</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#t2" type="default"/>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <control function="end_speak" target="jp.co.sharp.translate.app"/>
+            </action>
         </topic>
     </body>
 </hvml>

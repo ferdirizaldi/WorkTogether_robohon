@@ -11,7 +11,6 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <memory type="permanent" key="jp.co.sharp.translate.app.jp_word" value="${Lvcsr:Basic}"/>
                 <control function="send_word" target="jp.co.sharp.translate.app">
                     <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
                 </control>

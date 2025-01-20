@@ -65,7 +65,11 @@ public class ScenarioDefinitions {
      */
     public static final String FUNC_SEND_WORD = "send_word";
     /**
-     * 関数名：send_word
+     * 関数名：end_speak
+     */
+    public static final String FUNC_END_SPEAK = "end_speak";
+    /**
+     * 関数名：end_app
      */
     public static final String FUNC_END_APP = "end_app";
 
