@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
-        //アプリ起動時に翻訳APIとの接続をチェックして発話を実行するようにしたい
+        //アプリ起動時に翻訳APIのテストをして発話を実行
         final String test_translated_word = translate("りんご");//適当な単語を英訳してtest_translated_wordを作成する
         if(!Objects.equals(test_translated_word, "Error during translation")){
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
