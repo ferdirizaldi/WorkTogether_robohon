@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
 
 repositories{
-    maven { url 'http://repo1.maven.org/maven2' }
+    maven { url 'https://repo1.maven.org/maven2' }
+    maven {
+        name = "dynomakeRepository"
+        url = uri("https://maven.dynomake.space/releases")
+    }
 }
 
 android {
@@ -23,4 +27,5 @@ android {
 
 dependencies {
     provided files('jar/jp.co.sharp.android.voiceui.framework.jar')
+    implementation "space.dynomake:libretranslate-java:1.0.9"
 }
