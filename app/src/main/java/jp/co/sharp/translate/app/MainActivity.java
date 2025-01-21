@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
         final String test_translated_word = translate("りんご");//適当な単語を英訳してtest_translated_wordを作成する
-        if(!Objects.equals(test_translated_word, "Error during translation")){
+        if(!test_translated_word.contains("Error during translation")){
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
         }else{
             Log.v(TAG, "Test_translated_word Is Error Message");
@@ -245,7 +245,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
         Log.v(TAG, "TEST:Translated_word Is " + translated_word);//翻訳後のテキストを確認するテスト用のログ
-        if(Objects.equals(translated_word, "Error during translation")){
+        if(translated_word.contains("Error during translation")){
             Log.v(TAG, "Translated_word Is Error Message");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
             return;//translated_wordがエラーメッセージなのでリターン
