@@ -121,8 +121,14 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
-        //アプリ起動時に発話を実行.
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);
+        //アプリ起動時に翻訳APIとの接続をチェックして発話を実行するようにしたい
+        final String test_translated_word = translate("りんご");//適当な単語を英訳してtest_translated_wordを作成する
+        if(!Objects.equals(test_translated_word, "Error during translation")){
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
+        }else{
+            Log.v(TAG, "Test_translated_word Is Error Message");
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//接続が失敗したときの発話
+        }
 
     }
 
@@ -208,34 +214,39 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
         if(Objects.equals(original_word,null) || original_word.length() > max_length){
             Log.v(TAG, "Original_word Is Wrong");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR);//errorシナリオを起動する
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//original_wordが不正な場合はリターン
         }
 
         final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
-        if(Objects.equals(translated_word, "Error during translation") || Objects.equals(translated_word, null) || translated_word.length() > max_length){
+        if(Objects.equals(translated_word, "Error during translation")){
+            Log.v(TAG, "Translated_word Is Error Message");
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
+            return;//translated_wordがエラーメッセージなのでリターン
+        }
+        if(Objects.equals(translated_word, null) || translated_word.length() > max_length){
             Log.v(TAG, "Translated_word Is Wrong");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR);//errorシナリオを起動する
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//translated_wordが不正な場合はリターン
         }
 
         int result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);//翻訳前の単語をspeakシナリオの手が届くpメモリに送る
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Set Original_word Failed");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR);//errorシナリオを起動する
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//original_wordのpメモリへの保存が失敗したらリターン
         }
         result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳後の単語をspeakシナリオの手が届くpメモリに送る
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Set Translated_word Failed");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR);//errorシナリオを起動する
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//translated_wordのpメモリへの保存が失敗したらリターン
         }
 
         result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Speak Scenario Failed To Start");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR);//errorシナリオを起動する
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
         }else{
             speak_flag = 1;//speakシナリオが正常に開始したら立てる
             Log.v(TAG, "Speak Scenario Started");

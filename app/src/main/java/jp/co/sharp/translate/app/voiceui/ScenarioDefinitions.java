@@ -61,9 +61,14 @@ public class ScenarioDefinitions {
      */
     public static final String ACC_LISTEN =  ScenarioDefinitions.PACKAGE + ".listen";
     /**
-     * シナリオ名：errorシナリオ
+     * シナリオ名：errorシナリオのconnectionトピック
      */
-    public static final String ACC_ERROR =  ScenarioDefinitions.PACKAGE + ".error";
+    public static final String ACC_ERROR_CONNECTION =  ScenarioDefinitions.PACKAGE + ".error_connection";
+    /**
+     * シナリオ名：errorシナリオのtranslateトピック
+     */
+    public static final String ACC_ERROR_TRANSLATE =  ScenarioDefinitions.PACKAGE + ".error_translate";
+
     /**
      * 関数名：send_word
      */
