@@ -168,11 +168,16 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
                     final String original_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
-                    //
-                    //入力バーにoriginal_wordの内容を表示する
-                    inputTextValue.setText(original_word);
-                    //
-                    startSpeakScenario(original_word);//speakシナリオを開始させる
+                    if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
+                        Log.v(TAG, "Listen Scenario Sent Normal Text");
+                        //
+                        //入力バーにoriginal_wordの内容を表示する
+                        inputTextValue.setText(original_word);
+                        //
+                        startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
+                    }else{
+                        Log.v(TAG, "Listen Scenario Sent Empty Text");
+                    }
                 }
                 if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
                     speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
