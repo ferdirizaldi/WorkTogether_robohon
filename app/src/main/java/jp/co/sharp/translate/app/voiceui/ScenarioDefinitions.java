@@ -61,6 +61,10 @@ public class ScenarioDefinitions {
      */
     public static final String ACC_LISTEN =  ScenarioDefinitions.PACKAGE + ".listen";
     /**
+     * シナリオ名：errorシナリオ
+     */
+    public static final String ACC_ERROR =  ScenarioDefinitions.PACKAGE + ".error";
+    /**
      * 関数名：send_word
      */
     public static final String FUNC_SEND_WORD = "send_word";
