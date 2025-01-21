@@ -25,7 +25,7 @@ public class LibreTranslateAPI {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
                 String data = "q=" + URLEncoder.encode(text, "UTF-8") +
-                        "&source=auto" +
+                        "&source=ja" +
                         "&target=" + URLEncoder.encode(targetLanguage, "UTF-8") +
                         "&format=text";
 
