@@ -132,8 +132,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
         // Usage
-        String translated_word = translateSync("こんにちは");
-        System.out.println("Translated Text Global: " + translated_word);
+        //String translated_word = translateSync("こんにちは");
+        //System.out.println("Translated Text Global: " + translated_word);
 
         final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
         if(!test_translated_word.contains("Error during translation")){
@@ -250,7 +250,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
 
         final String translated_word = translateSync(original_word);//original_wordを英訳したen_wordを作成する
-        Log.v(TAG, "TEST:Translated_word Is " + translated_word);//翻訳後のテキストを確認するテスト用のログ
         if(translated_word.contains("Error during translation")){
             Log.v(TAG, "Translated_word Is Error Message");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
