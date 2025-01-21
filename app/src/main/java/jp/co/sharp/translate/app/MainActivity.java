@@ -180,7 +180,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
                         //
                         //入力バーにoriginal_wordの内容を表示する
-                        inputTextValue.setText(original_word);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                inputTextValue.setText(original_word);
+                            }
+                        });
                         //
                         startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
                     }else{
