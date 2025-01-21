@@ -226,7 +226,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Speak Scenario Failed To Start");
-            return;
         }else{
             speak_flag = 1;//speakシナリオが正常に開始したら立てる
             Log.v(TAG, "Speak Scenario Started");
