@@ -16,6 +16,7 @@ import android.widget.Toolbar;
 
 import java.util.List;
 import java.util.Locale;//追加1/17 multilingualからのコピペ
+import java.util.Objects;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
@@ -48,6 +49,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private EditText inputTextValue;
     private TextView outputTextValue;
     private int speak_flag = 0;//speakシナリオ実行中に立つフラグ
+    private int max_length = 100;//翻訳前後の文の長さの限界
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 }
                 if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
                     speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
+                    Log.v(TAG, "Speak Scenario Ended");
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -197,20 +200,19 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * 翻訳をしてspeakシナリオを開始させる関数
      */
     private void startSpeakScenario(final String original_word){
-        if(speak_flag == 1)return;//すでにspeakシナリオが実行中の場合はリターン
-        if(original_word == null || original_word.length() > 100)return;//original_wordが不正な場合はリターン
-
-        speak_flag = 1;//speakシナリオを開始したら立てる
+        if(speak_flag == 1) return;//すでにspeakシナリオが実行中の場合はリターン
+        if(Objects.equals(original_word,null) || original_word.length() > max_length) return;//original_wordが不正な場合はリターン
 
         final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
-        if(translated_word == null || translated_word.length() > 100){//en_wordが不正な場合はフラグを下げてからリターン
-            speak_flag = 0;
-            return;
-        }
+        if(Objects.equals(translated_word, "Error during translation") || Objects.equals(translated_word, null) || translated_word.length() > max_length) return;//translated_wordが不正な場合はリターン
 
         VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);
         VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳前と済みの単語をspeakシナリオの手が届くpメモリに送る
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
+        int result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
+        if(result != VoiceUIManager.VOICEUI_ERROR){
+            speak_flag = 1;//speakシナリオが正常に開始したら立てる
+            Log.v(TAG, "Speak Scenario Started");
+        }
     }
 
 
