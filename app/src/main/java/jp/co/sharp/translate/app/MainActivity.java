@@ -62,11 +62,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
-
-        //
-        //ボタン等を作る
-        //
-
+        
         // 単語変数を取得
         inputTextValue = (EditText) findViewById(R.id.input_text_value);
         outputTextValue = (TextView) findViewById(R.id.output_text_value);
