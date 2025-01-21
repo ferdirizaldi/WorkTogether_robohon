@@ -64,11 +64,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
-
-        //
-        //ボタン等を作る
-        //
-
+        
         // 単語変数を取得
         inputTextValue = (EditText) findViewById(R.id.input_text_value);
         outputTextValue = (TextView) findViewById(R.id.output_text_value);
@@ -89,13 +85,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private void handleTextProcessing() {
         // Get the input text
-        String inputText = inputTextValue.getText().toString().trim();
+        String original_word = inputTextValue.getText().toString().trim();
 
-        // Perform text processing (e.g., mock translation or processing)
-        String processedText = processText(inputText);
+        //original_wordを英訳したen_wordを作成する
+        final String translated_word = translate(original_word);
 
         // Display the processed text in the output box
-        outputTextValue.setText(processedText);
+        outputTextValue.setText(translated_word);
     }
 
     private String processText(String input) {
@@ -174,6 +170,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     final String original_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
                     //
                     //入力バーにoriginal_wordの内容を表示する
+                    inputTextValue.setText(original_word);
                     //
                     startSpeakScenario(original_word);//speakシナリオを開始させる
                 }
@@ -205,6 +202,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
         if(Objects.equals(translated_word, "Error during translation") || Objects.equals(translated_word, null) || translated_word.length() > max_length) return;//translated_wordが不正な場合はリターン
+
+        //出力バーにtranslated_wordの内容を表示する
+        inputTextValue.setText(translated_word);
 
         VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);
         VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳前と済みの単語をspeakシナリオの手が届くpメモリに送る
