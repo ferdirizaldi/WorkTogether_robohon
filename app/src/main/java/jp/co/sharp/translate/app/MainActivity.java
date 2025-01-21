@@ -190,7 +190,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
                     if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
-                        //
+
                         //入力バーにoriginal_wordの内容を表示する
                         runOnUiThread(new Runnable() {
                             @Override
@@ -198,13 +198,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                                 inputTextValue.setText(original_word);
                             }
                         });
-                        //
+
                         startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
                     }
 
-                    //
+
                     // Update UI on the main thread
                     runOnUiThread(new Runnable() {
                         @Override
@@ -212,7 +212,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                             inputTextValue.setText(original_word);
                         }
                     });
-                    //
+
                     startSpeakScenario(original_word);//speakシナリオを開始させる
 
                 }
