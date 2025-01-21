@@ -212,9 +212,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             return;//translated_wordが不正な場合はリターン
         }
 
-        //出力バーにtranslated_wordの内容を表示する
-        inputTextValue.setText(translated_word);
-
         int result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);//翻訳前の単語をspeakシナリオの手が届くpメモリに送る
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Set Original_word Failed");
@@ -233,6 +230,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }else{
             speak_flag = 1;//speakシナリオが正常に開始したら立てる
             Log.v(TAG, "Speak Scenario Started");
+            //出力バーにtranslated_wordの内容を表示する
+            outputTextValue.setText(translated_word);
         }
     }
 
