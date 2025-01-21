@@ -93,7 +93,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         final String translated_word = translate(original_word);
 
         // Display the processed text in the output box
-        outputTextValue.setText(translated_word);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                outputTextValue.setText(translated_word);
+            }
+        });
     }
 
     private String processText(String input) {
@@ -256,15 +261,18 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             Log.v(TAG, "Speak Scenario Started");
 
             //出力バーにtranslated_wordの内容を表示する
-            outputTextValue.setText(translated_word);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    outputTextValue.setText(translated_word);
+                }
+            });
         }
     }
 
 
     //日本語から英語に翻訳
     private String translate(String original_word) {
-            outputTextValue.setText("Please enter some text!");
-            return null;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
