@@ -17,6 +17,7 @@ import android.widget.Toolbar;
 import java.util.List;
 import java.util.Locale;//追加1/17 multilingualからのコピペ
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
@@ -50,6 +51,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private TextView outputTextValue;
     private int speak_flag = 0;//speakシナリオ実行中に立つフラグ
     private final int max_length = 100;//翻訳前後の文の長さの限界
+    private String translated_word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         startSpeakScenario(original_word);//speakシナリオを開始させる
 
         //original_wordを英訳したen_wordを作成する
-        final String translated_word = translate(original_word);
+        //final String translated_word = translate(original_word);
 
         // Display the processed text in the output box
         runOnUiThread(new Runnable() {
@@ -129,20 +131,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
-        LibreTranslateAPI.translateAsync("りんご", "en", new LibreTranslateAPI.TranslationCallback() {
-            @Override
-            public void onSuccess(String translatedText) {
-                System.out.println("Translated Text: " + translatedText);
-            }
+        // Usage
+        String translated_word = translateSync("こんにちは");
+        System.out.println("Translated Text Global: " + translated_word);
 
-            @Override
-            public void onError(String errorMessage) {
-                System.err.println("Translation Error: " + errorMessage);
-            }
-        });
-
-        final String test_translated_word = translate("りんご");//適当な単語を英訳してtest_translated_wordを作成する
-
+        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
         if(!test_translated_word.contains("Error during translation")){
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
         }else{
@@ -256,7 +249,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             return;//original_wordが不正な場合はリターン
         }
 
-        final String translated_word = translate(original_word);//original_wordを英訳したen_wordを作成する
+        final String translated_word = translateSync(original_word);//original_wordを英訳したen_wordを作成する
         Log.v(TAG, "TEST:Translated_word Is " + translated_word);//翻訳後のテキストを確認するテスト用のログ
         if(translated_word.contains("Error during translation")){
             Log.v(TAG, "Translated_word Is Error Message");
@@ -302,22 +295,50 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
 
     //日本語から英語に翻訳
-    private String translate(String original_word) {
-        runOnUiThread(new Runnable() {
+    private String translateSync(String original_word) {
+        final String[] translatedTextHolder = new String[1];
+        CountDownLatch latch = new CountDownLatch(1);
+
+        translate(original_word, result -> {
+            translatedTextHolder[0] = result;
+            latch.countDown(); // Signal that the translation is done
+        });
+
+        try {
+            latch.await(); // Wait for the callback to complete
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return translatedTextHolder[0]; // Return the result
+    }
+
+    private void translate(String original_word, TranslationResultCallback callback) {
+
+        // Specify the target language
+        String targetLanguage = "en";
+
+        // Call the asynchronous translation method
+        LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
             @Override
-            public void run() {
-                outputTextValue.setText("単語を入力してください");
+            public void onSuccess(String translatedText) {
+                // Pass the translated text to the callback
+                callback.onResult(translatedText);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Pass null or an error message to the callback
+                callback.onResult(null);
             }
         });
-        // 翻訳APIのインスタンス生成
-        LibreTranslateAPI translateService = new LibreTranslateAPI();
-
-        // 翻訳関数呼び出し
-        String targetLanguage = "en"; // Example: English
-        String translatedText = translateService.translate(original_word, targetLanguage);
-
-        return translatedText;
     }
+
+
+    public interface TranslationResultCallback {
+        void onResult(String result);
+    }
+
 
 
     /**
