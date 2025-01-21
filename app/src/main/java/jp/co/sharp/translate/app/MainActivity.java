@@ -91,6 +91,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         startSpeakScenario(original_word);//speakシナリオを開始させる
 
+        //翻訳
+        final String translated_word = translateSync(original_word);//original_wordを英訳したen_wordを作成する
+
         // Display the processed text in the output box
         runOnUiThread(new Runnable() {
             @Override
