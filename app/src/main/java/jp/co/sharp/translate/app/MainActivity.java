@@ -87,11 +87,18 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // Get the input text
         String original_word = inputTextValue.getText().toString().trim();
 
+        startSpeakScenario(original_word);//speakシナリオを開始させる
+
         //original_wordを英訳したen_wordを作成する
         final String translated_word = translate(original_word);
 
         // Display the processed text in the output box
-        outputTextValue.setText(translated_word);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                outputTextValue.setText(translated_word);
+            }
+        });
     }
 
     private String processText(String input) {
@@ -174,16 +181,34 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
                     final String original_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
+
                     if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
                         //
                         //入力バーにoriginal_wordの内容を表示する
-                        inputTextValue.setText(original_word);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                inputTextValue.setText(original_word);
+                            }
+                        });
                         //
                         startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
                     }
+
+                    //
+                    // Update UI on the main thread
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            inputTextValue.setText(original_word);
+                        }
+                    });
+                    //
+                    startSpeakScenario(original_word);//speakシナリオを開始させる
+
                 }
                 if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
                     speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
@@ -250,27 +275,32 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }else{
             speak_flag = 1;//speakシナリオが正常に開始したら立てる
             Log.v(TAG, "Speak Scenario Started");
+
             //出力バーにtranslated_wordの内容を表示する
-            outputTextValue.setText(translated_word);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    outputTextValue.setText(translated_word);
+                }
+            });
         }
     }
 
 
     //日本語から英語に翻訳
     private String translate(String original_word) {
-        if (original_word.isEmpty()) {
-            outputTextValue.setText("Please enter some text!");
-            return null;
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                outputTextValue.setText("単語を入力してください");
+            }
+        });
         // 翻訳APIのインスタンス生成
         LibreTranslateAPI translateService = new LibreTranslateAPI();
 
         // 翻訳関数呼び出し
         String targetLanguage = "en"; // Example: English
         String translatedText = translateService.translate(original_word, targetLanguage);
-
-        // 出力表示
-        outputTextValue.setText(translatedText);
 
         return translatedText;
     }
