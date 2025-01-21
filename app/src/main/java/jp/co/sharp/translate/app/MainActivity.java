@@ -91,9 +91,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         startSpeakScenario(original_word);//speakシナリオを開始させる
 
-        //original_wordを英訳したen_wordを作成する
-        //final String translated_word = translate(original_word);
-
         // Display the processed text in the output box
         runOnUiThread(new Runnable() {
             @Override
@@ -131,10 +128,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
-        // Usage
-        //String translated_word = translateSync("こんにちは");
-        //System.out.println("Translated Text Global: " + translated_word);
-
         final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
         if(!test_translated_word.contains("Error during translation")){
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
