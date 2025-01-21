@@ -92,7 +92,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         startSpeakScenario(original_word);//speakシナリオを開始させる
 
         //翻訳
-        final String translated_word = translateSync(original_word);//original_wordを英訳したen_wordを作成する
+        final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
 
         // Display the processed text in the output box
         runOnUiThread(new Runnable() {
@@ -245,7 +245,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             return;//original_wordが不正な場合はリターン
         }
 
-        final String translated_word = translateSync(original_word);//original_wordを英訳したen_wordを作成する
+        final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
         if(translated_word.contains("Error during translation")){
             Log.v(TAG, "Translated_word Is Error Message");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
