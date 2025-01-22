@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private EditText inputTextValue;
     private TextView outputTextValue;
     private int speak_flag;//speakシナリオ実行中に立つフラグ
-    private int speak_again_flag;//speakシナリオ実行後に立ち、speak_againが可能になるシナリオフラグ
+    private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
     private final int max_length = 100;//翻訳前後の文の長さの許容限界
 
     @Override
@@ -216,6 +216,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     if(speak_again_flag == 1){//speak_againフラグが立っている、つまり一度speakシナリオが起動しているときだけ実行
                         int result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
                         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
+                            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
                             Log.v(TAG, "Speak Scenario Failed To Start");
                             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
                         }else {
@@ -249,6 +250,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
         if(Objects.equals(original_word,null) || original_word.length() > max_length){
             Log.v(TAG, "Original_word Is Wrong");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//original_wordが不正な場合はリターン
         }
@@ -256,11 +258,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
         if(translated_word.contains("Error during translation")){
             Log.v(TAG, "Translated_word Is Error Message");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
             return;//translated_wordがエラーメッセージなのでリターン
         }
         if(Objects.equals(translated_word, null) || translated_word.length() > max_length){
             Log.v(TAG, "Translated_word Is Wrong");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//translated_wordが不正な場合はリターン
         }
@@ -268,12 +272,14 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         int result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);//翻訳前の単語をspeakシナリオの手が届くpメモリに送る
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Set Original_word Failed");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//original_wordのpメモリへの保存が失敗したらリターン
         }
         result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳後の単語をspeakシナリオの手が届くpメモリに送る
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Set Translated_word Failed");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
             return;//translated_wordのpメモリへの保存が失敗したらリターン
         }
@@ -281,6 +287,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
         if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
             Log.v(TAG, "Speak Scenario Failed To Start");
+            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
         }else{
             speak_flag = 1;//speakシナリオが正常に開始したらフラグを立てる
