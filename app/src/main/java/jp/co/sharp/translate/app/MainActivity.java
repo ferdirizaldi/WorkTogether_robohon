@@ -85,8 +85,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
-            
-            System.exit(0);
+            finish();
         });
 
     }
@@ -168,7 +167,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
         //単一Activityの場合はonPauseでアプリを終了する.
-        System.exit(0);
+        finish();
     }
 
     @Override
@@ -182,6 +181,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //インスタンスのごみ掃除.
         mVUIManager = null;
         mVUIListener = null;
+
+        System.exit(0);
     }
 
     /**
@@ -218,7 +219,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
-                    System.exit(0);//アプリを終了する
+                    finish();//アプリを終了する
                 }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
@@ -346,7 +347,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
-            System.exit(0);
+            finish();
         }
     }
 
