@@ -85,8 +85,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
-            finish();
-
+            
             System.exit(0);
         });
 
