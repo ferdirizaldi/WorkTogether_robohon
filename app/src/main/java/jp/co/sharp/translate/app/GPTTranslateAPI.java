@@ -18,7 +18,7 @@ public class GPTTranslateAPI {
     private static final String API_KEY = "GPT_API_KEY"; // Replace with your GPT API key
 
     //GPT_API_KEY
-    // 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
+    //
 
     public static void translateAsync(final String text, final String targetLanguage, final TranslationCallback callback) {
         new Thread(() -> {
