@@ -49,9 +49,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
     private EditText inputTextValue;
     private TextView outputTextValue;
-    private int speak_flag = 0;//speakシナリオ実行中に立つフラグ
-    private final int max_length = 100;//翻訳前後の文の長さの限界
-    private String translated_word;
+    private int speak_flag;//speakシナリオ実行中に立つフラグ
+    private final int max_length = 100;//翻訳前後の文の長さの許容限界
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +138,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+
+        //speakシナリオ実行中に立つフラグを初期化
+        speak_flag = 0;
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
         final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
