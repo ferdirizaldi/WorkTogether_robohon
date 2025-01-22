@@ -330,7 +330,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         String targetLanguage = "en";
 
         // 非同期の関数を呼び出し
-        GPTTranslateAPI.translateAsync(original_word, targetLanguage, new GPTTranslateAPI.TranslationCallback() {
+        LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
             @Override
             public void onSuccess(String translatedText) {
                 // Pass the translated text to the callback
