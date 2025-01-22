@@ -84,13 +84,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
-<<<<<<< Updated upstream
             // Finish the current activity
             finish();
-=======
-            // アプリ終了
-            System.exit(0);
->>>>>>> Stashed changes
         });
 
     }
