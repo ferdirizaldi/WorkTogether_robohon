@@ -102,18 +102,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // 入力テキストを取得
         String original_word = inputTextValue.getText().toString().trim();
 
-        startSpeakScenario(original_word);//speakシナリオを開始させる
-
-        //翻訳
-        final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
-
-        // 出力バーに翻訳結果を表示
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                outputTextValue.setText(translated_word);
-            }
-        });
+        //speakシナリオを開始させる
+        startSpeakScenario(original_word);
     }
 
     @Override
