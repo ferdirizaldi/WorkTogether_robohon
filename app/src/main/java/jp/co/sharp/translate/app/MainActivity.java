@@ -84,8 +84,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
+<<<<<<< Updated upstream
             // Finish the current activity
             finish();
+=======
+            // アプリ終了
+            System.exit(0);
+>>>>>>> Stashed changes
         });
 
     }
@@ -94,7 +99,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * Handle the text processing when the button is clicked.
      */
     private void handleTextProcessing() {
-        // Get the input text
+        // 入力テキストを取得
         String original_word = inputTextValue.getText().toString().trim();
 
         startSpeakScenario(original_word);//speakシナリオを開始させる
@@ -102,21 +107,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //翻訳
         final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
 
-        // Display the processed text in the output box
+        // 出力バーに翻訳結果を表示
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 outputTextValue.setText(translated_word);
             }
         });
-    }
-
-    private String processText(String input) {
-        if (input.isEmpty()) {
-            return "Please enter some text!";
-        }
-        // Example: Reverse the input text (replace with your logic)
-        return new StringBuilder(input).reverse().toString();
     }
 
     @Override
@@ -297,24 +294,24 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         translate(original_word, result -> {
             translatedTextHolder[0] = result;
-            latch.countDown(); // Signal that the translation is done
+            latch.countDown(); // 翻訳処理が終わったサイン
         });
 
         try {
-            latch.await(); // Wait for the callback to complete
+            latch.await(); // コールバックが終わるまで待機
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return translatedTextHolder[0]; // Return the result
+        return translatedTextHolder[0]; // 翻訳結果を返す
     }
 
     private void translate(String original_word, TranslationResultCallback callback) {
 
-        // Specify the target language
+        // 翻訳結果の言語を選択
         String targetLanguage = "en";
 
-        // Call the asynchronous translation method
+        // 非同期の関数を呼び出し
         LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
             @Override
             public void onSuccess(String translatedText) {
