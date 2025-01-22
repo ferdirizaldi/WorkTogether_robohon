@@ -199,18 +199,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
                     }
-
-
-                    // Update UI on the main thread
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            inputTextValue.setText(original_word);
-                        }
-                    });
-
-                    startSpeakScenario(original_word);//speakシナリオを開始させる
-
                 }
                 if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
                     speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
