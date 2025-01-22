@@ -80,18 +80,21 @@ public class ScenarioDefinitions {
     /**
      * 関数名：end_app
      */
+    public static final String FUNC_SPEAK_AGAIN = "speak_again";
+    /**
+     * 関数名：end_app
+     */
     public static final String FUNC_END_APP = "end_app";
-
     /**
      * キー：lvcsr_basic
      */
     public static final String KEY_LVCSR_BASIC = "Lvcsr_Basic";
     /**
-     * 日本語の単語
+     * 翻訳前の単語
      */
     public static final String MEM_P_ORIGINAL_WORD = ScenarioDefinitions.PACKAGE + ".original_word";
     /**
-     * 英語の単語
+     * 翻訳後の単語
      */
     public static final String MEM_P_TRANSLATED_WORD = ScenarioDefinitions.PACKAGE + ".translated_word";
 }
