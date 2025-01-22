@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;//追加1/17 multilingualからのコピペ
 import android.util.Log;
 import android.view.View;//追加1/17 multilingualからのコピペ
+import android.view.WindowManager;
 import android.widget.Button;//追加1/17 multilingualからのコピペ
 import android.widget.EditText;
 import android.widget.TextView;
@@ -66,6 +67,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
+
+        // Prevent the keyboard from showing up on app start
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // 単語変数を取得
         inputTextValue = (EditText) findViewById(R.id.input_text_value);

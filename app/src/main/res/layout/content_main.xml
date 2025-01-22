@@ -43,9 +43,7 @@
                 android:hint="単語を入力してください"
                 android:textSize="18sp"
                 android:padding="8dp"
-                android:background="@drawable/text_box_border"
-                android:focusable="false"
-                android:focusableInTouchMode="true"/>
+                android:background="@drawable/text_box_border" />
 
             <Button
                 android:id="@+id/voice_translate_button"
