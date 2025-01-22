@@ -40,10 +40,12 @@
                 android:id="@+id/input_text_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter text here"
+                android:hint="単語を入力してください"
                 android:textSize="18sp"
                 android:padding="8dp"
-                android:background="@drawable/text_box_border" />
+                android:background="@drawable/text_box_border"
+                android:focusable="false"
+                android:focusableInTouchMode="true"/>
 
             <Button
                 android:id="@+id/voice_translate_button"
