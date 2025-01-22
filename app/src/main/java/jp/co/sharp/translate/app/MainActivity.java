@@ -169,7 +169,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
         //単一Activityの場合はonPauseでアプリを終了する.
-        finish();
+        System.exit(0);
     }
 
     @Override
@@ -219,7 +219,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
-                    finish();//アプリを終了する
+                    System.exit(0);//アプリを終了する
                 }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
@@ -347,7 +347,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
-            finish();
+            System.exit(0);
         }
     }
 
