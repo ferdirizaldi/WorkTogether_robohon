@@ -20,4 +20,6 @@
     <string name="mainactivity_content_text1">セッション時間を選択してください</string>
     <string name="sessionactivity_text1">タイマー</string>
     <string name="default_timeroutput_text">00:00:00</string>
+    <string name="showactivity_text1">絵を描けたよ！</string>
+    <string name="showactivity_imgdsc">描けた絵</string>
 </resources>

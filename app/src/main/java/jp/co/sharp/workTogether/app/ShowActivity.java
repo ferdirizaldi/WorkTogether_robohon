@@ -69,18 +69,18 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // Prevent the keyboard from showing up on app start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // 単語変数を取得
-        inputTextValue = (EditText) findViewById(R.id.input_text_value);
-        outputTextValue = (TextView) findViewById(R.id.output_text_value);
-
-        // 翻訳ボタン表示
-        Button voiceTranslateButton = (Button) findViewById(R.id.voice_translate_button);
-        voiceTranslateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleTextProcessing();
-            }
-        });
+//        // 単語変数を取得
+//        inputTextValue = (EditText) findViewById(R.id.input_text_value);
+//        outputTextValue = (TextView) findViewById(R.id.output_text_value);
+//
+//        // 翻訳ボタン表示
+//        Button voiceTranslateButton = (Button) findViewById(R.id.voice_translate_button);
+//        voiceTranslateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                handleTextProcessing();
+//            }
+//        });
 
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);

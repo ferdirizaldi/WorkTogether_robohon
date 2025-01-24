@@ -20,7 +20,7 @@
                 android:background="#666666" />
 
             <TextView
-                android:text="@string/output_text"
+                android:text="@string/showactivity_text1"
                 android:id="@+id/output_text"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
@@ -35,7 +35,13 @@
                 android:textSize="18sp"
                 android:background="@drawable/text_box_border" />
 
-
+            <ImageView
+                android:id="@+id/output_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/rakuone"
+                android:contentDescription="@string/showactivity_imgdsc"
+                android:layout_marginTop="16dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
