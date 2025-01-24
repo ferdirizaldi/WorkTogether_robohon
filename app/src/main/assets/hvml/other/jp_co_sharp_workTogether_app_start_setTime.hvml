@@ -5,12 +5,12 @@
         <description>アプリ起動時の発話シナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.hello"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.startSetTime"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>翻訳したい単語を聞かせて!</speech>
+                <speech>${memory_p:jp.co.sharp.workTogether.app.target_time}時間の勉強をしよう!</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
