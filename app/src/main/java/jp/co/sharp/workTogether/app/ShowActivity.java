@@ -56,7 +56,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate()");
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.show_activity);
 
         //タイトルバー設定.
         setupTitleBar();

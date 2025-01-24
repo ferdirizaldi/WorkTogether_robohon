@@ -56,7 +56,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate()");
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.session_activity);
 
         //タイトルバー設定.
         setupTitleBar();

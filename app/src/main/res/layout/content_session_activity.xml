@@ -25,16 +25,18 @@
                 android:id="@+id/output_text"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/output_text_value"
-                android:layout_width="match_parent"
+                android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/default_timeroutput_text"
                 android:textSize="18sp"
-                android:background="@drawable/text_box_border" />
+                android:background="@drawable/text_box_border"
+                android:layout_gravity="center_horizontal"/>
 
 
 

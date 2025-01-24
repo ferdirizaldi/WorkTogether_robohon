@@ -71,17 +71,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
 
         // 翻訳ボタン表示
-        //Button voiceTranslateButton = (Button) findViewById(R.id.voice_translate_button);
-//        voiceTranslateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                handleTextProcessing();
-//            }
-//        });
+        //MainActivityの全UIを表示する関数を呼び出し
 
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
@@ -125,13 +118,14 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         speak_again_flag = 0;
 
         //アプリ起動時に翻訳APIのテストをして発話を実行
-        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
-        if(!test_translated_word.contains("Error during translation")){
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
-        }else{
-            Log.v(TAG, "Test_translated_word Is Error Message");
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//接続が失敗したときの発話
-        }
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
+//        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
+//        if(!test_translated_word.contains("Error during translation")){
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
+//        }else{
+//            Log.v(TAG, "Test_translated_word Is Error Message");
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//接続が失敗したときの発話
+//        }
 
     }
 
@@ -361,6 +355,30 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private void setupTitleBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
+    }
+
+    /**
+     * Helper method for transitioning to another activity.
+     *
+     * @param context       Current context (usually `this` in an activity).
+     * @param targetActivity Target activity class for the transition.
+     * @param extras         Optional data to pass to the target activity (can be null).
+     */
+    /**
+    //データ渡しなしのActivity移動
+     navigateToActivity(this, TargetActivity.class, null);
+    //データ渡しなしのActivity移動
+     Bundle extras = new Bundle();
+     extras.putString("key", "value");
+     extras.putInt("another_key", 123);
+     navigateToActivity(this, TargetActivity.class, extras);
+    **/
+    private void navigateToActivity(Context context, Class<?> targetActivity, Bundle extras) {
+        Intent intent = new Intent(context, targetActivity);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
     }
 
 }
