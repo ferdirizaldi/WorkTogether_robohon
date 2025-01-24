@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;//追加1/17 multilingualからのコピペ
 import android.util.Log;
 import android.view.View;//追加1/17 multilingualからのコピペ
 import android.view.WindowManager;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import java.util.List;
-import java.util.Locale;//追加1/17 multilingualからのコピペ
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
@@ -58,7 +56,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate()");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         //タイトルバー設定.
         setupTitleBar();
@@ -122,7 +120,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //VoiceUIListenerの登録.
         VoiceUIManagerUtil.registerVoiceUIListener(mVUIManager, mVUIListener);
 
-        //Scene有効化.
+        //Scene有効化
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
         //フラグを初期化
