@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">翻訳アプリ</string>
-    <string name="hello">RoBoHoN 翻訳アプリ</string>
-    <string name="default_mode_text">翻訳アプリ起動したよ!</string>
+    <string name="app_name">いっしょに作業</string>
+    <string name="hello">RoBoHoN 一緒に作業</string>
+    <string name="default_mode_text">一緒に作業アプリ起動したよ!</string>
     <string name="recog_label_text">入力</string>
     <string name="default_text">--RECOG_TEXT--</string>
     <string name="button_voice_accost">ACCOST</string>

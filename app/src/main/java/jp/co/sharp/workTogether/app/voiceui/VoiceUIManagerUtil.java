@@ -1,4 +1,4 @@
-package jp.co.sharp.translate.app.voiceui;
+package jp.co.sharp.workTogether.app.voiceui;
 
 import android.os.RemoteException;
 import android.util.Log;
@@ -9,7 +9,7 @@ import jp.co.sharp.android.voiceui.VoiceUIListener;
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
 
-import static jp.co.sharp.translate.app.voiceui.ScenarioDefinitions.TAG_ACCOST;
+import static jp.co.sharp.workTogether.app.voiceui.ScenarioDefinitions.TAG_ACCOST;
 
 /**
  * VoiceUIManager関連のUtilityクラス.

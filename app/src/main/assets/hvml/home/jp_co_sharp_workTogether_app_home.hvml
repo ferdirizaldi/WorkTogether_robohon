@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <hvml version="2.0">
     <head>
-        <producer>jp.co.sharp.translate.app</producer>
+        <producer>jp.co.sharp.workTogether.app</producer>
         <description>ホーム起動シナリオ</description>
         <scene value="home"/>
         <version value="1.0"/>
@@ -19,8 +19,8 @@
                 <speech>翻訳アプリを起動するね</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="start_activity" target="home">
-                    <data key="package_name" value="jp.co.sharp.translate.app"/>
-                    <data key="class_name" value="jp.co.sharp.translate.app.MainActivity"/>
+                    <data key="package_name" value="jp.co.sharp.workTogether.app"/>
+                    <data key="class_name" value="jp.co.sharp.workTogether.app.MainActivity"/>
                 </control>
             </action>
         </topic>

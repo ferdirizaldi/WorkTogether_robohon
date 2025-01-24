@@ -1,4 +1,4 @@
-package jp.co.sharp.translate.app.voiceui;
+package jp.co.sharp.workTogether.app.voiceui;
 
 /**
  * シナリオファイルで使用する定数の定義クラス.<br>
@@ -39,7 +39,7 @@ public class ScenarioDefinitions {
     /**
      * Package名.
      */
-    protected static final String PACKAGE = "jp.co.sharp.translate.app";
+    protected static final String PACKAGE = "jp.co.sharp.workTogether.app";
     /**
      * controlタグで指定するターゲット名.
      */

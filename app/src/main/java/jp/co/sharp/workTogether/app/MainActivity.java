@@ -1,4 +1,4 @@
-package jp.co.sharp.translate.app;
+package jp.co.sharp.workTogether.app;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -22,10 +22,10 @@ import java.util.concurrent.CountDownLatch;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
-import jp.co.sharp.translate.app.voiceui.ScenarioDefinitions;
-import jp.co.sharp.translate.app.voiceui.VoiceUIListenerImpl;
-import jp.co.sharp.translate.app.voiceui.VoiceUIManagerUtil;
-import jp.co.sharp.translate.app.voiceui.VoiceUIVariableUtil;//追加1/17 multilingualからのコピペ
+import jp.co.sharp.workTogether.app.voiceui.ScenarioDefinitions;
+import jp.co.sharp.workTogether.app.voiceui.VoiceUIListenerImpl;
+import jp.co.sharp.workTogether.app.voiceui.VoiceUIManagerUtil;
+import jp.co.sharp.workTogether.app.voiceui.VoiceUIVariableUtil;//追加1/17 multilingualからのコピペ
 
 
 /**
@@ -324,7 +324,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         String targetLanguage = "en";
 
         // 非同期の関数を呼び出し
-        LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
+        /*LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
             @Override
             public void onSuccess(String translatedText) {
                 // Pass the translated text to the callback
@@ -336,7 +336,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 // Pass null or an error message to the callback
                 callback.onResult(null);
             }
-        });
+        });*/
     }
 
 

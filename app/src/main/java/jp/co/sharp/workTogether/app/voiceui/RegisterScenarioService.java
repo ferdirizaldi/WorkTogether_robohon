@@ -1,4 +1,4 @@
-package jp.co.sharp.translate.app.voiceui;
+package jp.co.sharp.workTogether.app.voiceui;
 
 import android.app.Service;
 import android.content.Context;

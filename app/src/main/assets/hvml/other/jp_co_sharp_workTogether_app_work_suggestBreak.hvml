@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <hvml version="2.0">
     <head>
-        <producer>jp.co.sharp.translate.app</producer>
+        <producer>jp.co.sharp.workTogether.app</producer>
         <description>エラーメッセージを発話するシナリオ</description>
-        <scene value="jp.co.sharp.translate.app.scene_common"/>
+        <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
-        <accost priority="73" topic_id="t1" word="jp.co.sharp.translate.app.error_connection"/>
-        <accost priority="73" topic_id="t2" word="jp.co.sharp.translate.app.error_translate"/>
+        <accost priority="73" topic_id="t1" word="jp.co.sharp.workTogether.app.error_connection"/>
+        <accost priority="73" topic_id="t2" word="jp.co.sharp.workTogether.app.error_translate"/>
     </head>
     <body>
         <topic id="t1" listen="false">
