@@ -46,8 +46,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private HomeEventReceiver mHomeEventReceiver;
 
-    private EditText inputTextValue;
-    private TextView outputTextValue;
     private int speak_flag;//speakシナリオ実行中に立つフラグ
     private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
     private final int max_length = 100;//翻訳前後の文の長さの許容限界
@@ -132,6 +130,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //Scene有効化
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //フラグを初期化
         speak_flag = 0;
@@ -220,8 +219,49 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                         }
                     }
                 }
+
+
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+                if(ScenarioDefinitions.FUNC_1HOUR.equals(function)){//setTimeシナリオのone_hour_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+                if(ScenarioDefinitions.FUNC_2HOURS.equals(function)){//setTimeシナリオのtwo_hours_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+                if(ScenarioDefinitions.FUNC_NOLIMIT.equals(function)){//setTimeシナリオのnolimit_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
                 }
 
@@ -300,53 +340,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             });
         }
     }
-
-
-    //日本語から英語に翻訳
-    private String translateSync(String original_word) {
-        final String[] translatedTextHolder = new String[1];
-        CountDownLatch latch = new CountDownLatch(1);
-
-        translate(original_word, result -> {
-            translatedTextHolder[0] = result;
-            latch.countDown(); // 翻訳処理が終わったサイン
-        });
-
-        try {
-            latch.await(); // コールバックが終わるまで待機
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return translatedTextHolder[0]; // 翻訳結果を返す
-    }
-
-    private void translate(String original_word, TranslationResultCallback callback) {
-
-        // 翻訳結果の言語を選択
-        String targetLanguage = "en";
-
-        // 非同期の関数を呼び出し
-        /*LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
-            @Override
-            public void onSuccess(String translatedText) {
-                // Pass the translated text to the callback
-                callback.onResult(translatedText);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // Pass null or an error message to the callback
-                callback.onResult(null);
-            }
-        });*/
-    }
-
-
-    public interface TranslationResultCallback {
-        void onResult(String result);
-    }
-
 
 
     /**
