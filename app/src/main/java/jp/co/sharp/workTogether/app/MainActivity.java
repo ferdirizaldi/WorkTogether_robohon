@@ -87,20 +87,26 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         oneHour_button.setOnClickListener(v -> {
             // Add functionality for 1 Hour Button
             Bundle extras = new Bundle();
-            extras.putString("key", "value");
-            extras.putInt("another_key", 123);
+            extras.putString("SessionName", "1Hour");
+            extras.putInt("SessionLong", 1);
             navigateToActivity(this, SessionActivity.class, null);
             Log.v(TAG, "1時間ボタンが押された");
         });
 
         twoHours_button.setOnClickListener(v -> {
             // Add functionality for Button 2
+            Bundle extras = new Bundle();
+            extras.putString("SessionName", "2Hours");
+            extras.putInt("SessionLong", 2);
             navigateToActivity(this, SessionActivity.class, null);
             Log.v(TAG, "2時間ボタンが押された");
         });
 
         noLimit_button.setOnClickListener(v -> {
             // Add functionality for Button 3
+            Bundle extras = new Bundle();
+            extras.putString("SessionName", "noLimit");
+            extras.putInt("SessionLong", -1);
             navigateToActivity(this, SessionActivity.class, null);
             Log.v(TAG, "無限時間ボタンが押された");
         });
@@ -199,34 +205,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
                     }
                 }
-                if(ScenarioDefinitions.FUNC_END_SPEAK.equals(function)){//speakシナリオのend_speak関数
-                    speak_flag = 0;//speakシナリオが終了したのでspeakフラグをオフにする
-                    Log.v(TAG, "Speak Scenario Ended");
-                }
-                if(ScenarioDefinitions.FUNC_SPEAK_AGAIN.equals(function)){//againシナリオのspeak_again関数
-                    Log.v(TAG, "Again Scenario Ended");
-                    if(speak_again_flag == 1){//speak_againフラグが立っている、つまり一度speakシナリオが起動しているときだけ実行
-                        int result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
-                        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
-                            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-                            Log.v(TAG, "Speak Scenario Failed To Start");
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-                        }else {
-                            speak_flag = 1;//speakシナリオが正常に開始したらフラグを立てる
-                            Log.v(TAG, "Speak Scenario Started Again");
-                        }
-                    }
-                }
 
 
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
-                    // Add functionality for 1 Hour Button
-                    Bundle extras = new Bundle();
-                    extras.putString("key", "value");
-                    extras.putInt("another_key", 123);
-                    navigateToActivity(this, SessionActivity.class, null);
-                    Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
                 }
 
@@ -234,8 +216,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive End Voice Command heard");
                     // Add functionality for 1 Hour Button
                     Bundle extras = new Bundle();
-                    extras.putString("key", "value");
-                    extras.putInt("another_key", 123);
+                    extras.putString("SessionName", "1Hour");
+                    extras.putInt("SessionLong", 1);
                     navigateToActivity(this, SessionActivity.class, null);
                     Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
@@ -245,8 +227,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive End Voice Command heard");
                     // Add functionality for 1 Hour Button
                     Bundle extras = new Bundle();
-                    extras.putString("key", "value");
-                    extras.putInt("another_key", 123);
+                    extras.putString("SessionName", "2Hours");
+                    extras.putInt("SessionLong", 2);
                     navigateToActivity(this, SessionActivity.class, null);
                     Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
@@ -256,8 +238,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive End Voice Command heard");
                     // Add functionality for 1 Hour Button
                     Bundle extras = new Bundle();
-                    extras.putString("key", "value");
-                    extras.putInt("another_key", 123);
+                    extras.putString("SessionName", "noLimit");
+                    extras.putInt("SessionLong", -1);
                     navigateToActivity(this, SessionActivity.class, null);
                     Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
@@ -328,14 +310,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             speak_flag = 1;//speakシナリオが正常に開始したらフラグを立てる
             speak_again_flag = 1;
             Log.v(TAG, "Speak Scenario Started");
-
-            //出力バーにtranslated_wordの内容を表示する
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    outputTextValue.setText(translated_word);
-                }
-            });
+            
         }
     }
 
