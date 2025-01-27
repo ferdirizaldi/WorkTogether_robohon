@@ -203,7 +203,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
-                        if(Objects.equals(sessionTime,"1")){
+                        if(sessionTime != null && sessionTime.contains("1")){
                             Log.v(TAG, "1 hour from voice");
                             // Add functionality for 1 Hour Button
                             Bundle extras = new Bundle();
@@ -213,7 +213,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                             Log.v(TAG, "1時間ボタンが押された");
                             finish();//アプリを終了する
                         }
-                        else if(Objects.equals(sessionTime,"2")){
+                        else if(sessionTime != null && sessionTime.contains("2")){
                             Log.v(TAG, "2 hours from voice");
                             // Add functionality for 1 Hour Button
                             Bundle extras = new Bundle();
