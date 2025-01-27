@@ -87,7 +87,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // Set click listeners
         oneHour_button.setOnClickListener(v -> {
-            // Add functionality for Button 1
+            // Add functionality for 1 Hour Button
+            Bundle extras = new Bundle();
+            extras.putString("key", "value");
+            extras.putInt("another_key", 123);
             navigateToActivity(this, SessionActivity.class, null);
             Log.v(TAG, "1時間ボタンが押された");
         });
@@ -110,17 +113,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
     }
 
-
-    /**
-     * Handle the text processing when the button is clicked.
-     */
-    private void handleTextProcessing() {
-        // 入力テキストを取得
-        String original_word = inputTextValue.getText().toString().trim();
-
-        //speakシナリオを開始させる
-        startSpeakScenario(original_word);
-    }
 
     @Override
     public void onResume() {
