@@ -129,19 +129,9 @@ public class ScenarioDefinitions {
      * 翻訳後の単語
      */
     public static final String MEM_P_TRANSLATED_WORD = ScenarioDefinitions.PACKAGE + ".translated_word";
-
     /**
-     * 関数名：one_hour_start
+     *
      */
-    public static final String FUNC_1HOUR = "one_hour_start";
+    public static final String START_END_SPEAK = ScenarioDefinitions.PACKAGE + ".start_end";
 
-    /**
-     * 関数名：twp_hours_start
-     */
-    public static final String FUNC_2HOURS = "two_hours_start";
-
-    /**
-     * 関数名：nolimit_start
-     */
-    public static final String FUNC_NOLIMIT = "nolimit_start";
 }

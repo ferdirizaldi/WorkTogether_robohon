@@ -2,7 +2,7 @@
 <hvml version="2.0">
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
-        <description>英単語を発話するシナリオ</description>
+        <description>セッション時間を発話させるシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
         <accost priority="73" topic_id="t1" word="jp.co.sharp.workTogether.app.startEnd"/>
@@ -10,7 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>セッション始めるね！</speech>
+                <speech>${memory_p:jp.co.sharp.workTogether.app.sessionTime}セッション始めるね！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#t2" type="default"/>
