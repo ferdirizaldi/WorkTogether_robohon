@@ -23,6 +23,7 @@ import java.util.concurrent.ScheduledExecutorService;//追加日1/24
 import java.util.concurrent.TimeUnit;//追加日1/24
 import java.util.Timer;//追加日1/24
 import java.util.TimerTask;//追加日1/24
+import java.util.Random;//追加日1/27
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
@@ -128,7 +129,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         VoiceUIManagerUtil.registerVoiceUIListener(mVUIManager, mVUIListener);
 
         //Scene操作
-        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
+        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
         alertTimer = getIntent().getIntExtra("alertTime",0);
@@ -172,6 +173,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_WORK);
+        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_BREAK);
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
@@ -253,14 +256,16 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         if (actionTimer < 0) {
             int result;
             if (phaseFrag) {//work状態のとき
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTION);//アクションシナリオを起動する
+                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の数字がかえってくるので1足している)
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTION + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
                 } else {
                     actionTimer = workActionTime;
                 }
             } else {//break状態のとき
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTION);//アクションシナリオを起動する
+                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の数字がかえってくるので1足している)
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTION + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_ACTION Failed");
                 } else {
@@ -353,6 +358,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
+            timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();//mainActivityがSessionActivityを呼び出した後に速やかに終了していればブロードキャストを用いる必要もない
         }
     }
@@ -380,5 +386,5 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         }
         context.startActivity(intent);
     }
-    
+
 }
