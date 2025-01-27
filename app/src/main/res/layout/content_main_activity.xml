@@ -26,8 +26,6 @@
                 android:layout_marginTop="20dp"
                 android:background="#666666" />
 
-
-
             <TextView
                 android:text="@string/mainactivity_content_text1"
                 android:id="@+id/input_text"
