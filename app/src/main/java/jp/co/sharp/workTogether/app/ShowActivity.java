@@ -46,8 +46,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private HomeEventReceiver mHomeEventReceiver;
 
-    private EditText inputTextValue;
-    private TextView outputTextValue;
     private int speak_flag;//speakシナリオ実行中に立つフラグ
     private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
     private final int max_length = 100;//翻訳前後の文の長さの許容限界
@@ -69,19 +67,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // Prevent the keyboard from showing up on app start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-//        // 単語変数を取得
-//        inputTextValue = (EditText) findViewById(R.id.input_text_value);
-//        outputTextValue = (TextView) findViewById(R.id.output_text_value);
-//
-//        // 翻訳ボタン表示
-//        Button voiceTranslateButton = (Button) findViewById(R.id.voice_translate_button);
-//        voiceTranslateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                handleTextProcessing();
-//            }
-//        });
-
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
 
@@ -91,17 +76,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             finish();
         });
 
-    }
-
-    /**
-     * Handle the text processing when the button is clicked.
-     */
-    private void handleTextProcessing() {
-        // 入力テキストを取得
-        String original_word = inputTextValue.getText().toString().trim();
-
-        //speakシナリオを開始させる
-        startSpeakScenario(original_word);
     }
 
     @Override

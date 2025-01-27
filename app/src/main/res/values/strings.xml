@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">いっしょに作業</string>
     <string name="hello">RoBoHoN いっしょに作業</string>
-    <string name="default_mode_text">いっしょに作業アプリ起動したよ!</string>
+    <string name="default_mode_text">アプリ起動したよ!</string>
     <string name="recog_label_text">入力</string>
     <string name="default_text">--RECOG_TEXT--</string>
     <string name="button_voice_accost">ACCOST</string>
@@ -17,7 +17,7 @@
     <string name="oneHourButton_text">1時間</string>
     <string name="twoHoursButton_text">2時間</string>
     <string name="threeHoursButton_text">自由時間</string>
-    <string name="mainactivity_content_text1">セッション時間を選択してください</string>
+    <string name="mainactivity_content_text1">セッション時間を選択してね！</string>
     <string name="sessionactivity_text1">過ぎた時間</string>
     <string name="default_timeroutput_text">00:00:00</string>
     <string name="showactivity_text1">絵を描けたよ！</string>

@@ -46,8 +46,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private HomeEventReceiver mHomeEventReceiver;
 
-    private EditText inputTextValue;
-    private TextView outputTextValue;
     private int speak_flag;//speakシナリオ実行中に立つフラグ
     private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
     private final int max_length = 100;//翻訳前後の文の長さの許容限界
@@ -70,29 +68,49 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
-        // 翻訳ボタン表示
-        //MainActivityの全UIを表示する関数を呼び出し
-
-        // 終了ボタン取得
-        Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        // 終了ボタンの処理
-        finishButton.setOnClickListener(view -> {
-            // Finish the current activity
-            finish();
-        });
+        // UI表示
+        initializeMainUI();
 
     }
 
     /**
-     * Handle the text processing when the button is clicked.
+     * Initializes buttons and their click listeners.
      */
-    private void handleTextProcessing() {
-        // 入力テキストを取得
-        String original_word = inputTextValue.getText().toString().trim();
+    private void initializeMainUI() {
+        // Button references
+        Button oneHour_button = (Button) findViewById(R.id.oneHour_button);
+        Button twoHours_button = (Button) findViewById(R.id.twoHours_button);
+        Button noLimit_button = (Button) findViewById(R.id.noLimit_button);
+        Button finishButton = (Button) findViewById(R.id.finish_app_button);
 
-        //speakシナリオを開始させる
-        startSpeakScenario(original_word);
+        // Set click listeners
+        oneHour_button.setOnClickListener(v -> {
+            // Add functionality for 1 Hour Button
+            Bundle extras = new Bundle();
+            extras.putString("key", "value");
+            extras.putInt("another_key", 123);
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "1時間ボタンが押された");
+        });
+
+        twoHours_button.setOnClickListener(v -> {
+            // Add functionality for Button 2
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "2時間ボタンが押された");
+        });
+
+        noLimit_button.setOnClickListener(v -> {
+            // Add functionality for Button 3
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "無限時間ボタンが押された");
+        });
+
+        finishButton.setOnClickListener(v -> {
+            // Finish the current activity
+            finish();
+        });
     }
+
 
     @Override
     public void onResume() {
@@ -112,6 +130,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //Scene有効化
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //フラグを初期化
         speak_flag = 0;
@@ -175,14 +194,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
-                        //入力バーにoriginal_wordの内容を表示する
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                inputTextValue.setText(original_word);
-                            }
-                        });
-
                         startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
@@ -206,10 +217,53 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                         }
                     }
                 }
+
+
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
                     finish();//アプリを終了する
                 }
+
+                if(ScenarioDefinitions.FUNC_1HOUR.equals(function)){//setTimeシナリオのone_hour_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+                if(ScenarioDefinitions.FUNC_2HOURS.equals(function)){//setTimeシナリオのtwo_hours_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+                if(ScenarioDefinitions.FUNC_NOLIMIT.equals(function)){//setTimeシナリオのnolimit_start関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    // Add functionality for 1 Hour Button
+                    Bundle extras = new Bundle();
+                    extras.putString("key", "value");
+                    extras.putInt("another_key", 123);
+                    navigateToActivity(this, SessionActivity.class, null);
+                    Log.v(TAG, "1時間ボタンが押された");
+                    finish();//アプリを終了する
+                }
+
+
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
@@ -284,53 +338,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             });
         }
     }
-
-
-    //日本語から英語に翻訳
-    private String translateSync(String original_word) {
-        final String[] translatedTextHolder = new String[1];
-        CountDownLatch latch = new CountDownLatch(1);
-
-        translate(original_word, result -> {
-            translatedTextHolder[0] = result;
-            latch.countDown(); // 翻訳処理が終わったサイン
-        });
-
-        try {
-            latch.await(); // コールバックが終わるまで待機
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return translatedTextHolder[0]; // 翻訳結果を返す
-    }
-
-    private void translate(String original_word, TranslationResultCallback callback) {
-
-        // 翻訳結果の言語を選択
-        String targetLanguage = "en";
-
-        // 非同期の関数を呼び出し
-        /*LibreTranslateAPI.translateAsync(original_word, targetLanguage, new LibreTranslateAPI.TranslationCallback() {
-            @Override
-            public void onSuccess(String translatedText) {
-                // Pass the translated text to the callback
-                callback.onResult(translatedText);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // Pass null or an error message to the callback
-                callback.onResult(null);
-            }
-        });*/
-    }
-
-
-    public interface TranslationResultCallback {
-        void onResult(String result);
-    }
-
 
 
     /**
