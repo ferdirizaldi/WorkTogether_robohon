@@ -9,8 +9,8 @@
     </head>
     <body>
         <topic id="t1" listen="false">
-            <speech>セッションを終了するよ</speech>
             <action index="1">
+                <speech>セッションを終了するよ</speech>
                 <control function="end_session" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>

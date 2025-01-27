@@ -10,12 +10,14 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>作業中だよ</speech>
+                <speech>どう塗ろうかな</speech>
+                <behavior id="0x060005" type="normal"/>
             </action>
-        </topic>
-        <topic id="t2" listen="false">
-            <action index="1">
-                <speech>作業をしているよ</speech>
+            <action index="2">
+                <behavior id="0x060012" type="normal"/>
+            </action>
+            <action index="3">
+                <behavior id="0x060011" type="normal"/>
             </action>
         </topic>
     </body>

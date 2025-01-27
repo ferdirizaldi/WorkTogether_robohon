@@ -79,10 +79,10 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
 
         // フェイズ移行ボタン表示
-        Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
+        /*Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
         shiftPhaseButton.setOnClickListener(view -> {
             shiftPhase();//フェイズを移行させる関数
-        });
+        });*/
 
         // UI表示
         initializeSessionUI();
