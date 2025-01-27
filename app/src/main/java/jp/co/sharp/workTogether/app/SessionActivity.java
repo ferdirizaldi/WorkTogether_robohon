@@ -68,7 +68,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate()");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.session_activity);
 
         //タイトルバー設定.
         //setupTitleBar();
@@ -77,21 +77,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
-
-        // Prevent the keyboard from showing up on app start
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        // 単語変数を取得
-        //inputTextValue = (EditText) findViewById(R.id.input_text_value);
-        //outputTextValue = (TextView) findViewById(R.id.output_text_value);
-
-        /*TASK
-        画面のUI表示
-
-        現在のフェイズの表示
-        suggestが呼ばれるまでの残り時間の表示
-        (終了予定時刻までの残り時間の表示)必要かどうか決めかねる
-         */
 
         // フェイズ移行ボタン表示
         Button shiftPhaseButton = (Button) findViewById(R.id.voice_translate_button);

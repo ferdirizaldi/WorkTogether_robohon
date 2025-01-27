@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+    tools:showIn="@layout/session_activity" tools:context=".SessionActivity">
 
     <ScrollView
         android:layout_height="fill_parent"
@@ -13,12 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:text="@string/default_mode_text"
-                android:id="@+id/mode_value"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -26,50 +20,23 @@
                 android:layout_marginTop="20dp"
                 android:background="#666666" />
 
-
-
             <TextView
-                android:text="@string/input_text"
-                android:id="@+id/input_text"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
-            <EditText
-                android:id="@+id/input_text_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="単語を入力してください"
-                android:textSize="18sp"
-                android:padding="8dp"
-                android:background="@drawable/text_box_border" />
-
-            <Button
-                android:id="@+id/voice_translate_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:singleLine="false"
-                android:text="@string/button_voice_translate"
-                android:textSize="32sp" />
-
-            <TextView
-                android:text="@string/output_text"
+                android:text="@string/sessionactivity_text1"
                 android:id="@+id/output_text"
                 android:textSize="24sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/output_text_value"
-                android:layout_width="match_parent"
+                android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/default_output_text"
+                android:text="@string/default_timeroutput_text"
                 android:textSize="18sp"
-                android:background="@drawable/text_box_border" />
+                android:background="@drawable/text_box_border"
+                android:layout_gravity="center_horizontal"/>
 
 
 

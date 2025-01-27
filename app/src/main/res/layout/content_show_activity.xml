@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/show_activity" tools:context=".ShowActivity">
+
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"
+                android:background="#666666" />
+
+            <TextView
+                android:text="@string/showactivity_text1"
+                android:id="@+id/output_text"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/output_text_value"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/showactivity_default_text"
+                android:textSize="18sp"
+                android:background="@drawable/text_box_border"
+                android:layout_gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/output_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/rakuone"
+                android:contentDescription="@string/showactivity_imgdsc"
+                android:layout_marginTop="16dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/finish_app_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_finish_app"
+                android:singleLine="false"
+                android:textSize="32sp"
+                android:layout_marginTop="0dp"
+                android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
