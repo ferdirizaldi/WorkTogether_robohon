@@ -84,12 +84,34 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             shiftPhase();//フェイズを移行させる関数
         });
 
-        // 終了ボタン表示
+        // UI表示
+        initializeSessionUI();
+
+    }
+
+    /**
+     * Initializes buttons and their click listeners.
+     */
+    private void initializeSessionUI() {
+        // Button references
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        finishButton.setOnClickListener(view -> {
-            endSession();//セッションを終了させる関数
+
+        // Text Areas
+        TextView outputTextValue= (TextView) findViewById(R.id.output_text_value);
+        TextView outputText = (TextView) findViewById(R.id.output_text);
+
+        //タイマー値の設定
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                outputTextValue.setText("00:00:00");
+            }
         });
 
+        finishButton.setOnClickListener(v -> {
+            // Finish the current activity
+            finish();
+        });
     }
 
     @Override

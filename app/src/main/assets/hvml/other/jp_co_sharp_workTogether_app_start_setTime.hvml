@@ -10,7 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>${memory_p:jp.co.sharp.workTogether.app.target_time}時間の勉強をしよう!</speech>
+                <speech>${memory_p:jp.co.sharp.workTogether.app.target_time}時間で作業しよう!</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

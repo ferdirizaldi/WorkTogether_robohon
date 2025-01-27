@@ -70,18 +70,46 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
-        // 翻訳ボタン表示
-        //MainActivityの全UIを表示する関数を呼び出し
+        // UI表示
+        initializeMainUI();
 
-        // 終了ボタン取得
+    }
+
+    /**
+     * Initializes buttons and their click listeners.
+     */
+    private void initializeMainUI() {
+        // Button references
+        Button oneHour_button = (Button) findViewById(R.id.oneHour_button);
+        Button twoHours_button = (Button) findViewById(R.id.twoHours_button);
+        Button noLimit_button = (Button) findViewById(R.id.noLimit_button);
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        // 終了ボタンの処理
-        finishButton.setOnClickListener(view -> {
+
+        // Set click listeners
+        oneHour_button.setOnClickListener(v -> {
+            // Add functionality for Button 1
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "1時間ボタンが押された");
+        });
+
+        twoHours_button.setOnClickListener(v -> {
+            // Add functionality for Button 2
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "2時間ボタンが押された");
+        });
+
+        noLimit_button.setOnClickListener(v -> {
+            // Add functionality for Button 3
+            navigateToActivity(this, SessionActivity.class, null);
+            Log.v(TAG, "無限時間ボタンが押された");
+        });
+
+        finishButton.setOnClickListener(v -> {
             // Finish the current activity
             finish();
         });
-
     }
+
 
     /**
      * Handle the text processing when the button is clicked.
@@ -177,14 +205,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
-                        //入力バーにoriginal_wordの内容を表示する
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                inputTextValue.setText(original_word);
-                            }
-                        });
-
                         startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
@@ -212,6 +232,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive End Voice Command heard");
                     finish();//アプリを終了する
                 }
+
+
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
