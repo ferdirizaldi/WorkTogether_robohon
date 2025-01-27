@@ -100,6 +100,14 @@ public class ScenarioDefinitions {
      * 関数名：end_session work_endシナリオ及びbreak_endシナリオからSessionActivityに送る
      */
     public static final String FUNC_END_SESSION = "end_session";
+    /**
+     * 関数名：end_app show_endシナリオからShowActivityに送る
+     */
+    public static final String FUNC_END_APP = "end_app";
+    /**
+     * 関数名：use_projector show_projectorシナリオからShowActivityに送る
+     */
+    public static final String FUNC_USE_PROJECTOR = "use_projector";
 
     /**
      * 関数名：send_word
@@ -113,10 +121,6 @@ public class ScenarioDefinitions {
      * 関数名：end_app
      */
     public static final String FUNC_SPEAK_AGAIN = "speak_again";
-    /**
-     * 関数名：end_app
-     */
-    public static final String FUNC_END_APP = "end_app";
     /**
      * キー：lvcsr_basic
      */

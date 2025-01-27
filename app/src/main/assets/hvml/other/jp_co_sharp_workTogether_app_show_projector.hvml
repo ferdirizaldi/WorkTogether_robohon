@@ -2,16 +2,21 @@
 <hvml version="2.0">
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
-        <description>アプリ起動時の発話シナリオ</description>
+        <description>プロジェクター使用コマンドを聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.hello"/>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [プロジェクタ,投影] and ${Lvcsr:Basic} include [使おう,しよう,はじめ,やろう,使用,開始]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>翻訳したい単語を聞かせて!</speech>
+                <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
+                <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
+            </action>
+            <action index="2">
+                <speech>プロジェクターを使うよ</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="use_projector" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>
