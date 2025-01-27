@@ -10,7 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>セッション始めるね！</speech>
+                <speech>${memory_p:jp.co.sharp.workTogether.app.sessionTime}セッション始めるね！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#t2" type="default"/>

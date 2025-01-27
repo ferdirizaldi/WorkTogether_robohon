@@ -195,12 +195,46 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
-                    final String original_word = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
+                    final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
 
-                    if(!(Objects.equals(original_word, ""))) {//正常なテキストなら一連の処理を開始する
+                    //移動前にセッション開始の発話
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.START_END_SPEAK);
+
+                    if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
-                        startSpeakScenario(original_word);//翻訳して画面表示してspeakシナリオを開始させる
+                        if(Objects.equals(sessionTime,"1")){
+                            Log.v(TAG, "1 hour from voice");
+                            // Add functionality for 1 Hour Button
+                            Bundle extras = new Bundle();
+                            extras.putString("SessionName", "1Hour");
+                            extras.putInt("SessionLong", 1);
+                            navigateToActivity(this, SessionActivity.class, extras);
+                            Log.v(TAG, "1時間ボタンが押された");
+                            finish();//アプリを終了する
+                        }
+                        else if(Objects.equals(sessionTime,"2")){
+                            Log.v(TAG, "2 hours from voice");
+                            // Add functionality for 1 Hour Button
+                            Bundle extras = new Bundle();
+                            extras.putString("SessionName", "2Hours");
+                            extras.putInt("SessionLong", 2);
+                            navigateToActivity(this, SessionActivity.class, extras);
+                            Log.v(TAG, "1時間ボタンが押された");
+                            finish();//アプリを終了する
+                        }
+                        else{
+                            Log.v(TAG, "noLimit time from voice");
+                            // Add functionality for 1 Hour Button
+                            Bundle extras = new Bundle();
+                            extras.putString("SessionName", "noLimit");
+                            extras.putInt("SessionLong", -1);
+                            navigateToActivity(this, SessionActivity.class, extras);
+                            Log.v(TAG, "1時間ボタンが押された");
+                            finish();//アプリを終了する
+                        }
+
+
                     }else{
                         Log.v(TAG, "Listen Scenario Sent Empty Text");
                     }
@@ -211,40 +245,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive End Voice Command heard");
                     finish();//アプリを終了する
                 }
-
-                if(ScenarioDefinitions.FUNC_1HOUR.equals(function)){//setTimeシナリオのone_hour_start関数
-                    Log.v(TAG, "Receive End Voice Command heard");
-                    // Add functionality for 1 Hour Button
-                    Bundle extras = new Bundle();
-                    extras.putString("SessionName", "1Hour");
-                    extras.putInt("SessionLong", 1);
-                    navigateToActivity(this, SessionActivity.class, null);
-                    Log.v(TAG, "1時間ボタンが押された");
-                    finish();//アプリを終了する
-                }
-
-                if(ScenarioDefinitions.FUNC_2HOURS.equals(function)){//setTimeシナリオのtwo_hours_start関数
-                    Log.v(TAG, "Receive End Voice Command heard");
-                    // Add functionality for 1 Hour Button
-                    Bundle extras = new Bundle();
-                    extras.putString("SessionName", "2Hours");
-                    extras.putInt("SessionLong", 2);
-                    navigateToActivity(this, SessionActivity.class, null);
-                    Log.v(TAG, "1時間ボタンが押された");
-                    finish();//アプリを終了する
-                }
-
-                if(ScenarioDefinitions.FUNC_NOLIMIT.equals(function)){//setTimeシナリオのnolimit_start関数
-                    Log.v(TAG, "Receive End Voice Command heard");
-                    // Add functionality for 1 Hour Button
-                    Bundle extras = new Bundle();
-                    extras.putString("SessionName", "noLimit");
-                    extras.putInt("SessionLong", -1);
-                    navigateToActivity(this, SessionActivity.class, null);
-                    Log.v(TAG, "1時間ボタンが押された");
-                    finish();//アプリを終了する
-                }
-
 
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
@@ -260,59 +260,59 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     /**
      * 翻訳をしてspeakシナリオを開始させる関数
      */
-    private void startSpeakScenario(final String original_word){
-        if(speak_flag == 1){
-            Log.v(TAG, "Speak Scenario Is During Execution");
-            return;//すでにspeakシナリオが実行中の場合はリターン
-        }
-        if(Objects.equals(original_word,null) || original_word.length() > max_length){
-            Log.v(TAG, "Original_word Is Wrong");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-            return;//original_wordが不正な場合はリターン
-        }
-
-        final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
-        if(translated_word.contains("Error during translation")){
-            Log.v(TAG, "Translated_word Is Error Message");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
-            return;//translated_wordがエラーメッセージなのでリターン
-        }
-        if(Objects.equals(translated_word, null) || translated_word.length() > max_length){
-            Log.v(TAG, "Translated_word Is Wrong");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-            return;//translated_wordが不正な場合はリターン
-        }
-
-        int result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);//翻訳前の単語をspeakシナリオの手が届くpメモリに送る
-        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
-            Log.v(TAG, "Set Original_word Failed");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-            return;//original_wordのpメモリへの保存が失敗したらリターン
-        }
-        result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳後の単語をspeakシナリオの手が届くpメモリに送る
-        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
-            Log.v(TAG, "Set Translated_word Failed");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-            return;//translated_wordのpメモリへの保存が失敗したらリターン
-        }
-
-        result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
-        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
-            Log.v(TAG, "Speak Scenario Failed To Start");
-            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
-        }else{
-            speak_flag = 1;//speakシナリオが正常に開始したらフラグを立てる
-            speak_again_flag = 1;
-            Log.v(TAG, "Speak Scenario Started");
-            
-        }
-    }
+//    private void startSpeakScenario(final String original_word){
+//        if(speak_flag == 1){
+//            Log.v(TAG, "Speak Scenario Is During Execution");
+//            return;//すでにspeakシナリオが実行中の場合はリターン
+//        }
+//        if(Objects.equals(original_word,null) || original_word.length() > max_length){
+//            Log.v(TAG, "Original_word Is Wrong");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
+//            return;//original_wordが不正な場合はリターン
+//        }
+//
+//        final String translated_word = translateSync(original_word);//original_wordを英訳したtranslated_wordを作成する
+//        if(translated_word.contains("Error during translation")){
+//            Log.v(TAG, "Translated_word Is Error Message");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//errorシナリオのconnectionトピックを起動する
+//            return;//translated_wordがエラーメッセージなのでリターン
+//        }
+//        if(Objects.equals(translated_word, null) || translated_word.length() > max_length){
+//            Log.v(TAG, "Translated_word Is Wrong");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
+//            return;//translated_wordが不正な場合はリターン
+//        }
+//
+//        int result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_ORIGINAL_WORD, original_word);//翻訳前の単語をspeakシナリオの手が届くpメモリに送る
+//        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
+//            Log.v(TAG, "Set Original_word Failed");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
+//            return;//original_wordのpメモリへの保存が失敗したらリターン
+//        }
+//        result = VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_TRANSLATED_WORD, translated_word);//翻訳後の単語をspeakシナリオの手が届くpメモリに送る
+//        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
+//            Log.v(TAG, "Set Translated_word Failed");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
+//            return;//translated_wordのpメモリへの保存が失敗したらリターン
+//        }
+//
+//        result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SPEAK);//speakシナリオを起動する
+//        if(Objects.equals(result,VoiceUIManager.VOICEUI_ERROR)){
+//            Log.v(TAG, "Speak Scenario Failed To Start");
+//            speak_again_flag = 0;//不具合時はspeak_againフラグを下げる
+//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_TRANSLATE);//errorシナリオのtranslateトピックを起動する
+//        }else{
+//            speak_flag = 1;//speakシナリオが正常に開始したらフラグを立てる
+//            speak_again_flag = 1;
+//            Log.v(TAG, "Speak Scenario Started");
+//
+//        }
+//    }
 
 
     /**
