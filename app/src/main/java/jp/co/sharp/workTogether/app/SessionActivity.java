@@ -51,12 +51,12 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      */
     private HomeEventReceiver mHomeEventReceiver;
 
-    final private int workTime = 60 * 25;//デフォルトの作業時間
-    final private int workSnoozeTime = 60 * 5;//作業中止の提案の周期
-    final private int workActionTime = 60 * 1;//作業中の動作の周期
-    final private int breakTime = 60 * 5;//デフォルトの休憩時間
-    final private int breakSnoozeTime = 60 * 5;//休憩中止の提案の周期
-    final private int breakActionTime = 60 * 1;//休憩中の動作の周期
+    final private int workTime = 60 * 25;//デフォルトの作業時間(秒)
+    final private int workSnoozeTime = 60 * 5;//作業中止の提案の周期(秒)
+    final private int workActionTime = 60 * 1;//作業中の動作の周期(秒)
+    final private int breakTime = 60 * 5;//デフォルトの休憩時間(秒)
+    final private int breakSnoozeTime = 60 * 5;//休憩中止の提案の周期(秒)
+    final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
     private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
@@ -76,10 +76,10 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //ホームボタンの検知登録.
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        registerReceiver(mHomeEventReceiver, filterHome);
+        registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
 
         // フェイズ移行ボタン表示
-        Button shiftPhaseButton = (Button) findViewById(R.id.voice_translate_button);
+        Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
         shiftPhaseButton.setOnClickListener(view -> {
             shiftPhase();//フェイズを移行させる関数
         });
@@ -111,15 +111,16 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //Scene操作
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
-        //フラグの初期化
-        timerStopFrag = false;//毎秒呼び出されるタイマースレッドが動作中かを表すフラグ(false:停止中 true:動作中)
-        phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
-        alertFrag = false;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
+        //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
+        alertTimer = getIntent().getIntExtra("alertTime",0);
+        alertFrag = (alertTimer == 0);//アラートまでの時間が未定義等により0秒になった時は、すでにアラート済みということにしてタイマーを止める
 
-        //workフェイズを開始
+        //breakフェイズからフェイズ移行させることでworkフェイズを開始
+        phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
 
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
+        timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)
         //Handlerインスタンスの生成
         final Handler handler = new Handler();
         TimerTask task = new TimerTask() {
@@ -140,7 +141,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         };
         Timer t = new Timer();
         t.scheduleAtFixedRate(task, 0, 1000);//1秒ごとにrunが実行される
-
     }
 
     @Override
@@ -159,10 +159,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //単一Activityの場合はonPauseでアプリを終了する.
         finish();
-
-        /*TASK
-        複数アクティビティなので即時終了はせず最終的に終了するようにする
-         */
     }
 
     @Override
@@ -176,12 +172,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //インスタンスのごみ掃除.
         mVUIManager = null;
         mVUIListener = null;
-
-        System.exit(0);
-
-        /*TASK
-        複数アクティビティなのでまとめて終了するようにする
-        */
     }
 
     /**
@@ -252,9 +242,29 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
     /*
     毎秒呼ばれるタイムイベント関数
-    それぞれが同時に起きた時の処理順をどうするか
+    それぞれが同時に起きた時の処理順をどうするかを考える必要あり
      */
     public void onTimeEvent() {
+          /*終了予定時刻超過で呼ばれるalert
+        if　フラグがたっていない
+            alertTimer--
+            if 一定時間を超過
+                alertのシナリオをよぶ
+                終わったらフラグを立てる
+         */
+        if (!alertFrag) {
+            alertTimer--;
+            if (alertTimer < 0) {
+                int result;
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ALERT);//アラートシナリオを起動する
+                if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
+                    Log.v(TAG, "Start Speech ACC_ALERT Failed");
+                } else {
+                    alertFrag = true;
+                }
+            }
+        }
+
         /*定期的に呼ばれるaction
         actionTimer--   タイマーは毎秒減らしていき、1以下になっていたら処理を行う
         if 一定時間を超過
@@ -277,26 +287,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     Log.v(TAG, "Start Speech ACC_BREAK_ACTION Failed");
                 } else {
                     actionTimer = breakActionTime;
-                }
-            }
-        }
-
-         /*終了予定時刻超過で呼ばれるalert
-        if　フラグがたっていない
-            alertTimer--
-            if 一定時間を超過
-                alertのシナリオをよぶ
-                終わったらフラグを立てる
-         */
-        if (!alertFrag) {
-            alertTimer--;
-            if (alertTimer < 0) {
-                int result;
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ALERT);//アラートシナリオを起動する
-                if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
-                    Log.v(TAG, "Start Speech ACC_ALERT Failed");
-                } else {
-                    alertFrag = true;
                 }
             }
         }
@@ -333,6 +323,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      */
     public void shiftPhase() {
         if(phaseFrag) {//現在workフェイズならbreakフェイズを開始する
+            Log.v(TAG, "Start Break Phase");
             phaseFrag = false;//フラグをbreak状態にする
 
             //シーン操作
@@ -344,6 +335,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
             //actionTimer = breakActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする　0にすることで、フェイズ移行後にすぐ動作をするのでわかりやすくて良くなるかも
         }else{//現在breakフェイズならworkフェイズを開始する
+            Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
 
             //シーン操作
@@ -357,18 +349,20 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         }
     }
 
-    /*TASK
+    /*
     セッションを終了してshowActivityを開始させる関数
      */
     public void endSession() {
-        timerStopFrag = true;//タイマースレッドの処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
-
-    /*
+        /*
     タイマー等を解放し、onTimeイベントが呼ばれない状態にする
     showActivityを呼び出す
-    アクティビティを終了か終了待機状態にする
+    アクティビティを終了する
      */
+        timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
 
+        navigateToActivity(this, ShowActivity.class,null);//ShowActivityを呼び出す
+
+        finish();//ShowActivityを呼んだらすぐに終了する
     }
 
     /**
@@ -381,12 +375,32 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
-            finish();
-
-            /*TASK
-            他のアクティビティも終了させる必要があるか？
-            */
+            finish();//mainActivityがSessionActivityを呼び出した後に速やかに終了していればブロードキャストを用いる必要もない
         }
+    }
+
+    /**
+     * Helper method for transitioning to another activity.
+     *
+     * @param context       Current context (usually `this` in an activity).
+     * @param targetActivity Target activity class for the transition.
+     * @param extras         Optional data to pass to the target activity (can be null).
+     */
+    /**
+     //データ渡しなしのActivity移動
+     navigateToActivity(this, TargetActivity.class, null);
+     //データ渡しなしのActivity移動
+     Bundle extras = new Bundle();
+     extras.putString("key", "value");
+     extras.putInt("another_key", 123);
+     navigateToActivity(this, TargetActivity.class, extras);
+     **/
+    private void navigateToActivity(Context context, Class<?> targetActivity, Bundle extras) {
+        Intent intent = new Intent(context, targetActivity);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
     }
 
     /*
@@ -493,7 +507,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 callback.onResult(null);
             }
         });*/
-    }
 
 /*
     public interface TranslationResultCallback {
@@ -501,7 +514,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     }
 */
 
-    /**
+    /*
      * タイトルバーを設定する.
      */
     /*private void setupTitleBar() {

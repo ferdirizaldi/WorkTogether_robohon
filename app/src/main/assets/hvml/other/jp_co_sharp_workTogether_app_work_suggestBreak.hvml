@@ -2,24 +2,15 @@
 <hvml version="2.0">
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
-        <description>エラーメッセージを発話するシナリオ</description>
-        <scene value="jp.co.sharp.workTogether.app.scene_common"/>
+        <description>作業時間終了時の発話シナリオ</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_work"/>
         <version value="1.0"/>
-        <accost priority="73" topic_id="t1" word="jp.co.sharp.workTogether.app.error_connection"/>
-        <accost priority="73" topic_id="t2" word="jp.co.sharp.workTogether.app.error_translate"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.work.suggestBreak"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>翻訳ソフトとの通信が、うまくいかないみたいだよ</speech>
-                <behavior id="assign" type="normal"/>
-            </action>
-        </topic>
-    </body>
-    <body>
-        <topic id="t2" listen="false">
-            <action index="1">
-                <speech>ごめんね、うまく翻訳できなかったよ</speech>
+                <speech>そろそろ休憩するのはどうかな？</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

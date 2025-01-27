@@ -2,16 +2,16 @@
 <hvml version="2.0">
 <head>
     <producer>jp.co.sharp.workTogether.app</producer>
-    <description>「もう一度」を聞き取るシナリオ</description>
-    <scene value="jp.co.sharp.workTogether.app.scene_common"/>
+    <description>セッション終了コマンドを聞き取るシナリオ</description>
+    <scene value="jp.co.sharp.workTogether.app.scene_work"/>
     <version value="1.0"/>
-    <situation priority="72" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [もういち,もう一度,もっかい,もう一回,もういっ]</situation>
-    <accost priority="72" topic_id="t2" word="jp.co.sharp.workTogether.app.again"/>
+    <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [アプリ,セッション]</situation>
 </head>
 <body>
     <topic id="t1" listen="false">
+        <speech>セッションを終了するよ</speech>
         <action index="1">
-            <control function="speak_again" target="jp.co.sharp.workTogether.app"/>
+            <control function="end_session" target="jp.co.sharp.workTogether.app"/>
         </action>
     </topic>
 </body>

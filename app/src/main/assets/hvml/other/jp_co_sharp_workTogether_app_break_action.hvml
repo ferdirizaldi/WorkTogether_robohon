@@ -2,16 +2,20 @@
 <hvml version="2.0">
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
-        <description>アプリ起動時の発話シナリオ</description>
-        <scene value="jp.co.sharp.workTogether.app.scene_common"/>
+        <description>休憩フェイズ中の定期的な動作</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_break"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.hello"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.action"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>翻訳したい単語を聞かせて!</speech>
-                <behavior id="assign" type="normal"/>
+                <speech>休憩中だよ</speech>
+            </action>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>休憩をしているよ</speech>
             </action>
         </topic>
     </body>

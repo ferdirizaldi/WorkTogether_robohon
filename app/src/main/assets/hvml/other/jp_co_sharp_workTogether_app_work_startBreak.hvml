@@ -1,33 +1,19 @@
 <?xml version="1.0" ?>
 <hvml version="2.0">
-<head>
-    <producer>jp.co.sharp.workTogether.app</producer>
-    <description>アプリを終了するためのシナリオ</description>
-    <scene value="jp.co.sharp.workTogether.app.scene_common"/>
-    <version value="1.0"/>
-    <situation priority="72" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [終了,終わ,やめ]</situation>
-    <accost priority="72" topic_id="t2" word="jp.co.sharp.workTogether.app.end"/>
-</head>
-<body>
-    <topic id="t1" listen="false">
-        <action index="1">
-            <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
-            <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
-        </action>
-        <next href="#t2" type="default"/>
-    </topic>
-    <topic id="t2" listen="false">
-        <action index="1">
-            <speech>翻訳アプリを終了するね</speech>
-            <behavior id="assign" type="normal"/>
-            <control function="end_app" target="jp.co.sharp.workTogether.app"/>
-        </action>
-        <next href="#t3" type="default"/>
-    </topic>
-    <topic id="t3" listen="false">
-        <action index="1">
-            <memory key="jp.co.sharp.workTogether.app_value" operation="delete" type="permanent"/>
-        </action>
-    </topic>
-</body>
+    <head>
+        <producer>jp.co.sharp.workTogether.app</producer>
+        <description>休憩開始コマンドを聞き取るシナリオ</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_work"/>
+        <version value="1.0"/>
+        <situation priority="75" topic_id="t1" trigger="user-word">(${Lvcsr:Basic} include [休憩,休み,中断] and ${Lvcsr:Basic} include [しよう,はじめ,開始]) or ${Lvcsr:Basic} include [休もう]</situation>
+    </head>
+    <body>
+        <topic id="t1" listen="false">
+            <action index="1">
+                <speech>うん、ひと休みしよう</speech>
+                <behavior id="assign" type="normal"/>
+                <control function="shift_phase" target="jp.co.sharp.workTogether.app"/>
+            </action>
+        </topic>
+    </body>
 </hvml>

@@ -167,8 +167,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //インスタンスのごみ掃除.
         mVUIManager = null;
         mVUIListener = null;
-
-        System.exit(0);
     }
 
     /**
