@@ -10,7 +10,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>作業または勉強時間教えて!</speech>
+                <speech>一緒に作業しよう！作業または勉強時間教えて!</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <action index="2">
