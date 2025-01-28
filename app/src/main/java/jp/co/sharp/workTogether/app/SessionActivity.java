@@ -256,7 +256,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         if (actionTimer < 0) {
             int result;
             if (phaseFrag) {//work状態のとき
-                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の数字がかえってくるので1足している)
+                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTION + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
@@ -264,7 +264,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     actionTimer = workActionTime;
                 }
             } else {//break状態のとき
-                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の数字がかえってくるので1足している)
+                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTION + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_ACTION Failed");

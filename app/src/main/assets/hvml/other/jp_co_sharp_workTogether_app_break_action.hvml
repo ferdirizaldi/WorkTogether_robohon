@@ -17,7 +17,7 @@
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
-                <speech>休むのも大事だよね</speech>
+                <speech>しっかり休むのも大事だよね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
