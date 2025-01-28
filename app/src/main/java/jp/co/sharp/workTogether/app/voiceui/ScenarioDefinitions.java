@@ -93,6 +93,14 @@ public class ScenarioDefinitions {
      */
     public static final String ACC_ALERT = PACKAGE + ".alert";
     /**
+     * accost名: アプリ開始時の発話シナリオ
+     */
+    public static final String ACC_START_SET_TIME = ScenarioDefinitions.PACKAGE + ".start_setTime";
+    /**
+     * accost名: アプリ開始時の発話シナリオ
+     */
+    public static final String ACC_START_END_SPEAK = ScenarioDefinitions.PACKAGE + ".start_end";
+    /**
      * 関数名：shift_phase work_startBreakシナリオ及びbreak_startWorkシナリオからSessionActivityに送る
      */
     public static final String FUNC_SHIFT_PHASE = "shift_phase";
@@ -134,8 +142,9 @@ public class ScenarioDefinitions {
      */
     public static final String MEM_P_TRANSLATED_WORD = ScenarioDefinitions.PACKAGE + ".translated_word";
     /**
-     *
+     * キー：SessionTime　作業
      */
-    public static final String START_END_SPEAK = ScenarioDefinitions.PACKAGE + ".start_end";
+    public static final String MEM_P_SESSION_TIME = ScenarioDefinitions.PACKAGE + ".session_time";
+
 
 }

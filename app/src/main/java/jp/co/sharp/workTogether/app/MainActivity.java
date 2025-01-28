@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;//追加1/17 multilingualからのコピペ
 import android.view.WindowManager;
@@ -49,6 +51,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private int speak_flag;//speakシナリオ実行中に立つフラグ
     private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
     private final int max_length = 100;//翻訳前後の文の長さの許容限界
+    private String sessionTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,30 +88,45 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // Set click listeners
         oneHour_button.setOnClickListener(v -> {
-            // Add functionality for 1 Hour Button
-            Bundle extras = new Bundle();
-            extras.putString("SessionName", "1Hour");
-            extras.putInt("SessionLong", 1);
-            navigateToActivity(this, SessionActivity.class, null);
-            Log.v(TAG, "1時間ボタンが押された");
+            sessionTime = "1時間";
+            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+            // Delay navigation for a set time (e.g., 2 seconds)
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                Bundle extras = new Bundle();
+                extras.putString("SessionName", "1Hour");
+                extras.putInt("SessionLong", 1);
+                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+            }, 4000); // 2000ms delay
         });
 
         twoHours_button.setOnClickListener(v -> {
-            // Add functionality for Button 2
-            Bundle extras = new Bundle();
-            extras.putString("SessionName", "2Hours");
-            extras.putInt("SessionLong", 2);
-            navigateToActivity(this, SessionActivity.class, null);
-            Log.v(TAG, "2時間ボタンが押された");
+            sessionTime = "2時間";
+            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+            // Delay navigation for a set time (e.g., 2 seconds)
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                Bundle extras = new Bundle();
+                extras.putString("SessionName", "1Hour");
+                extras.putInt("SessionLong", 1);
+                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+            }, 4000); // 2000ms delay
         });
 
         noLimit_button.setOnClickListener(v -> {
-            // Add functionality for Button 3
-            Bundle extras = new Bundle();
-            extras.putString("SessionName", "noLimit");
-            extras.putInt("SessionLong", -1);
-            navigateToActivity(this, SessionActivity.class, null);
-            Log.v(TAG, "無限時間ボタンが押された");
+            sessionTime = "無限";
+            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+            // Delay navigation for a set time (e.g., 2 seconds)
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                Bundle extras = new Bundle();
+                extras.putString("SessionName", "無限");
+                extras.putInt("SessionLong", -1);
+                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+            }, 4000); // 2000ms delay
         });
 
         finishButton.setOnClickListener(v -> {
@@ -142,8 +160,12 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         speak_flag = 0;
         speak_again_flag = 0;
 
-        //アプリ起動時に翻訳APIのテストをして発話を実行
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
+        //アプリ起動時に作業
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);
+        //時間選択発話
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_SET_TIME);
+
+
 //        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
 //        if(!test_translated_word.contains("Error during translation")){
 //            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
@@ -198,7 +220,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
 
                     //移動前にセッション開始の発話
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.START_END_SPEAK);
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
 
                     if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");

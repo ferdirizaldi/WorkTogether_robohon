@@ -13,6 +13,10 @@
                 <speech>作業または勉強時間教えて!</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <action index="2">
+                <speech>１時間２時間、それとも無限のセッション、どっちがいい？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
         </topic>
     </body>
 </hvml>
