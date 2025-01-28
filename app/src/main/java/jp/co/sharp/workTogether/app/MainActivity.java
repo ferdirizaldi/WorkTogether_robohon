@@ -224,15 +224,13 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
 
                     //移動前にセッション開始の発話
+                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
                     VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
 
                     if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
                         if(sessionTime != null && sessionTime.contains("1")){
-                            final String sessionTimePass = "1時間";
-                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
                             // Delay navigation for a set time (e.g., 2 seconds)
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Bundle extras = new Bundle();
@@ -245,9 +243,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                             finish();//アプリを終了する
                         }
                         else if(sessionTime != null && sessionTime.contains("2")){
-                            final String sessionTimePass = "2時間";
-                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
                             // Delay navigation for a set time (e.g., 2 seconds)
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Bundle extras = new Bundle();
@@ -260,9 +255,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                             finish();//アプリを終了する
                         }
                         else{
-                            final String sessionTimePass = "無限時間";
-                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
                             // Delay navigation for a set time (e.g., 2 seconds)
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Bundle extras = new Bundle();
