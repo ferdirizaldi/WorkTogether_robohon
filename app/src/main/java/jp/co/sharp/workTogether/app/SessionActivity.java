@@ -113,7 +113,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             // Extract specific data
             String sessionName = extras.getString("SessionName", "DefaultName"); // Default value if null
-            sessionLong = extras.getInt("SessionTime", 0); // Default value if not provided
+            sessionLong = extras.getInt("SessionLong", 0); // Default value if not provided
 
             // Return the data as an array of strings
             return new String[]{sessionName, String.valueOf(sessionLong)};
@@ -232,7 +232,10 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.START_END_SPEAK);
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
-        alertTimer = getIntent().getIntExtra("alertTime",0);
+        if(sessionLong>0){
+            alertTimer = 3600 * sessionLong;
+        }
+        Log.v("Session Activity", "Session AlertTime:" + alertTimer);
         alertFrag = (alertTimer == 0);//アラートまでの時間が未定義等により0秒になった時は、すでにアラート済みということにしてタイマーを止める
 
         //breakフェイズからフェイズ移行させることでworkフェイズを開始
