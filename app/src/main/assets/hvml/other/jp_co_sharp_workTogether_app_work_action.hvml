@@ -23,7 +23,7 @@
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
-                <speech>何色にしようかな</speech>
+                <speech>どんな色にしようかな</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
