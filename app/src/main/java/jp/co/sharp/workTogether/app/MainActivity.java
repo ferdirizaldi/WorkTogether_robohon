@@ -47,10 +47,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-
-    private int speak_flag;//speakシナリオ実行中に立つフラグ
-    private int speak_again_flag;//speakシナリオ実行開始時に立ち、speak_againが可能になるシナリオフラグ
-    private final int max_length = 100;//翻訳前後の文の長さの許容限界
     private String sessionTime = "";
 
     @Override
@@ -68,8 +64,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         registerReceiver(mHomeEventReceiver, filterHome);
 
         // Prevent the keyboard from showing up on app start
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // UI表示
         initializeMainUI();
@@ -159,23 +154,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
-        //フラグを初期化
-        speak_flag = 0;
-        speak_again_flag = 0;
-
         //アプリ起動時に発話
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);
-        //時間選択発話
-        //VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_SET_TIME);
-
-
-//        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
-//        if(!test_translated_word.contains("Error during translation")){
-//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);//アプリ開始時の発話
-//        }else{
-//            Log.v(TAG, "Test_translated_word Is Error Message");
-//            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ERROR_CONNECTION);//接続が失敗したときの発話
-//        }
 
     }
 

@@ -6,7 +6,6 @@
 
     <uses-permission android:name="jp.co.sharp.android.permission.VOICEUI" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="jp.co.sharp.android.rb.action.permission.REQUEST_ACTION" />
     <uses-permission android:name="jp.co.sharp.android.rb.projectormanager.permission.ACCESS_PROJECTOR" />
 
     <application
@@ -51,9 +50,6 @@
 
         <uses-library
             android:name="jp.co.sharp.android.voiceui.framework"
-            android:required="true" />
-        <uses-library
-            android:name="jp.co.sharp.android.rb.action.framework"
             android:required="true" />
         <uses-library android:name="jp.co.sharp.android.rb.projector.framework"
             android:required="true" />

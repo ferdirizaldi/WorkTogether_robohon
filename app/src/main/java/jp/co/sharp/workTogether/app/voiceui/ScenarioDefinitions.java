@@ -134,14 +134,6 @@ public class ScenarioDefinitions {
      */
     public static final String KEY_LVCSR_BASIC = "Lvcsr_Basic";
     /**
-     * 翻訳前の単語
-     */
-    public static final String MEM_P_ORIGINAL_WORD = ScenarioDefinitions.PACKAGE + ".original_word";
-    /**
-     * 翻訳後の単語
-     */
-    public static final String MEM_P_TRANSLATED_WORD = ScenarioDefinitions.PACKAGE + ".translated_word";
-    /**
      * キー：SessionTime　作業
      */
     public static final String MEM_P_SESSION_TIME = ScenarioDefinitions.PACKAGE + ".session_time";
