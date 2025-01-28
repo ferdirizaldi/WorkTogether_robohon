@@ -5,7 +5,7 @@
         <description>プロジェクター使用コマンドを聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
-        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [プロジェクタ,投影] and ${Lvcsr:Basic} include [使おう,しよう,はじめ,やろう,使用,開始]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [プロジェクタ,プロジェクト,投影] and ${Lvcsr:Basic} include [使おう,しよう,はじめ,やろう,使用,開始,解し,会し,起動,移し,写し,映し,見せて]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">

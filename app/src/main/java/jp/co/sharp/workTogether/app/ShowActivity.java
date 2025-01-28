@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.PowerManager;//追加日1/28
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import jp.co.sharp.workTogether.app.voiceui.ScenarioDefinitions;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIListenerImpl;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIManagerUtil;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIVariableUtil;
+import jp.co.sharp.android.rb.projectormanager.ProjectorManagerServiceUtil;
 
 
 /**
@@ -45,6 +47,22 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
+    /**
+     * プロジェクター状態変化イベント検知.
+     */
+    private ProjectorEventReceiver mProjectorEventReceiver;
+    /**
+     * プロジェクタ照射中のWakelock.
+     */
+    private android.os.PowerManager.WakeLock mWakelock;
+    /**
+     * 排他制御用.
+     */
+    private Object mLock = new Object();
+    /**
+     * プロジェクタ照射状態.
+     */
+    private boolean isProjected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +74,9 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
+
+        //プロジェクタイベントの検知登録.
+        setProjectorEventReceiver();
 
         //TASK
         //画面に出来上がった絵を表示する
@@ -73,12 +94,10 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // projectorButton = (Button) findViewById(R.id.use_projector_button);
 
         // プロジェクター使用ボタンの処理
-//        projectorButton.setOnClickListener(view -> {
-//            //
-//            //TASK
-//            showProjector();//プロジェクターを起動する関数
-//            //
-//        });
+        projectorButton.setOnClickListener(view -> {
+            //プロジェクターを起動する
+            showProjector();
+        });
 
     }
 
@@ -102,7 +121,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
-        //起動時の発話
+        //アクティビティ起動時の発話
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOST);//showActivityの起動時シナリオを起動する
     }
 
@@ -136,6 +155,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //インスタンスのごみ掃除.
         mVUIManager = null;
         mVUIListener = null;
+        mProjectorEventReceiver = null;
     }
 
     /**
@@ -170,6 +190,109 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //TASK
         //プロジェクターでできあがあった絵を見せる
         //
+        if(!isProjected) {
+            //開始
+            startService(getIntentForProjector());
+        }
+    }
+
+    /**
+     * プロジェクターマネージャーの開始/停止用のIntentを設定する.
+     */
+    private Intent getIntentForProjector() {
+        Intent intent = new Intent();
+        ComponentName componentName = new ComponentName(
+                ProjectorManagerServiceUtil.PACKAGE_NAME,
+                ProjectorManagerServiceUtil.CLASS_NAME);
+        //逆方向で照射する
+        intent.putExtra(ProjectorManagerServiceUtil.EXTRA_PROJECTOR_OUTPUT, ProjectorManagerServiceUtil.EXTRA_PROJECTOR_OUTPUT_VAL_REVERSE);
+        //足元に照射する
+        intent.putExtra(ProjectorManagerServiceUtil.EXTRA_PROJECTOR_DIRECTION, ProjectorManagerServiceUtil.EXTRA_PROJECTOR_DIRECTION_VAL_UNDER);
+        intent.setComponent(componentName);
+        return intent;
+    }
+
+    /**
+     * プロジェクターの状態変化イベントを受け取るためのレシーバーをセットする.
+     */
+    private void setProjectorEventReceiver() {
+        Log.v(TAG, "setProjectorEventReceiver()");
+        if (mProjectorEventReceiver == null) {
+            mProjectorEventReceiver = new ProjectorEventReceiver();
+        } else {
+            return;
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_START);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR);
+        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
+        registerReceiver(mProjectorEventReceiver, intentFilter);
+    }
+
+    /**
+     * WakeLockを取得する.
+     */
+    private void acquireWakeLock() {
+        Log.v(TAG, "acquireWakeLock()");
+        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+        synchronized (mLock) {
+            if (mWakelock == null || !mWakelock.isHeld()) {
+                mWakelock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                        | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                        | PowerManager.ON_AFTER_RELEASE, MainActivity.class.getName());
+                mWakelock.acquire();
+            }
+        }
+    }
+
+    /**
+     * WakeLockを開放する.
+     */
+    private void releaseWakeLock() {
+        Log.v(TAG, "releaseWakeLock()");
+        synchronized (mLock) {
+            if (mWakelock != null && mWakelock.isHeld()) {
+                mWakelock.release();
+                mWakelock = null;
+            }
+        }
+    }
+
+    /**
+     * プロジェクターの状態変化時のイベントを受け取るためのBroadcastレシーバークラス.<br>
+     * <p/>
+     * 照射開始時にはWakeLockの取得、終了時にはWakeLockの開放する.<br>
+     * アプリ仕様に応じて必要な処理があれば実装すること.
+     */
+    private class ProjectorEventReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v(TAG, "ProjectorEventReceiver#onReceive():" + intent.getAction());
+            switch (intent.getAction()) {
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME:
+                    break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START:
+                    acquireWakeLock();
+                    isProjected = true;
+                    break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE:
+                    releaseWakeLock();
+                    isProjected = false;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /**
@@ -185,6 +308,5 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             finish();
         }
     }
-
 
 }
