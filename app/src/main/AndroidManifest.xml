@@ -56,8 +56,6 @@
         <uses-library
             android:name="jp.co.sharp.android.rb.action.framework"
             android:required="true" />
-        <uses-library android:name="jp.co.sharp.android.projector.framework"
-            android:required="true" />
         <uses-library android:name="jp.co.sharp.android.rb.projector.framework"
             android:required="true" />
 

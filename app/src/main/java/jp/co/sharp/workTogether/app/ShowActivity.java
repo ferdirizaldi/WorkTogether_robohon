@@ -2,6 +2,7 @@ package jp.co.sharp.workTogether.app;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -90,14 +91,14 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             finish();
         });
 
-        // プロジェクター使用ボタン取得
+        /*// プロジェクター使用ボタン取得
         Button projectorButton = (Button) findViewById(R.id.use_projector_button);
 
         // プロジェクター使用ボタンの処理
         projectorButton.setOnClickListener(view -> {
             //プロジェクターを起動する
             startProjector();
-        });
+        });*/
 
     }
 
@@ -186,6 +187,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     }
 
     public void startProjector(){
+        Log.v(TAG, "Try Start Projector");
         //プロジェクターでできあがあった絵を見せる
         if(!isProjected) {//すでにプロジェクターが起動済みでなければ
             //プロジェクター起動
@@ -277,6 +279,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START:
                     acquireWakeLock();
+                    Log.v(TAG, "Projector Is Started");
                     isProjected = true;
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END:
