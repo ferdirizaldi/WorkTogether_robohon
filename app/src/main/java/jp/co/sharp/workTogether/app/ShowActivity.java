@@ -91,7 +91,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
 
         // プロジェクター使用ボタン取得
-        // projectorButton = (Button) findViewById(R.id.use_projector_button);
+        projectorButton = (Button) findViewById(R.id.use_projector_button);
 
         // プロジェクター使用ボタンの処理
         projectorButton.setOnClickListener(view -> {
