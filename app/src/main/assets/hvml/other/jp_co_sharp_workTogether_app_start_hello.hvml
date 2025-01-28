@@ -5,7 +5,7 @@
         <description>アプリ起動時の発話シナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_common"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.hello"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.start_hello"/>
     </head>
     <body>
         <topic id="t1" listen="false">

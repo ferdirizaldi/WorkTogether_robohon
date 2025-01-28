@@ -67,7 +67,7 @@ public class ScenarioDefinitions {
     /**
      * accost名: アプリ開始時の発話シナリオ
      */
-    public static final String ACC_HELLO = PACKAGE + ".start.hello";
+    public static final String ACC_HELLO = PACKAGE + ".start_hello";
     /**
      * accost名: 作業中の動作をするシナリオ
      */

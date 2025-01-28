@@ -93,17 +93,33 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private void initializeSessionUI() {
         // Button references
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
+        Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
 
         // Text Areas
-        TextView outputTextValue= (TextView) findViewById(R.id.output_text_value);
-        TextView outputText = (TextView) findViewById(R.id.output_text);
+        TextView sessionText1 = (TextView) findViewById(R.id.session_text1);
+        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+        TextView sessionText2 = (TextView) findViewById(R.id.session_text2);
+        TextView sessionOutputTime = (TextView) findViewById(R.id.sessionOutput_text2_value);
+
 
         //タイマー値の設定
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                outputTextValue.setText("00:00:00");
+                sessionOutputStatus.setText("作業中");
+                sessionOutputTime.setText("00:00:00");
             }
+        });
+
+        shiftPhaseButton.setOnClickListener(v -> {
+            //Shift Phase
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    sessionOutputStatus.setText("休憩");
+                }
+            });
         });
 
         finishButton.setOnClickListener(v -> {

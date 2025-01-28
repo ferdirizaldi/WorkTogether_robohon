@@ -28,6 +28,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SessionActivity" />
+        <activity android:name=".ShowActivity" />
+
         <service
             android:name=".voiceui.RegisterScenarioService"
             android:enabled="true"
