@@ -2,7 +2,7 @@ package jp.co.sharp.workTogether.app;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
+import android.content.ComponentName;//追加日1/28
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
