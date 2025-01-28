@@ -82,9 +82,41 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             shiftPhase();//フェイズを移行させる関数
         });*/
 
+        String[] sessionData = getExtrasAsArray();
+
+        if(sessionData!=null){
+            Log.v("Session Activity", "Session Name:" + sessionData[0]);
+            Log.v("Session Activity", "Session Name:" + sessionData[1]);
+        }else{
+            Log.v("Session Activity", "No Extras Found");
+        }
+
         // UI表示
         initializeSessionUI();
 
+    }
+
+    /**
+     * Retrieves the extras from the intent and returns them as an array of strings.
+     *
+     * @return A string array containing the session data or null if no extras exist.
+     */
+    private String[] getExtrasAsArray() {
+        Intent intent = getIntent();
+
+        if (intent != null && intent.getExtras() != null) {
+            Bundle extras = intent.getExtras();
+
+            // Extract specific data
+            String sessionName = extras.getString("SessionName", "DefaultName"); // Default value if null
+            int sessionLong = extras.getInt("SessionLong", 0); // Default value if not provided
+
+            // Return the data as an array of strings
+            return new String[]{sessionName, String.valueOf(sessionLong)};
+        }
+
+        // Return null if no extras are found
+        return null;
     }
 
     /**
@@ -146,6 +178,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //Scene操作
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+
+        //SessionActivity起動時の発話
+        //VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.START_END_SPEAK);
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
         alertTimer = getIntent().getIntExtra("alertTime",0);
