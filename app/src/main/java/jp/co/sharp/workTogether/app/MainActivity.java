@@ -230,33 +230,48 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
                         if(sessionTime != null && sessionTime.contains("1")){
-                            Log.v(TAG, "1 hour from voice");
-                            // Add functionality for 1 Hour Button
-                            Bundle extras = new Bundle();
-                            extras.putString("SessionName", "1Hour");
-                            extras.putInt("SessionLong", 1);
-                            navigateToActivity(this, SessionActivity.class, extras);
-                            Log.v(TAG, "1時間ボタンが押された");
+                            final String sessionTimePass = "1時間";
+                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
+                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+                            // Delay navigation for a set time (e.g., 2 seconds)
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                Bundle extras = new Bundle();
+                                extras.putString("SessionName", "1Hour");
+                                extras.putInt("SessionLong", 1);
+                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                                finish();
+                            }, 4000); // 2000ms delay
                             finish();//アプリを終了する
                         }
                         else if(sessionTime != null && sessionTime.contains("2")){
-                            Log.v(TAG, "2 hours from voice");
-                            // Add functionality for 1 Hour Button
-                            Bundle extras = new Bundle();
-                            extras.putString("SessionName", "2Hours");
-                            extras.putInt("SessionLong", 2);
-                            navigateToActivity(this, SessionActivity.class, extras);
-                            Log.v(TAG, "1時間ボタンが押された");
+                            final String sessionTimePass = "2時間";
+                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
+                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+                            // Delay navigation for a set time (e.g., 2 seconds)
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                Bundle extras = new Bundle();
+                                extras.putString("SessionName", "2Hours");
+                                extras.putInt("SessionLong", 2);
+                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                                finish();
+                            }, 4000); // 2000ms delay
                             finish();//アプリを終了する
                         }
                         else{
-                            Log.v(TAG, "noLimit time from voice");
-                            // Add functionality for 1 Hour Button
-                            Bundle extras = new Bundle();
-                            extras.putString("SessionName", "noLimit");
-                            extras.putInt("SessionLong", -1);
-                            navigateToActivity(this, SessionActivity.class, extras);
-                            Log.v(TAG, "1時間ボタンが押された");
+                            final String sessionTimePass = "無限時間";
+                            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTimePass);
+                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+                            // Delay navigation for a set time (e.g., 2 seconds)
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                Bundle extras = new Bundle();
+                                extras.putString("SessionName", "無限");
+                                extras.putInt("SessionLong", -1);
+                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                                finish();
+                            }, 4000); // 2000ms delay
                             finish();//アプリを終了する
                         }
 
