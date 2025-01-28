@@ -38,9 +38,6 @@
             <meta-data android:name="use_projector" android:value="ShowActivity" />
         </activity>
 
-        <activity android:name=".SessionActivity" />
-        <activity android:name=".ShowActivity" />
-
         <service
             android:name=".voiceui.RegisterScenarioService"
             android:enabled="true"
