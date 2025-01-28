@@ -98,6 +98,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 extras.putInt("SessionLong", 1);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
                 Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                finish();
             }, 4000); // 2000ms delay
         });
 
@@ -112,6 +113,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 extras.putInt("SessionLong", 1);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
                 Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                finish();
             }, 4000); // 2000ms delay
         });
 
@@ -126,6 +128,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 extras.putInt("SessionLong", -1);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
                 Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                finish();
             }, 4000); // 2000ms delay
         });
 

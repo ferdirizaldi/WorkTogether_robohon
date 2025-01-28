@@ -28,7 +28,6 @@ import jp.co.sharp.workTogether.app.voiceui.VoiceUIManagerUtil;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIVariableUtil;
 import jp.co.sharp.android.rb.projectormanager.ProjectorManagerServiceUtil;
 
-
 /**
  * 音声UIを利用した最低限の機能だけ実装したActivity.
  */

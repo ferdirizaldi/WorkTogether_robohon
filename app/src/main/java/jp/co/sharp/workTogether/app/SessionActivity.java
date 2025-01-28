@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;//追加日1/24
@@ -64,6 +67,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private int alertTimer;//終了予定時刻までの時間をカウントダウンする
     private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンする
     private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンする
+    private int sessionLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         if(sessionData!=null){
             Log.v("Session Activity", "Session Name:" + sessionData[0]);
-            Log.v("Session Activity", "Session Name:" + sessionData[1]);
+            Log.v("Session Activity", "Session Time:" + sessionData[1]);
         }else{
             Log.v("Session Activity", "No Extras Found");
         }
@@ -109,7 +113,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             // Extract specific data
             String sessionName = extras.getString("SessionName", "DefaultName"); // Default value if null
-            int sessionLong = extras.getInt("SessionLong", 0); // Default value if not provided
+            sessionLong = extras.getInt("SessionTime", 0); // Default value if not provided
 
             // Return the data as an array of strings
             return new String[]{sessionName, String.valueOf(sessionLong)};
@@ -126,6 +130,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         // Button references
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
         Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
+        Button sessionFinishButton = (Button) findViewById(R.id.finish_session_button);
 
         // Text Areas
         TextView sessionText1 = (TextView) findViewById(R.id.session_text1);
@@ -143,21 +148,64 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             }
         });
 
+        updateSessionOutputTime(sessionLong, sessionOutputTime);
+
         shiftPhaseButton.setOnClickListener(v -> {
             //Shift Phase
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(phaseFrag){
+                        phaseFrag = false;
+                        sessionOutputStatus.setText("休憩");
+                    }else{
+                        phaseFrag = true;
+                        sessionOutputStatus.setText("作業中");
+                    }
 
-                    sessionOutputStatus.setText("休憩");
                 }
             });
+        });
+
+        sessionFinishButton.setOnClickListener(v -> {
+            // Finish the current activity
+            timerStopFrag = true;
+            navigateToActivity(this, ShowActivity.class, null);
+            finish();
         });
 
         finishButton.setOnClickListener(v -> {
             // Finish the current activity
             timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();
+        });
+    }
+
+    private void updateSessionOutputTime(int sessionLong, TextView sessionOutputTime) {
+        // Get the current time
+        Calendar calendar = Calendar.getInstance();
+
+        // Add the session duration in hours to the current time
+        if (sessionLong == 1) {
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
+        } else if (sessionLong == 2) {
+            calendar.add(Calendar.HOUR_OF_DAY, 2);
+        } else {
+            // Handle the default case (e.g., infinite session)
+            sessionOutputTime.setText("∞");
+            return;
+        }
+
+        // Format the calculated end time to HH:mm:ss
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String endTime = timeFormat.format(calendar.getTime());
+
+        // Update the TextViews on the UI thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sessionOutputTime.setText(endTime);
+            }
         });
     }
 
