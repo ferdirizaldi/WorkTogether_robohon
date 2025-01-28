@@ -96,7 +96,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // プロジェクター使用ボタンの処理
         projectorButton.setOnClickListener(view -> {
             //プロジェクターを起動する
-            showProjector();
+            startProjector();
         });
 
     }
@@ -169,7 +169,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_USE_PROJECTOR.equals(function)){//show_projectorシナリオのshow_projector関数
                     Log.v(TAG, "Receive Projector Voice Command heard");
-                    showProjector();//プロジェクターを起動する関数
+                    startProjector();//プロジェクターを起動する関数
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -185,13 +185,10 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    public void showProjector(){
-        //
-        //TASK
+    public void startProjector(){
         //プロジェクターでできあがあった絵を見せる
-        //
-        if(!isProjected) {
-            //開始
+        if(!isProjected) {//すでにプロジェクターが起動済みでなければ
+            //プロジェクター起動
             startService(getIntentForProjector());
         }
     }
