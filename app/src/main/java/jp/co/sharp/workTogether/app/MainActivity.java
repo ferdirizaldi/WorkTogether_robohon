@@ -160,10 +160,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         speak_flag = 0;
         speak_again_flag = 0;
 
-        //アプリ起動時に作業
+        //アプリ起動時に発話
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);
         //時間選択発話
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_SET_TIME);
+        //VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_SET_TIME);
 
 
 //        final String test_translated_word = translateSync("りんご");//適当な単語を英訳してtest_translated_wordを作成する
@@ -186,6 +186,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);

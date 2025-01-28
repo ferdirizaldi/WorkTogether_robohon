@@ -156,6 +156,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         finishButton.setOnClickListener(v -> {
             // Finish the current activity
+            timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();
         });
     }
