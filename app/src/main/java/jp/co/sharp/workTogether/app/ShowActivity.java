@@ -78,9 +78,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //プロジェクタイベントの検知登録.
         setProjectorEventReceiver();
 
-        //TASK
-        //画面に出来上がった絵を表示する
-
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
 
@@ -151,6 +148,9 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //ホームボタンの検知破棄.
         this.unregisterReceiver(mHomeEventReceiver);
+
+        //プロジェクタイベントの検知破棄.
+        this.unregisterReceiver(mProjectorEventReceiver);
 
         //インスタンスのごみ掃除.
         mVUIManager = null;
