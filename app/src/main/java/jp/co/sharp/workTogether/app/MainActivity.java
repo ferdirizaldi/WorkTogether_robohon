@@ -269,7 +269,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    
+
     /**
      * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>
      * <p/>
