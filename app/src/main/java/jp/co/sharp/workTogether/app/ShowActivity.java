@@ -87,11 +87,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
 
         //過ぎた時間表示を更新
-        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+        TextView resultTimePassed = (TextView) findViewById(R.id.sessionOutput_text1_value);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sessionOutputStatus.setText();
+                resultTimePassed.setText(getIntentDataByKey("SessionStartTime"));
 
             }
         });

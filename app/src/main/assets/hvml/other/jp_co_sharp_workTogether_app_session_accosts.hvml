@@ -14,14 +14,12 @@
                 <speech>僕といっしょに${memory_p:jp.co.sharp.workTogether.app.session_time}頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
-            <next href="#t2" type="default"/>
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
                 <speech>僕といっしょに頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
-            <next href="#t2" type="default"/>
         </topic>
     </body>
 </hvml>
