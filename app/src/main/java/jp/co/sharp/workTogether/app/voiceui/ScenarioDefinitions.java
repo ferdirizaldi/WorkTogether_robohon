@@ -119,10 +119,6 @@ public class ScenarioDefinitions {
     /**
      * 関数名：send_word
      */
-    public static final String FUNC_SEND_WORD = "send_word";
-    /**
-     * 関数名：send_word
-     */
     public static final String FUNC_SEND_WORD_ONEHOUR = "send_word_oneHour";
     /**
      * 関数名：send_word
@@ -132,14 +128,6 @@ public class ScenarioDefinitions {
      * 関数名：send_word
      */
     public static final String FUNC_SEND_WORD_MUGEN = "send_word_mugen";
-    /**
-     * 関数名：end_speak
-     */
-    public static final String FUNC_END_SPEAK = "end_speak";
-    /**
-     * 関数名：end_app
-     */
-    public static final String FUNC_SPEAK_AGAIN = "speak_again";
     /**
      * キー：lvcsr_basic
      */
