@@ -58,6 +58,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     final private int workTime = 60 * 25;//デフォルトの作業時間(秒)
     final private int workSnoozeTime = 60 * 5;//作業中止の提案の周期(秒)
     final private int workActionTime = 60 * 1;//作業中の動作の周期(秒)
+    final private int workActionTimeFirst = 7;//最初の作業動作までの時間（秒）
     final private int breakTime = 60 * 5;//デフォルトの休憩時間(秒)
     final private int breakSnoozeTime = 60 * 5;//休憩中止の提案の周期(秒)
     final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
@@ -94,7 +95,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         }else{
             Log.v("Session Activity", "No Extras Found");
         }
-
+        
         // UI表示
         initializeSessionUI();
 
@@ -170,6 +171,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         sessionFinishButton.setOnClickListener(v -> {
             // Finish the current activity
             timerStopFrag = true;
+
             navigateToActivity(this, ShowActivity.class, null);
             finish();
         });
@@ -184,6 +186,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private void updateSessionOutputTime(int sessionLong, TextView sessionOutputTime) {
         // Get the current time
         Calendar calendar = Calendar.getInstance();
+
 
         // Add the session duration in hours to the current time
         if (sessionLong == 1) {
@@ -431,7 +434,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             //タイマー更新
             suggestTimer = workTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            actionTimer = 5;//フェイズごとの動作を行うまでの時間をカウントダウンする
+            actionTimer = workActionTimeFirst;//フェイズごとの動作を行うまでの時間をカウントダウンする
             //actionTimer = workActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする
         }
     }
