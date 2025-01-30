@@ -80,16 +80,24 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
             finish();
         });
 
+        //過ぎた時間表示を更新
+        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sessionOutputStatus.setText();
+
+            }
+        });
+
         //プロジェクター使用ボタン取得
         Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
-
         //プロジェクター使用ボタンの処理
         showProjectorButton.setOnClickListener(view -> {
             //プロジェクターを起動する
@@ -308,6 +316,24 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             // ホームボタン押下でアプリ終了する.
             finish();
         }
+    }
+    /**
+     * Retrieves the extras from the intent and returns them as an array of strings.
+     *
+     * @return A string data containing the session data or null if no extras exist by key.
+     * //Intentからの変数を受け取る関数
+     */
+    private String getIntentDataByKey(String key) {
+        Intent intent = getIntent();
+        if (intent != null && intent.getExtras() != null) {
+            Bundle extras = intent.getExtras();
+            String intentExtraData = extras.getString(key, "null"); // Default value if not provided
+            // Return the data as an array of strings
+            return intentExtraData;
+        }
+
+        // Return null if no extras are found
+        return null;
     }
 
 }

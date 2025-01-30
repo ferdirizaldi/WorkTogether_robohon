@@ -70,6 +70,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンする
     private int sessionLong;
 
+    private String startTime;//開始時刻
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +97,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         }else{
             Log.v("Session Activity", "No Extras Found");
         }
-        
+
         // UI表示
         initializeSessionUI();
 
@@ -134,9 +136,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         Button sessionFinishButton = (Button) findViewById(R.id.finish_session_button);
 
         // Text Areas
-        TextView sessionText1 = (TextView) findViewById(R.id.session_text1);
         TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
-        TextView sessionText2 = (TextView) findViewById(R.id.session_text2);
         TextView sessionOutputTime = (TextView) findViewById(R.id.sessionOutput_text2_value);
 
 
@@ -171,8 +171,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         sessionFinishButton.setOnClickListener(v -> {
             // Finish the current activity
             timerStopFrag = true;
-
-            navigateToActivity(this, ShowActivity.class, null);
+            Bundle extras = new Bundle();
+            extras.putInt("SessionStartTime", Integer.parseInt(startTime));
+            navigateToActivity(this, ShowActivity.class, extras);
             finish();
         });
 
@@ -201,6 +202,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         // Format the calculated end time to HH:mm:ss
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        startTime = timeFormat.format(Calendar.getInstance().getTime());
         String endTime = timeFormat.format(calendar.getTime());
 
         // Update the TextViews on the UI thread
