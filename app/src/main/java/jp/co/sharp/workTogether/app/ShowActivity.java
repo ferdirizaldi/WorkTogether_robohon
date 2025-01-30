@@ -138,7 +138,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
         //単一Activityの場合はonPauseでアプリを終了する.
-        finish();
+        //プロジェクター起動時にもonPauseは呼ばれるので終了しない
+        //finish();
     }
 
     @Override
