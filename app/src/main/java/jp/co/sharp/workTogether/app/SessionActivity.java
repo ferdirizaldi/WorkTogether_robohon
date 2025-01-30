@@ -62,6 +62,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     final private int breakTime = 60 * 5;//デフォルトの休憩時間(秒)
     final private int breakSnoozeTime = 60 * 5;//休憩中止の提案の周期(秒)
     final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
+    final private int breakActionTimeFirst = 7;//最初の休憩動作までの時間（秒）
     private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
@@ -424,8 +425,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             //タイマー更新
             suggestTimer = breakTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            //actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
-            actionTimer = breakActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする　0にすることで、フェイズ移行後にすぐ動作をするのでわかりやすくて良くなるかも
+            actionTimer = breakActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
         }else{//現在breakフェイズならworkフェイズを開始する
             Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
@@ -436,8 +436,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             //タイマー更新
             suggestTimer = workTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            actionTimer = workActionTimeFirst;//フェイズごとの動作を行うまでの時間をカウントダウンする
-            //actionTimer = workActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする
+            actionTimer = workActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
         }
     }
 
