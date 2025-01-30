@@ -55,22 +55,22 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      */
     private HomeEventReceiver mHomeEventReceiver;
 
-    final private int workTime = 60 * 25;//デフォルトの作業時間(秒)
-    final private int workSnoozeTime = 60 * 5;//作業中止の提案の周期(秒)
+    final private int workSuggestTimeFirst = 60 * 25;//初回の作業中止の提案までの時間(秒)
+    final private int workSuggestTime = 60 * 5;//作業中止の提案の周期(秒)
+    final private int workActionTimeFirst = 7;//初回の作業動作までの時間(秒)
     final private int workActionTime = 60 * 1;//作業中の動作の周期(秒)
-    final private int workActionTimeFirst = 7;//最初の作業動作までの時間（秒）
-    final private int breakTime = 60 * 5;//デフォルトの休憩時間(秒)
-    final private int breakSnoozeTime = 60 * 5;//休憩中止の提案の周期(秒)
+    final private int breakSuggestTimeFirst = 60 * 5;//初回の休憩中止の提案までの時間(秒)
+    final private int breakSuggestTime = 60 * 5;//休憩中止の提案の周期(秒)
+    final private int breakActionTimeFirst = 7;//初回の休憩動作までの時間(秒)
     final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
     private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
-    private int alertTimer;//終了予定時刻までの時間をカウントダウンする
-    private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンする
-    private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンする
-    private int sessionLong;
-
-    private String startTime;//開始時刻
+    private int alertTimer;//終了予定時刻までの時間をカウントダウンするタイマー
+    private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンするタイマー
+    private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンするタイマー
+    private int sessionLong;//meinActivityから送られてきたセッション終了までの時間
+    private String startTime;//セッション開始時の時刻
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -397,14 +397,14 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_SUGGEST Failed");
                 } else {
-                    suggestTimer = workSnoozeTime;
+                    suggestTimer = workSuggestTime;
                 }
             } else {//break状態のとき
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_SUGGEST);//サジェストンシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_SUGGEST Failed");
                 } else {
-                    suggestTimer = breakSnoozeTime;
+                    suggestTimer = breakSuggestTime;
                 }
             }
         }
@@ -423,9 +423,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_BREAK);
 
             //タイマー更新
-            suggestTimer = breakTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            //actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
-            actionTimer = breakActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする　0にすることで、フェイズ移行後にすぐ動作をするのでわかりやすくて良くなるかも
+            suggestTimer = breakSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
+            actionTimer = breakActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
         }else{//現在breakフェイズならworkフェイズを開始する
             Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
@@ -435,9 +434,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_WORK);
 
             //タイマー更新
-            suggestTimer = workTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            actionTimer = workActionTimeFirst;//フェイズごとの動作を行うまでの時間をカウントダウンする
-            //actionTimer = workActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする
+            suggestTimer = workSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
+            actionTimer = workActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
         }
     }
 

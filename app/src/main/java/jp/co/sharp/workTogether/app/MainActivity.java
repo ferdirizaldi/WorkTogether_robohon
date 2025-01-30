@@ -143,6 +143,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //アプリ起動時に発話
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t1");
 
+        //TASK
         //何秒か経過したらt2を呼ぶようにしたい
 
     }
