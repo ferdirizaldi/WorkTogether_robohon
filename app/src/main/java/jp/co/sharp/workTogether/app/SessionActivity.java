@@ -83,12 +83,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
 
-        // フェイズ移行ボタン表示
-        /*Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
-        shiftPhaseButton.setOnClickListener(view -> {
-            shiftPhase();//フェイズを移行させる関数
-        });*/
-
         String[] sessionData = getExtrasAsArray();
 
         if(sessionData!=null){
@@ -242,13 +236,16 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         Log.v("Session Activity", "Session AlertTime:" + alertTimer);
         alertFrag = (alertTimer == 0);//アラートまでの時間が未定義等により0秒になった時は、すでにアラート済みということにしてタイマーを止める
 
+        //セッション開始の発話
+        if(alertFrag) {//時間が設定されていないときは発話内容に時間の含まれていないトピックを呼び出す
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t2");
+        }else{//時間が設定されているときは発話内容に時間の含まれているトピックを呼び出す
+            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t1");
+        }
+
         //breakフェイズからフェイズ移行させることでworkフェイズを開始
         phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
-
-        //セッション開始の発話
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t2");
-        //終了時間が入力されているかで発話トピックを変えたい
 
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
         timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)

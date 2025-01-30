@@ -11,7 +11,11 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>うん、一緒に頑張ろう</speech>
+                <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
+                <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
+            </action>
+            <action index="2">
+                <speech>一緒に頑張ろう</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="shift_phase" target="jp.co.sharp.workTogether.app"/>
             </action>
