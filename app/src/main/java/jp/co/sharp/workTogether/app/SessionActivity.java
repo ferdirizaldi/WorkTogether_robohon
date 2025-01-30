@@ -247,6 +247,12 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
 
+
+        //セッション開始の発話
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t1");
+        //終了時間が入力されているかで発話トピックを変えたい
+
+
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
         timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)
         //Handlerインスタンスの生成
