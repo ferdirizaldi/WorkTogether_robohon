@@ -6,7 +6,13 @@
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <situation priority="74" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [1,2,無限,一,二,いち,に,むげん]</situation>
+=======
+        <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [1,一,いち,イチ,ichi]</situation>
+        <situation priority="74" topic_id="t2" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [2,二,に,ニ,ni]</situation>
+        <situation priority="74" topic_id="t3" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [無限,むげん,ムゲン,mugen]</situation>
+>>>>>>> Stashed changes
 =======
         <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [1,一,いち,イチ,ichi]</situation>
         <situation priority="74" topic_id="t2" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [2,二,に,ニ,ni]</situation>
