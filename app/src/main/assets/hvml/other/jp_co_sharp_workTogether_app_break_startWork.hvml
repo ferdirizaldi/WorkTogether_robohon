@@ -5,7 +5,8 @@
         <description>作業開始コマンドを聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_break"/>
         <version value="1.0"/>
-        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [作業,仕事,勉強] and ${Lvcsr:Basic} include [しよう,はじめ,やろう,頑張ろう,戻ろう,開始,再開]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [作業,仕事,勉強] and ${Lvcsr:Basic} include [しよう,やろう,頑張ろう,開始]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [戻ろう,再開,はじめ,始め,初め]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">

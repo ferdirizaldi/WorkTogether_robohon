@@ -5,7 +5,8 @@
         <description>休憩開始コマンドを聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_work"/>
         <version value="1.0"/>
-        <situation priority="75" topic_id="t1" trigger="user-word">(${Lvcsr:Basic} include [休憩,中断] and ${Lvcsr:Basic} include [しよう,はじめ,開始]) or ${Lvcsr:Basic} include [休み、休もう]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [休憩,中断] and ${Lvcsr:Basic} include [しよう,はじめ,開始]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [休み、休もう]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">

@@ -287,6 +287,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR:
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE:
                     releaseWakeLock();
+                    Log.v(TAG, "Projector Is Ended");
                     isProjected = false;
                     break;
                 default:
