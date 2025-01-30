@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="jp.co.sharp.android.rb.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="use_projector" android:value="ShowActivity" /><!--メタデータを差し込む場所がわからない-->
         </activity>
         <activity
             android:name=".SessionActivity"
@@ -32,6 +31,7 @@
         <activity
             android:name=".ShowActivity"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen" >
+            <meta-data android:name="use_projector" android:value="ShowActivity" />
         </activity>
 
         <service
