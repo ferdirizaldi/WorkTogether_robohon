@@ -5,12 +5,32 @@
         <description>アプリ起動時の発話シナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
+<<<<<<< Updated upstream
         <situation priority="74" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [1,2,無限,一,二,いち,に,むげん]</situation>
+=======
+        <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [1,一,いち,イチ,ichi]</situation>
+        <situation priority="74" topic_id="t2" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [2,二,に,ニ,ni]</situation>
+        <situation priority="74" topic_id="t3" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [無限,むげん,ムゲン,mugen]</situation>
+>>>>>>> Stashed changes
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <control function="send_word" target="jp.co.sharp.workTogether.app">
+                <control function="send_word_oneHour" target="jp.co.sharp.workTogether.app">
+                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
+                </control>
+            </action>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <control function="send_word_twoHours" target="jp.co.sharp.workTogether.app">
+                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
+                </control>
+            </action>
+        </topic>
+        <topic id="t3" listen="false">
+            <action index="1">
+                <control function="send_word_mugen" target="jp.co.sharp.workTogether.app">
                     <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
                 </control>
             </action>

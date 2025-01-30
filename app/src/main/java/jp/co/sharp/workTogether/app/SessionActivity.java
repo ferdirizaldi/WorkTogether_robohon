@@ -228,8 +228,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //Scene操作
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
 
-        //SessionActivity起動時の発話
-        //VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.START_END_SPEAK);
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
         if(sessionLong>0){
@@ -241,6 +239,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //breakフェイズからフェイズ移行させることでworkフェイズを開始
         phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
+
+        //セッション開始の発話
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
 
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
         timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)
@@ -418,8 +419,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             //タイマー更新
             suggestTimer = breakTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
-            //actionTimer = breakActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする　0にすることで、フェイズ移行後にすぐ動作をするのでわかりやすくて良くなるかも
+            //actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
+            actionTimer = breakActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする　0にすることで、フェイズ移行後にすぐ動作をするのでわかりやすくて良くなるかも
         }else{//現在breakフェイズならworkフェイズを開始する
             Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
@@ -430,7 +431,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             //タイマー更新
             suggestTimer = workTime;//フェイズの終了を提案するまでの時間をカウントダウンする
-            actionTimer = 0;//フェイズごとの動作を行うまでの時間をカウントダウンする
+            actionTimer = 5;//フェイズごとの動作を行うまでの時間をカウントダウンする
             //actionTimer = workActionTime;//フェイズごとの動作を行うまでの時間をカウントダウンする
         }
     }

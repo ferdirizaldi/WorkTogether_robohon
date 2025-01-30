@@ -122,6 +122,18 @@ public class ScenarioDefinitions {
      */
     public static final String FUNC_SEND_WORD = "send_word";
     /**
+     * 関数名：send_word
+     */
+    public static final String FUNC_SEND_WORD_ONEHOUR = "send_word_oneHour";
+    /**
+     * 関数名：send_word
+     */
+    public static final String FUNC_SEND_WORD_TWOHOURS = "send_word_twoHours";
+    /**
+     * 関数名：send_word
+     */
+    public static final String FUNC_SEND_WORD_MUGEN = "send_word_mugen";
+    /**
      * 関数名：end_speak
      */
     public static final String FUNC_END_SPEAK = "end_speak";

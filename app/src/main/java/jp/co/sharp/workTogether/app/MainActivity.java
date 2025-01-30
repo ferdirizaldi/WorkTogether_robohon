@@ -85,46 +85,35 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         oneHour_button.setOnClickListener(v -> {
             sessionTime = "1時間";
             VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
             // Delay navigation for a set time (e.g., 2 seconds)
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                Bundle extras = new Bundle();
-                extras.putString("SessionName", "1Hour");
-                extras.putInt("SessionLong", 1);
-                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                finish();
-            }, 4000); // 2000ms delay
+            Bundle extras = new Bundle();
+            extras.putString("SessionName", "1Hour");
+            extras.putInt("SessionLong", 1);
+            navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+            Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+            finish();
         });
 
         twoHours_button.setOnClickListener(v -> {
             sessionTime = "2時間";
             VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
-            // Delay navigation for a set time (e.g., 2 seconds)
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 Bundle extras = new Bundle();
                 extras.putString("SessionName", "1Hour");
                 extras.putInt("SessionLong", 1);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
                 Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
                 finish();
-            }, 4000); // 2000ms delay
         });
 
         noLimit_button.setOnClickListener(v -> {
             sessionTime = "無限";
             VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
-            // Delay navigation for a set time (e.g., 2 seconds)
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 Bundle extras = new Bundle();
                 extras.putString("SessionName", "無限");
-                extras.putInt("SessionLong", -1);
+                extras.putInt("SessionLong", 0);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
                 Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
                 finish();
-            }, 4000); // 2000ms delay
         });
 
         finishButton.setOnClickListener(v -> {
@@ -200,59 +189,40 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
-                if(ScenarioDefinitions.FUNC_SEND_WORD.equals(function)) {//listenシナリオのsend_word関数
-                    final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
 
-                    //移動前にセッション開始の発話
-                    VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
-
-                    if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
-                        Log.v(TAG, "Listen Scenario Sent Normal Text");
-
-                        if(sessionTime != null && sessionTime.contains("1") ||sessionTime.contains("一") ){
-                            // Delay navigation for a set time (e.g., 2 seconds)
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                Bundle extras = new Bundle();
-                                extras.putString("SessionName", "1Hour");
-                                extras.putInt("SessionLong", 1);
-                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                                finish();
-                            }, 4000); // 2000ms delay
-                            finish();//アプリを終了する
-                        }
-                        else if(sessionTime != null && sessionTime.contains("2")||sessionTime.contains("二") ){
-                            // Delay navigation for a set time (e.g., 2 seconds)
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                Bundle extras = new Bundle();
-                                extras.putString("SessionName", "2Hours");
-                                extras.putInt("SessionLong", 2);
-                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                                finish();
-                            }, 4000); // 2000ms delay
-                            finish();//アプリを終了する
-                        }
-                        else{
-                            // Delay navigation for a set time (e.g., 2 seconds)
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                Bundle extras = new Bundle();
-                                extras.putString("SessionName", "無限");
-                                extras.putInt("SessionLong", -1);
-                                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                                finish();
-                            }, 4000); // 2000ms delay
-                            finish();//アプリを終了する
-                        }
-
-
-                    }else{
-                        Log.v(TAG, "Listen Scenario Sent Empty Text");
+                final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
+                //セッション時間メモリ保存
+                VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
+                if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
+                    if(ScenarioDefinitions.FUNC_SEND_WORD_ONEHOUR.equals(function)){
+                        Bundle extras = new Bundle();
+                        extras.putString("SessionName", "1Hour");
+                        extras.putInt("SessionLong", 1);
+                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                        finish();
                     }
-                }
+                    if(ScenarioDefinitions.FUNC_SEND_WORD_TWOHOURS.equals(function)){
+                        Bundle extras = new Bundle();
+                        extras.putString("SessionName", "2Hours");
+                        extras.putInt("SessionLong", 2);
+                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                        finish();
 
+                    }
+                    if(ScenarioDefinitions.FUNC_SEND_WORD_MUGEN.equals(function)){
+                        Bundle extras = new Bundle();
+                        extras.putString("SessionName", "無限");
+                        extras.putInt("SessionLong", 0);
+                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
+                        finish();
+                    }
+
+                }else{
+                    Log.v(TAG, "Listen Scenario Sent Empty Text");
+                }
 
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
