@@ -11,21 +11,9 @@
     tools:context=".ShowActivity">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_layout"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello"
-        android:textSize="27sp" />
-
-    <include
         android:id="@+id/content_main"
         layout="@layout/content_show_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView" />
+        android:layout_height="wrap_content" />
+    
 </RelativeLayout>

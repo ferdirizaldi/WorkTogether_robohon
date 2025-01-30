@@ -90,7 +90,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             extras.putString("SessionName", "1Hour");
             extras.putInt("SessionLong", 1);
             navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-            Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
             finish();
         });
 
@@ -98,10 +97,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             sessionTime = "2時間";
             VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
                 Bundle extras = new Bundle();
-                extras.putString("SessionName", "1Hour");
-                extras.putInt("SessionLong", 1);
+                extras.putString("SessionName", "2Hours");
+                extras.putInt("SessionLong", 2);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
                 finish();
         });
 
@@ -112,7 +110,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 extras.putString("SessionName", "無限");
                 extras.putInt("SessionLong", 0);
                 navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
                 finish();
         });
 
