@@ -210,7 +210,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
                         Log.v(TAG, "Listen Scenario Sent Normal Text");
 
-                        if(sessionTime != null && sessionTime.contains("1")){
+                        if(sessionTime != null && sessionTime.contains("1") ||sessionTime.contains("一") ){
                             // Delay navigation for a set time (e.g., 2 seconds)
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Bundle extras = new Bundle();
@@ -222,7 +222,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                             }, 4000); // 2000ms delay
                             finish();//アプリを終了する
                         }
-                        else if(sessionTime != null && sessionTime.contains("2")){
+                        else if(sessionTime != null && sessionTime.contains("2")||sessionTime.contains("二") ){
                             // Delay navigation for a set time (e.g., 2 seconds)
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                 Bundle extras = new Bundle();

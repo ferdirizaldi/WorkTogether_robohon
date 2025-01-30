@@ -5,7 +5,7 @@
         <description>アプリ起動時の発話シナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
-        <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic}</situation>
+        <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [1,2,無限,一,二]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
