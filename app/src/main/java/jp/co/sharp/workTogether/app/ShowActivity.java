@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -87,12 +92,12 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
 
         //過ぎた時間表示を更新
-        TextView resultTimePassed = (TextView) findViewById(R.id.sessionOutput_text1_value);
+        TextView resultTimePassed = (TextView) findViewById(R.id.showActivity_output_text_value);
+        String FinalElapsedTime = getElapsedTime(getIntentDataByKey("SessionStartTime"));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                resultTimePassed.setText(getIntentDataByKey("SessionStartTime"));
-
+                resultTimePassed.setText(FinalElapsedTime);
             }
         });
 
@@ -329,7 +334,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
             Bundle extras = intent.getExtras();
-            String intentExtraData = extras.getString(key, "null"); // Default value if not provided
+            String intentExtraData = extras.getString(key, "wrongKey"); // Default value if not provided
+            System.out.println(intentExtraData);
             // Return the data as an array of strings
             return intentExtraData;
         }
@@ -338,4 +344,39 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         return null;
     }
 
+    /**
+     * 指定された開始時刻 (HH:mm:ss) から現在時刻までの経過時間を計算する
+     *
+     * @param startTime 開始時刻の文字列 (フォーマット: HH:mm:ss)
+     * @return 経過時間の文字列 (フォーマット: HH:mm:ss)、または無効な場合は "無効な時間形式"
+     */
+    public static String getElapsedTime(String startTime) {
+        try {
+            // 現在の時刻を取得 (Calendar → Date)
+            Calendar calendar = Calendar.getInstance();
+            Date now = calendar.getTime();
+
+            // SimpleDateFormat を使用して文字列を Date に変換
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            Date start = timeFormat.parse(startTime);
+
+            // 経過時間（ミリ秒単位）を計算
+            long elapsedMillis = now.getTime() - start.getTime();
+
+            // 経過時間が負の場合は、絶対値を取る（未来時間の考慮）
+            if (elapsedMillis < 0) {
+                elapsedMillis = Math.abs(elapsedMillis);
+            }
+
+            // ミリ秒を時間、分、秒に変換
+            long hours = (elapsedMillis / (1000 * 60 * 60)) % 24; // 24時間を超えないように
+            long minutes = (elapsedMillis / (1000 * 60)) % 60;
+            long seconds = (elapsedMillis / 1000) % 60;
+
+            // hh:mm:ss 形式の文字列を作成
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } catch (ParseException e) {
+            return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
+        }
+    }
 }

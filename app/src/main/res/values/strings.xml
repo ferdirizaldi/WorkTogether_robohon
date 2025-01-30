@@ -21,7 +21,7 @@
     <string name="sessionactivity_text1">今のフェーズ</string>
     <string name="sessionactivity_text2">予定終了時刻</string>
     <string name="default_timeroutput_text">00:00:00</string>
-    <string name="showactivity_text1">絵を描けたよ！</string>
+    <string name="showactivity_text1">絵を描けたよ！ 過ぎた時間↓ (時間:分:秒)</string>
     <string name="showactivity_imgdsc">描けた絵</string>
     <string name="showactivity_default_text">過ぎた時間</string>
     <string name="sessionActivity_defShowStatus_text">status</string>

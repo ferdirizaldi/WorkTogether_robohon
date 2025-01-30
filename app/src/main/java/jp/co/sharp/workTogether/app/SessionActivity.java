@@ -166,7 +166,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             // Finish the current activity
             timerStopFrag = true;
             Bundle extras = new Bundle();
-            extras.putInt("SessionStartTime", Integer.parseInt(startTime));
+            extras.putString("SessionStartTime", startTime);
             navigateToActivity(this, ShowActivity.class, extras);
             finish();
         });
