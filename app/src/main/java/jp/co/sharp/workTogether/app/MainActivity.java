@@ -144,7 +144,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //アプリ起動時に発話
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_HELLO);
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t1");
+
+        //何秒か経過したらt2を呼ぶようにしたい
 
     }
 
@@ -190,6 +192,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
 
+                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//start_endシナリオのend_app関数
+                    Log.v(TAG, "Receive End Voice Command heard");
+                    finish();//アプリを終了する
+                }
+
                 final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
                 //セッション時間メモリ保存
                 VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
@@ -222,11 +229,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
                 }else{
                     Log.v(TAG, "Listen Scenario Sent Empty Text");
-                }
-
-                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//endシナリオのend_app関数
-                    Log.v(TAG, "Receive End Voice Command heard");
-                    finish();//アプリを終了する
                 }
 
                 break;

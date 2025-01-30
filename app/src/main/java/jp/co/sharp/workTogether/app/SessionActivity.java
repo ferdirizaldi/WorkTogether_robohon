@@ -227,6 +227,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //Scene操作
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SESSION);
 
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
@@ -241,7 +242,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         shiftPhase();
 
         //セッション開始の発話
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_END_SPEAK);
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t2");
+        //終了時間が入力されているかで発話トピックを変えたい
 
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
         timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)
@@ -277,6 +279,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_SESSION);
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_WORK);
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_BREAK);
 
@@ -341,7 +344,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             alertTimer--;
             if (alertTimer < 0) {
                 int result;
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_ALERT);//アラートシナリオを起動する
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ALERT);//アラートシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_ALERT Failed");
                 } else {
@@ -361,7 +364,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             int result;
             if (phaseFrag) {//work状態のとき
                 int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTION + ".t" + rnd);//アクションシナリオを起動する
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
                 } else {
@@ -369,7 +372,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }
             } else {//break状態のとき
                 int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTION + ".t" + rnd);//アクションシナリオを起動する
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_ACTION Failed");
                 } else {

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<hvml version="2.0">
+    <head>
+        <producer>jp.co.sharp.workTogether.app</producer>
+        <description>セッション開始時にセッション時間を発話させるシナリオ</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_session"/>
+        <version value="1.0"/>
+        <accost priority="73" topic_id="t1" word="jp.co.sharp.workTogether.app.session.accosts.t1"/>
+        <accost priority="73" topic_id="t2" word="jp.co.sharp.workTogether.app.session.accosts.t2"/>
+    </head>
+    <body>
+        <topic id="t1" listen="false">
+            <action index="1">
+                <speech>僕といっしょに${memory_p:jp.co.sharp.workTogether.app.session_time}頑張ろう！</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+            <next href="#t2" type="default"/>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>僕といっしょに頑張ろう！</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+            <next href="#t2" type="default"/>
+        </topic>
+    </body>
+</hvml>

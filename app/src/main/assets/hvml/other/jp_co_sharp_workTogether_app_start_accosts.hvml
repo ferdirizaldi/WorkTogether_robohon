@@ -5,16 +5,19 @@
         <description>アプリ起動時の発話シナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.start_hello"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.start.accosts.t1"/>
+        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.start.accosts.t2"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>一緒に作業しよう！作業または勉強時間教えて!</speech>
+                <speech>僕といっしょにがんばろう！何時間ぐらいにする？</speech>
                 <behavior id="assign" type="normal"/>
             </action>
-            <action index="2">
-                <speech>１時間２時間、それとも無限のセッション、どっちがいい？</speech>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>１時間か２時間か、決まってないって答えてね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

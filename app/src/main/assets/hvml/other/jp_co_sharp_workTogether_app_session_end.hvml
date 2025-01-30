@@ -3,7 +3,7 @@
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
         <description>セッション終了コマンドを聞き取るシナリオ</description>
-        <scene value="jp.co.sharp.workTogether.app.scene_break"/>
+        <scene value="jp.co.sharp.workTogether.app.scene_session"/>
         <version value="1.0"/>
         <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [アプリ,セッション] and ${Lvcsr:Basic} include [終わ,中止,やめ]</situation>
     </head>
@@ -14,7 +14,7 @@
                 <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
             </action>
             <action index="2">
-                <speech>セッションを終了するよ</speech>
+                <speech>今日はもう終わりにしよう</speech>
                 <control function="end_session" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>

@@ -2,22 +2,20 @@
 <hvml version="2.0">
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
-        <description>セッション時間を発話させるシナリオ</description>
-        <scene value="jp.co.sharp.workTogether.app.scene_work"/>
+        <description>アプリ終了コマンドを受け付けるシナリオ</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
-        <accost priority="73" topic_id="t1" word="jp.co.sharp.workTogether.app.start_end"/>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [アプリ,セッション] and ${Lvcsr:Basic} include [終わ,中止,やめ]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>${memory_p:jp.co.sharp.workTogether.app.session_time}のセッション始めるね！</speech>
-                <behavior id="assign" type="normal"/>
+                <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
+                <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
             </action>
-            <next href="#t2" type="default"/>
-        </topic>
-        <topic id="t2" listen="false">
-            <action index="1">
-                <control function="end_speak" target="jp.co.sharp.workTogether.app"/>
+            <action index="2">
+                <speech>アプリを終了するね</speech>
+                <control function="end_app" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>

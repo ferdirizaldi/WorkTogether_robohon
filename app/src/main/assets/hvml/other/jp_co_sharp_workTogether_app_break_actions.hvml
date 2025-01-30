@@ -5,8 +5,8 @@
         <description>休憩フェイズ中の定期的な動作</description>
         <scene value="jp.co.sharp.workTogether.app.scene_break"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.action.t1"/>
-        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.break.action.t2"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.actions.t1"/>
+        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.break.actions.t2"/>
     </head>
     <body>
         <topic id="t1" listen="false">

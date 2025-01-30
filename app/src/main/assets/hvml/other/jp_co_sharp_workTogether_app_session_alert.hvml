@@ -3,9 +3,9 @@
     <head>
         <producer>jp.co.sharp.workTogether.app</producer>
         <description>終了予定時刻を超過した時の発話</description>
-        <scene value="jp.co.sharp.workTogether.app.scene_common"/>
+        <scene value="jp.co.sharp.workTogether.app.scene_session"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.alert"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.session.alert"/>
     </head>
     <body>
         <topic id="t1" listen="false">

@@ -5,8 +5,8 @@
         <description>作業フェイズ中の定期的な動作</description>
         <scene value="jp.co.sharp.workTogether.app.scene_work"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.work.action.t1"/>
-        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.work.action.t2"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.work.actions.t1"/>
+        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.work.actions.t2"/>
     </head>
     <body>
         <topic id="t1" listen="false">
