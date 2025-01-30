@@ -66,12 +66,11 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
-    private int alertTimer;//終了予定時刻までの時間をカウントダウンする
-    private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンする
-    private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンする
-    private int sessionLong;
-
-    private String startTime;//開始時刻
+    private int alertTimer;//終了予定時刻までの時間をカウントダウンするタイマー
+    private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンするタイマー
+    private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンするタイマー
+    private int sessionLong;//meinActivityから送られてきたセッション終了までの時間
+    private String startTime;//セッション開始時の時刻
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
