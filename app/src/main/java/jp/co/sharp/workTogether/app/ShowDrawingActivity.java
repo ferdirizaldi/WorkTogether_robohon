@@ -269,6 +269,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
                     releaseWakeLock();
                     Log.v(TAG, "Projector Is Ended");
                     isProjected = false;
+                    finish();
                     break;
                 default:
                     break;
