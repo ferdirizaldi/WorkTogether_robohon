@@ -104,7 +104,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
-        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
+        //VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //Show Projector関数で画像表示
         startProjector();
@@ -121,7 +121,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
-        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
+        //VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
@@ -157,6 +157,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
+                break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
             case VoiceUIListenerImpl.ACTION_CANCELLED:
