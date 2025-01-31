@@ -11,7 +11,7 @@
     tools:context=".ShowActivity">
 
     <include
-        android:id="@+id/content_main"
+        android:id="@+id/content_show"
         layout="@layout/content_show_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

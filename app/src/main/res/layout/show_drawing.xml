@@ -8,11 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".SessionActivity">
+    tools:context=".ShowActivity">
 
     <include
-        android:id="@+id/content_session"
-        layout="@layout/content_session_activity"
+        android:id="@+id/content_showDraw"
+        layout="@layout/content_show_drawing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    
 </RelativeLayout>
