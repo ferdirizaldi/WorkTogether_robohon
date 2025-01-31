@@ -131,7 +131,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                //現在のフェイズを表す
                 sessionOutputStatus.setText("作業中");
+                //終了予定時刻を表す
                 sessionOutputTime.setText("∞");
             }
         });
@@ -139,6 +141,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         updateSessionOutputTime(sessionLength, sessionOutputTime);
 
         shiftPhaseButton.setOnClickListener(v -> {
+            //作業フェイズと休憩フェイズを切り替えるボタン
             shiftPhase();
         });
 
@@ -155,12 +158,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     }
 
     private void updateSessionOutputTime(int sessionLength, TextView sessionOutputTime) {
-        //TASK
-        //１時間と2時間しか対応していないので後で修正が必要、セッション時間が無限の時の表記も考えなおす必要あり
-
         // Get the current time
         Calendar calendar = Calendar.getInstance();
-
 
         // Add the session duration in hours to the current time
         if (sessionLength == 0) {
