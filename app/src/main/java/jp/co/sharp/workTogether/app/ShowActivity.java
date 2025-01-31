@@ -81,7 +81,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         registerReceiver(mHomeEventReceiver, filterHome);
 
         //プロジェクタイベントの検知登録.
-        setProjectorEventReceiver();
+        //setProjectorEventReceiver();
 
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
@@ -107,9 +107,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         showProjectorButton.setOnClickListener(view -> {
             //落書表示専用画面に移動
             navigateToActivity(this, ShowDrawingActivity.class, null);
-
             //プロジェクターを起動する
-            //startProjector();
+            //startProjector(); //ShowDrawingActivityに移動
         });
 
     }
@@ -135,7 +134,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //アクティビティ起動時の発話
-
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの起動時シナリオを起動する
 
     }

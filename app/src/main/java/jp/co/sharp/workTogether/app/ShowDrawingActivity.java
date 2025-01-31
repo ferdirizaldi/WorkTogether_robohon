@@ -73,6 +73,9 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
 
+        //プロジェクタイベントの検知登録.
+        setProjectorEventReceiver();
+
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
         // 終了ボタンの処理
