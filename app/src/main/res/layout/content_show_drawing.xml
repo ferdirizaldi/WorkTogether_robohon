@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/show_drawing" tools:context=".ShowDrawingActivity"
+    android:layout_gravity="center_horizontal">
+
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/output_image"
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:src="@drawable/rakuone"
+                android:contentDescription="@string/showactivity_imgdsc"
+                android:layout_marginTop="16dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/finish_app_button"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_finish_app"
+                    android:singleLine="false"
+                    android:textSize="32sp"
+                    android:layout_marginTop="0dp"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

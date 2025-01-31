@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;//追加日1/24
 import android.util.Log;
@@ -138,20 +139,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         updateSessionOutputTime(sessionLength, sessionOutputTime);
 
         shiftPhaseButton.setOnClickListener(v -> {
-            //Shift Phase
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if(phaseFrag){
-                        phaseFrag = false;
-                        sessionOutputStatus.setText("休憩");
-                    }else{
-                        phaseFrag = true;
-                        sessionOutputStatus.setText("作業中");
-                    }
-
-                }
-            });
+            shiftPhase();
         });
 
         sessionFinishButton.setOnClickListener(v -> {
@@ -417,6 +405,17 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             //タイマー更新
             suggestTimer = breakSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
             actionTimer = breakActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
+
+
+            // 休憩に入る、UI更新
+            TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sessionOutputStatus.setText("休憩");
+                    sessionOutputStatus.setTextColor(Color.YELLOW);
+                }
+            });
         }else{//現在breakフェイズならworkフェイズを開始する
             Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
@@ -428,6 +427,16 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             //タイマー更新
             suggestTimer = workSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
             actionTimer = workActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
+
+            // 作業に入る、UI更新
+            TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sessionOutputStatus.setText("作業中");
+                    sessionOutputStatus.setTextColor(Color.GREEN);
+                }
+            });
         }
     }
 
