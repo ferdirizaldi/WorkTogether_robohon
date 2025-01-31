@@ -5,29 +5,29 @@
         <description>終了予定時間を聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
-        <situation priority="74" topic_id="t1" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [1,一,いち,イチ,ichi]</situation>
-        <situation priority="74" topic_id="t2" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [2,二,に,ニ,ni]</situation>
-        <situation priority="74" topic_id="t3" trigger="user-word">ＶＯＩＣＥＰＦ＿ＥＲＲ outof ${Lvcsr:Basic} include [無限,むげん,ムゲン,mugen]</situation>
+        <situation priority="74" topic_id="0" trigger="user-word">${Lvcsr:Basic} include [無限,むげん,決めてない,決まってない,わからない]</situation>
+        <situation priority="74" topic_id="1" trigger="user-word">${Lvcsr:Basic} include [1,一,いち]</situation>
+        <situation priority="74" topic_id="2" trigger="user-word">${Lvcsr:Basic} include [2,二,に]</situation>
     </head>
     <body>
-        <topic id="t1" listen="false">
+        <topic id="0" listen="false">
+            <action index="1">
+                <control function="send_length" target="jp.co.sharp.workTogether.app">
+                    <data key="Session_Length" value="0"/>
+                </control>
+            </action>
+        </topic>
+        <topic id="1" listen="false">
             <action index="1">
                 <control function="send_length" target="jp.co.sharp.workTogether.app">
                     <data key="Session_Length" value="1"/>
                 </control>
             </action>
         </topic>
-        <topic id="t2" listen="false">
+        <topic id="2" listen="false">
             <action index="1">
-                <control function="send_word_twoHours" target="jp.co.sharp.workTogether.app">
-                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
-                </control>
-            </action>
-        </topic>
-        <topic id="t3" listen="false">
-            <action index="1">
-                <control function="send_word_mugen" target="jp.co.sharp.workTogether.app">
-                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
+                <control function="send_length" target="jp.co.sharp.workTogether.app">
+                    <data key="Session_Length" value="2"/>
                 </control>
             </action>
         </topic>

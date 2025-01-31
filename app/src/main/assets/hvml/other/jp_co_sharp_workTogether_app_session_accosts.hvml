@@ -11,12 +11,20 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
+                <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
+                <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
+            </action>
+            <action index="2">
                 <speech>僕といっしょに${memory_p:jp.co.sharp.workTogether.app.session_length}頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
+                <speech>${resolver:speech_ok(${resolver:ok_id})}</speech>
+                <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
+            </action>
+            <action index="2">
                 <speech>僕といっしょに頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
