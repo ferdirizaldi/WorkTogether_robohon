@@ -14,7 +14,6 @@
                 <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
             </action>
             <action index="2">
-                <speech>今日はもう終わりにしよう</speech>
                 <control function="end_session" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
