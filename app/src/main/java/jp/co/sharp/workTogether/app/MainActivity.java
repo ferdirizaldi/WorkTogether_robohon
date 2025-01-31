@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-    private String sessionTime = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,34 +83,15 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // Set click listeners
         oneHour_button.setOnClickListener(v -> {
-            sessionTime = "1時間";
-            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-            // Delay navigation for a set time (e.g., 2 seconds)
-            Bundle extras = new Bundle();
-            extras.putString("SessionName", "1Hour");
-            extras.putInt("SessionLong", 1);
-            navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-            finish();
+            startActivity(1);//一時間のセッションを開始
         });
 
         twoHours_button.setOnClickListener(v -> {
-            sessionTime = "2時間";
-            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-                Bundle extras = new Bundle();
-                extras.putString("SessionName", "2Hours");
-                extras.putInt("SessionLong", 2);
-                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                finish();
+            startActivity(2);//二時間のセッションを開始
         });
 
         noLimit_button.setOnClickListener(v -> {
-            sessionTime = "無限";
-            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-                Bundle extras = new Bundle();
-                extras.putString("SessionName", "無限");
-                extras.putInt("SessionLong", 0);
-                navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                finish();
+            startActivity(0);//時間指定せずにセッションを開始
         });
 
         finishButton.setOnClickListener(v -> {
@@ -195,38 +176,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     finish();//アプリを終了する
                 }
 
-                final String sessionTime = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_LVCSR_BASIC);//聞いた単語をString変数に格納
-                //セッション時間メモリ保存
-                VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_TIME, sessionTime);
-                if(!(Objects.equals(sessionTime, ""))) {//正常なテキストなら一連の処理を開始する
-                    if(ScenarioDefinitions.FUNC_SEND_WORD_ONEHOUR.equals(function)){
-                        Bundle extras = new Bundle();
-                        extras.putString("SessionName", "1Hour");
-                        extras.putInt("SessionLong", 1);
-                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                        finish();
-                    }
-                    if(ScenarioDefinitions.FUNC_SEND_WORD_TWOHOURS.equals(function)){
-                        Bundle extras = new Bundle();
-                        extras.putString("SessionName", "2Hours");
-                        extras.putInt("SessionLong", 2);
-                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                        finish();
-
-                    }
-                    if(ScenarioDefinitions.FUNC_SEND_WORD_MUGEN.equals(function)){
-                        Bundle extras = new Bundle();
-                        extras.putString("SessionName", "無限");
-                        extras.putInt("SessionLong", 0);
-                        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
-                        Log.v(TAG, "Delayed navigation to SessionActivity after speech.");
-                        finish();
-                    }
-
-                }else{
-                    Log.v(TAG, "Listen Scenario Sent Empty Text");
+                if(ScenarioDefinitions.FUNC_SEND_LENGTH.equals(function)){
+                    //シナリオから送られてきたSession_LengthをStringからIntへ変換し、その時間のセッションを開始する
+                    startActivity(Integer.parseInt(VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_SESSION_LENGTH)));
                 }
 
                 break;
@@ -239,28 +191,17 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-
-    /**
-     * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>
-     * <p/>
-     * アプリは必ずホームボタンで終了する.
-     */
-    private class HomeEventReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.v(TAG, "Receive Home button pressed");
-            // ホームボタン押下でアプリ終了する.
-            finish();
+    public void startActivity(int sessionLength){
+        if(sessionLength != 0) {
+            VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_LENGTH, sessionLength + "時間");
         }
+
+        Bundle extras = new Bundle();
+        extras.putInt("sessionLength", sessionLength);
+        navigateToActivity(MainActivity.this, SessionActivity.class, extras);
+        finish();
     }
 
-    /**
-     * タイトルバーを設定する.
-     */
-    private void setupTitleBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-    }
 
     /**
      * Helper method for transitioning to another activity.
@@ -284,6 +225,28 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             intent.putExtras(extras);
         }
         context.startActivity(intent);
+    }
+
+    /**
+     * タイトルバーを設定する.
+     */
+    private void setupTitleBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setActionBar(toolbar);
+    }
+
+    /**
+     * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>
+     * <p/>
+     * アプリは必ずホームボタンで終了する.
+     */
+    private class HomeEventReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v(TAG, "Receive Home button pressed");
+            // ホームボタン押下でアプリ終了する.
+            finish();
+        }
     }
 
 }

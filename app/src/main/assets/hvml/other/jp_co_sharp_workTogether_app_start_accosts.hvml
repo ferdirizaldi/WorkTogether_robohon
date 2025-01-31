@@ -11,7 +11,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>僕といっしょにがんばろう！何時間ぐらいにしようか？</speech>
+                <speech>何時間ぐらいにするかは決まってる？</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

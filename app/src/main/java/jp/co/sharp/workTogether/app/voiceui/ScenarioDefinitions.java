@@ -117,25 +117,17 @@ public class ScenarioDefinitions {
      */
     public static final String FUNC_USE_PROJECTOR = "use_projector";
     /**
-     * 関数名：send_word
+     * 関数名：send_length start_setTimeシナリオからMainActivityに送る
      */
-    public static final String FUNC_SEND_WORD_ONEHOUR = "send_word_oneHour";
+    public static final String FUNC_SEND_LENGTH = "send_length";
     /**
-     * 関数名：send_word
+     * キー：Session_Length　send_lengthで変数を送るときのキー
      */
-    public static final String FUNC_SEND_WORD_TWOHOURS = "send_word_twoHours";
+    public static final String KEY_SESSION_LENGTH = "Session_Length";
     /**
-     * 関数名：send_word
+     * キー：Session_Length　pメモリにセッションの長さを格納するときのキー
      */
-    public static final String FUNC_SEND_WORD_MUGEN = "send_word_mugen";
-    /**
-     * キー：lvcsr_basic
-     */
-    public static final String KEY_LVCSR_BASIC = "Lvcsr_Basic";
-    /**
-     * キー：SessionTime　作業
-     */
-    public static final String MEM_P_SESSION_TIME = ScenarioDefinitions.PACKAGE + ".session_time";
+    public static final String MEM_P_SESSION_LENGTH = ScenarioDefinitions.PACKAGE + ".session_length";
 
 
 }

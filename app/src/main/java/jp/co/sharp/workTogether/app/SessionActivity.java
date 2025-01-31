@@ -69,7 +69,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private int alertTimer;//終了予定時刻までの時間をカウントダウンするタイマー
     private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンするタイマー
     private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンするタイマー
-    private int sessionLong;//meinActivityから送られてきたセッション終了までの時間
+    private int sessionLength;//meinActivityから送られてくる、セッション終了までの時間
     private String startTime;//セッション開始時の時刻
 
     @Override
@@ -83,14 +83,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
 
-        String[] sessionData = getExtrasAsArray();
-
-        if(sessionData!=null){
-            Log.v("Session Activity", "Session Name:" + sessionData[0]);
-            Log.v("Session Activity", "Session Time:" + sessionData[1]);
-        }else{
-            Log.v("Session Activity", "No Extras Found");
-        }
+        //セッションの予定時間sessionLengthを受け取る
+        sessionLength = getExtras();
+        Log.v("Session Activity", "Session Length:" + sessionLength);
 
         // UI表示
         initializeSessionUI();
@@ -102,22 +97,19 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      *
      * @return A string array containing the session data or null if no extras exist.
      */
-    private String[] getExtrasAsArray() {
+    private int getExtras() {
         Intent intent = getIntent();
 
-        if (intent != null && intent.getExtras() != null) {
+        if (intent != null) {
             Bundle extras = intent.getExtras();
-
-            // Extract specific data
-            String sessionName = extras.getString("SessionName", "DefaultName"); // Default value if null
-            sessionLong = extras.getInt("SessionLong", 0); // Default value if not provided
-
-            // Return the data as an array of strings
-            return new String[]{sessionName, String.valueOf(sessionLong)};
+            if (extras != null) {
+                // Extract specific data and return the data
+                return extras.getInt("sessionLength", 0); // Default value if not provided
+            }
         }
-
-        // Return null if no extras are found
-        return null;
+        // Return 0 if no extras are found
+        Log.v("Session Activity", "No Extras Are Found");
+        return 0;
     }
 
     /**
@@ -139,11 +131,11 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             @Override
             public void run() {
                 sessionOutputStatus.setText("作業中");
-                sessionOutputTime.setText("00:00:00");
+                sessionOutputTime.setText("∞");
             }
         });
 
-        updateSessionOutputTime(sessionLong, sessionOutputTime);
+        updateSessionOutputTime(sessionLength, sessionOutputTime);
 
         shiftPhaseButton.setOnClickListener(v -> {
             //Shift Phase
@@ -163,35 +155,31 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         });
 
         sessionFinishButton.setOnClickListener(v -> {
-            // Finish the current activity
-            timerStopFrag = true;
-            Bundle extras = new Bundle();
-            extras.putString("SessionStartTime", startTime);
-            navigateToActivity(this, ShowActivity.class, extras);
-            finish();
+            // セッションを終了させるボタン
+            endSession();//SessionActivityを終了させShowActivityに遷移
         });
 
         finishButton.setOnClickListener(v -> {
-            // Finish the current activity
+            // アプリ自体を終了させるボタン
             timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();
         });
     }
 
-    private void updateSessionOutputTime(int sessionLong, TextView sessionOutputTime) {
+    private void updateSessionOutputTime(int sessionLength, TextView sessionOutputTime) {
+        //TASK
+        //１時間と2時間しか対応していないので後で修正が必要、セッション時間が無限の時の表記も考えなおす必要あり
+
         // Get the current time
         Calendar calendar = Calendar.getInstance();
 
 
         // Add the session duration in hours to the current time
-        if (sessionLong == 1) {
-            calendar.add(Calendar.HOUR_OF_DAY, 1);
-        } else if (sessionLong == 2) {
-            calendar.add(Calendar.HOUR_OF_DAY, 2);
-        } else {
+        if (sessionLength == 0) {
             // Handle the default case (e.g., infinite session)
-            sessionOutputTime.setText("∞");
             return;
+        } else{
+            calendar.add(Calendar.HOUR_OF_DAY, sessionLength);
         }
 
         // Format the calculated end time to HH:mm:ss
@@ -230,9 +218,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
-        if(sessionLong>0){
-            alertTimer = 3600 * sessionLong;
-        }
+        alertTimer = 3600 * sessionLength;//単位を時間から秒に変換
         Log.v("Session Activity", "Session AlertTime:" + alertTimer);
         alertFrag = (alertTimer == 0);//アラートまでの時間が未定義等により0秒になった時は、すでにアラート済みということにしてタイマーを止める
 
@@ -456,7 +442,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      */
         timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
 
-        navigateToActivity(this, ShowActivity.class,null);//ShowActivityを呼び出す
+        Bundle extras = new Bundle();
+        extras.putString("sessionStartTime", startTime);
+        navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する
     }

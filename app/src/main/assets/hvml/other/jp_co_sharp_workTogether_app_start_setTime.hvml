@@ -12,8 +12,8 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <control function="send_word_oneHour" target="jp.co.sharp.workTogether.app">
-                    <data key="Lvcsr_Basic" value="${Lvcsr:Basic}"/>
+                <control function="send_length" target="jp.co.sharp.workTogether.app">
+                    <data key="Session_Length" value="1"/>
                 </control>
             </action>
         </topic>

@@ -93,7 +93,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //過ぎた時間表示を更新
         TextView resultTimePassed = (TextView) findViewById(R.id.showActivity_output_text_value);
-        String FinalElapsedTime = getElapsedTime(getIntentDataByKey("SessionStartTime"));
+        String FinalElapsedTime = getElapsedTime(getIntentDataByKey("sessionStartTime"));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
