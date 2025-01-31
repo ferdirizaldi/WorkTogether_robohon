@@ -83,15 +83,15 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // Set click listeners
         oneHour_button.setOnClickListener(v -> {
-            startActivity(1);//一時間のセッションを開始
+            startSession(1);//一時間のセッションを開始
         });
 
         twoHours_button.setOnClickListener(v -> {
-            startActivity(2);//二時間のセッションを開始
+            startSession(2);//二時間のセッションを開始
         });
 
         noLimit_button.setOnClickListener(v -> {
-            startActivity(0);//時間指定せずにセッションを開始
+            startSession(0);//時間指定せずにセッションを開始
         });
 
         finishButton.setOnClickListener(v -> {
@@ -170,17 +170,15 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
+                if(ScenarioDefinitions.FUNC_SEND_LENGTH.equals(function)){
+                    //シナリオから送られてきたSession_LengthをStringからIntへ変換し、その時間のセッションを開始する
+                    startSession(Integer.parseInt(VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_SESSION_LENGTH)));
+                }
 
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//start_endシナリオのend_app関数
                     Log.v(TAG, "Receive End Voice Command heard");
                     finish();//アプリを終了する
                 }
-
-                if(ScenarioDefinitions.FUNC_SEND_LENGTH.equals(function)){
-                    //シナリオから送られてきたSession_LengthをStringからIntへ変換し、その時間のセッションを開始する
-                    startActivity(Integer.parseInt(VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.KEY_SESSION_LENGTH)));
-                }
-
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
@@ -191,7 +189,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    public void startActivity(int sessionLength){
+    public void startSession(int sessionLength){
         if(sessionLength != 0) {
             VoiceUIManagerUtil.setMemory(mVUIManager, ScenarioDefinitions.MEM_P_SESSION_LENGTH, sessionLength + "時間");
         }
