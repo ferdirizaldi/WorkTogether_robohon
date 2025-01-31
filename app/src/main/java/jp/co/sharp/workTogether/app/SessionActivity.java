@@ -474,6 +474,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         Bundle extras = new Bundle();
         extras.putString("sessionStartTime", startTime);
+        extras.putBoolean("checkFirst", true);
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する

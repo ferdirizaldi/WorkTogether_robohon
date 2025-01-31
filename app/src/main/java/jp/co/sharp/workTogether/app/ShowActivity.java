@@ -56,7 +56,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private HomeEventReceiver mHomeEventReceiver;
     private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
-    private boolean accostedFrag = false;//アクティビティ起動時の発話が実行されたかを表すフラグ(false:未 true:済)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +117,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //アクティビティ起動時の発話
-        if(!accostedFrag) {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras.getBoolean("checkFirst",true)) {
             Log.v(TAG, "start.accost.t1 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの初回起動時シナリオを起動する
-            accostedFrag = true;
         }else{
             Log.v(TAG, "start.accost.t3 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t3");//showActivityの二回目以降起動時シナリオを起動する
@@ -168,8 +168,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
 
-        //プロジェクターが終わったら戻ってくるので終了しない
-        //finish();
+        //プロジェクターが終わっても戻ってこないので終了する
+        finish();
     }
 
     @Override

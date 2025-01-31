@@ -81,7 +81,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
-            finish();
+            endShowDrawing();
         });
 
     }
@@ -269,6 +269,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
                     releaseWakeLock();
                     Log.v(TAG, "Projector Is Ended");
                     isProjected = false;
+                    endShowDrawing();
                     break;
                 default:
                     break;
@@ -289,6 +290,39 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             finish();
         }
     }
+
+    public void endShowDrawing() {
+        Bundle extras = new Bundle();
+        extras.putBoolean("checkFirst", false);
+        navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
+
+        finish();//ShowActivityを呼んだらすぐに終了する
+    }
+
+    /**
+     * Helper method for transitioning to another activity.
+     *
+     * @param context       Current context (usually `this` in an activity).
+     * @param targetActivity Target activity class for the transition.
+     * @param extras         Optional data to pass to the target activity (can be null).
+     */
+    /**
+     //データ渡しなしのActivity移動
+     navigateToActivity(this, TargetActivity.class, null);
+     //データ渡しなしのActivity移動
+     Bundle extras = new Bundle();
+     extras.putString("key", "value");
+     extras.putInt("another_key", 123);
+     navigateToActivity(this, TargetActivity.class, extras);
+     **/
+    private void navigateToActivity(Context context, Class<?> targetActivity, Bundle extras) {
+        Intent intent = new Intent(context, targetActivity);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
+    }
+
     /**
      * Retrieves the extras from the intent and returns them as an array of strings.
      *
