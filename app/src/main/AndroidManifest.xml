@@ -31,7 +31,10 @@
         <activity
             android:name=".ShowActivity"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen" >
-            <meta-data android:name="use_projector" android:value="ShowActivity" />
+        </activity>
+        <activity
+            android:name=".ShowDrawingActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" >
         </activity>
 
         <service

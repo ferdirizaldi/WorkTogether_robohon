@@ -105,8 +105,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
         //プロジェクター使用ボタンの処理
         showProjectorButton.setOnClickListener(view -> {
+            //落書表示専用画面に移動
+            navigateToActivity(this, ShowDrawingActivity.class, null);
+
             //プロジェクターを起動する
-            startProjector();
+            //startProjector();
         });
 
     }
@@ -185,7 +188,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_USE_PROJECTOR.equals(function)){//show_projectorシナリオのshow_projector関数
                     Log.v(TAG, "Receive Projector Voice Command heard");
-                    startProjector();//プロジェクターを起動する関数
+                    navigateToActivity(this, ShowDrawingActivity.class, null);
+                    //startProjector();//プロジェクターを起動する関数
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -202,6 +206,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     }
 
     public void startProjector(){
+
         Log.v(TAG, "Try Start Projector");
         //プロジェクターでできあがあった絵を見せる
         if(!isProjected) {//すでにプロジェクターが起動済みでなければ
@@ -378,5 +383,29 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         } catch (ParseException e) {
             return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
         }
+    }
+
+    /**
+     * Helper method for transitioning to another activity.
+     *
+     * @param context       Current context (usually `this` in an activity).
+     * @param targetActivity Target activity class for the transition.
+     * @param extras         Optional data to pass to the target activity (can be null).
+     */
+    /**
+     //データ渡しなしのActivity移動
+     navigateToActivity(this, TargetActivity.class, null);
+     //データ渡しなしのActivity移動
+     Bundle extras = new Bundle();
+     extras.putString("key", "value");
+     extras.putInt("another_key", 123);
+     navigateToActivity(this, TargetActivity.class, extras);
+     **/
+    private void navigateToActivity(Context context, Class<?> targetActivity, Bundle extras) {
+        Intent intent = new Intent(context, targetActivity);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
     }
 }
