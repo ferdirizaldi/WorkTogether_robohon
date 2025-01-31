@@ -54,7 +54,7 @@
                     android:layout_height="60dp"
                     android:text="@string/button_show_result"
                     android:singleLine="false"
-                    android:textSize="25sp"
+                    android:textSize="23sp"
                     android:layout_marginTop="0dp"
                     android:layout_toStartOf="@id/finish_app_button"
                     android:layout_marginEnd="20dp" /> <!-- Optional spacing between buttons -->

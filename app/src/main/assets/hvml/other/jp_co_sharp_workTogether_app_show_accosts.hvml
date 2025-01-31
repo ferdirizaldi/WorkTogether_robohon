@@ -6,11 +6,18 @@
         <scene value="jp.co.sharp.workTogether.app.scene_show"/>
         <version value="1.0"/>
         <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.show.accosts.t1"/>
+        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.show.accosts.t2"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
                 <speech>お疲れ様！完成した絵をプロジェクタで見せてもいいかな？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>オッケーかまた今度って答えてね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

@@ -84,24 +84,6 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             finish();
         });
 
-        //過ぎた時間表示を更新
-        TextView resultTimePassed = (TextView) findViewById(R.id.showActivity_output_text_value);
-        String FinalElapsedTime = getElapsedTime(getIntentDataByKey("SessionStartTime"));
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                resultTimePassed.setText(FinalElapsedTime);
-            }
-        });
-
-        //プロジェクター使用ボタン取得
-        Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
-        //プロジェクター使用ボタンの処理
-        showProjectorButton.setOnClickListener(view -> {
-            //プロジェクターを起動する
-            startProjector();
-        });
-
     }
 
     @Override
@@ -124,9 +106,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
-        //アクティビティ起動時の発話
-
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの起動時シナリオを起動する
+        //Show Projector関数で画像表示
+        startProjector();
 
     }
 
@@ -175,16 +156,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         Log.v(TAG, "onScenarioEvent() : " + event);
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
-                String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
-                if(ScenarioDefinitions.FUNC_USE_PROJECTOR.equals(function)){//show_projectorシナリオのshow_projector関数
-                    Log.v(TAG, "Receive Projector Voice Command heard");
-                    startProjector();//プロジェクターを起動する関数
-                }
-                if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
-                    Log.v(TAG, "Receive End Voice Command heard");
-                    finish();//アプリを終了する
-                }
-                break;
+                String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
             case VoiceUIListenerImpl.ACTION_CANCELLED:
@@ -335,41 +307,5 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         // Return null if no extras are found
         return null;
-    }
-
-    /**
-     * 指定された開始時刻 (HH:mm:ss) から現在時刻までの経過時間を計算する
-     *
-     * @param startTime 開始時刻の文字列 (フォーマット: HH:mm:ss)
-     * @return 経過時間の文字列 (フォーマット: HH:mm:ss)、または無効な場合は "無効な時間形式"
-     */
-    public static String getElapsedTime(String startTime) {
-        try {
-            // 現在の時刻を取得 (Calendar → Date)
-            Calendar calendar = Calendar.getInstance();
-            Date now = calendar.getTime();
-
-            // SimpleDateFormat を使用して文字列を Date に変換
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-            Date start = timeFormat.parse(startTime);
-
-            // 経過時間（ミリ秒単位）を計算
-            long elapsedMillis = now.getTime() - start.getTime();
-
-            // 経過時間が負の場合は、絶対値を取る（未来時間の考慮）
-            if (elapsedMillis < 0) {
-                elapsedMillis = Math.abs(elapsedMillis);
-            }
-
-            // ミリ秒を時間、分、秒に変換
-            long hours = (elapsedMillis / (1000 * 60 * 60)) % 24; // 24時間を超えないように
-            long minutes = (elapsedMillis / (1000 * 60)) % 60;
-            long seconds = (elapsedMillis / 1000) % 60;
-
-            // hh:mm:ss 形式の文字列を作成
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        } catch (ParseException e) {
-            return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
-        }
     }
 }

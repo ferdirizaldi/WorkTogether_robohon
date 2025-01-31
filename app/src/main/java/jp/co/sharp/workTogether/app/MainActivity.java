@@ -18,6 +18,8 @@ import android.widget.Toolbar;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
@@ -47,6 +49,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
+    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
 
 
     @Override
@@ -122,10 +125,31 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //アプリ起動時に発話
+        Log.v(TAG, "start.accost.t1 Accosted");
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t1");
 
-        //TASK
-        //何秒か経過したらt2を呼ぶようにしたい
+        //アプリ起動後一定時間ごとに発話
+        accostStopFrag = false;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+        //Handlerインスタンスの生成
+        final Handler handler = new Handler();
+        TimerTask task = new TimerTask() {
+            //int count = 0;
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //スレッドの処理
+                        if(!accostStopFrag) {
+                            Log.v(TAG, "start.accost.t2 Accosted");
+                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t2");
+                        }
+                    }
+                });
+            }
+        };
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(task, 0, 10000);//10秒ごとにrunが実行される
 
     }
 
@@ -143,6 +167,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
+
+        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
 
         //単一Activityの場合はonPauseでアプリを終了する.
         finish();

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;//追加日1/28
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
@@ -68,6 +71,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * プロジェクタ照射状態.
      */
     private boolean isProjected = false;
+    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         registerReceiver(mHomeEventReceiver, filterHome);
 
         //プロジェクタイベントの検知登録.
-        setProjectorEventReceiver();
+        //setProjectorEventReceiver();
 
         // 終了ボタン取得
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
@@ -105,8 +109,10 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
         //プロジェクター使用ボタンの処理
         showProjectorButton.setOnClickListener(view -> {
+            //落書表示専用画面に移動
+            navigateToActivity(this, ShowDrawingActivity.class, null);
             //プロジェクターを起動する
-            startProjector();
+            //startProjector(); //ShowDrawingActivityに移動
         });
 
     }
@@ -132,9 +138,34 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //アクティビティ起動時の発話
-
+<<<<<<< HEAD
+        Log.v(TAG, "start.accost.t1 Accosted");
+=======
+>>>>>>> d064f0c845a737591b8afe0da8e0557fde478903
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの起動時シナリオを起動する
 
+        //アクティビティ起動後一定時間ごとに発話
+        accostStopFrag = false;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+        //Handlerインスタンスの生成
+        final Handler handler = new Handler();
+        TimerTask task = new TimerTask() {
+            //int count = 0;
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //スレッドの処理
+                        if(!accostStopFrag) {
+                            Log.v(TAG, "show.accost.t2 Accosted");
+                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t2");
+                        }
+                    }
+                });
+            }
+        };
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(task, 0, 10000);//10秒ごとにrunが実行される
     }
 
     @Override
@@ -151,6 +182,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
+
+        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
 
         //単一Activityの場合はonPauseでアプリを終了する.
         //プロジェクター起動時にもonPauseは呼ばれるので終了しない
@@ -185,7 +218,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
                 if(ScenarioDefinitions.FUNC_USE_PROJECTOR.equals(function)){//show_projectorシナリオのshow_projector関数
                     Log.v(TAG, "Receive Projector Voice Command heard");
-                    startProjector();//プロジェクターを起動する関数
+                    navigateToActivity(this, ShowDrawingActivity.class, null);
+                    //startProjector();//プロジェクターを起動する関数
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -202,6 +236,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     }
 
     public void startProjector(){
+
         Log.v(TAG, "Try Start Projector");
         //プロジェクターでできあがあった絵を見せる
         if(!isProjected) {//すでにプロジェクターが起動済みでなければ
@@ -378,5 +413,29 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         } catch (ParseException e) {
             return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
         }
+    }
+
+    /**
+     * Helper method for transitioning to another activity.
+     *
+     * @param context       Current context (usually `this` in an activity).
+     * @param targetActivity Target activity class for the transition.
+     * @param extras         Optional data to pass to the target activity (can be null).
+     */
+    /**
+     //データ渡しなしのActivity移動
+     navigateToActivity(this, TargetActivity.class, null);
+     //データ渡しなしのActivity移動
+     Bundle extras = new Bundle();
+     extras.putString("key", "value");
+     extras.putInt("another_key", 123);
+     navigateToActivity(this, TargetActivity.class, extras);
+     **/
+    private void navigateToActivity(Context context, Class<?> targetActivity, Bundle extras) {
+        Intent intent = new Intent(context, targetActivity);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
     }
 }

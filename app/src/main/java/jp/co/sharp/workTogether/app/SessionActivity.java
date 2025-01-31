@@ -152,7 +152,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         finishButton.setOnClickListener(v -> {
             // アプリ自体を終了させるボタン
-            timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();
         });
     }
@@ -259,6 +258,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
+
+        timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
 
         //単一Activityの場合はonPauseでアプリを終了する.
         finish();
@@ -441,7 +442,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     showActivityを呼び出す
     アクティビティを終了する
      */
-        timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
 
         Bundle extras = new Bundle();
         extras.putString("sessionStartTime", startTime);
@@ -460,7 +460,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
-            timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
             finish();//mainActivityがSessionActivityを呼び出した後に速やかに終了していればブロードキャストを用いる必要もない
         }
     }

@@ -5,7 +5,8 @@
         <description>アプリ終了コマンドを聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_show"/>
         <version value="1.0"/>
-        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [アプリ,セッション,プロジェクタ] and ${Lvcsr:Basic} include [終わ,中止,やめ]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [アプリ,セッション,プロジェクタ] and ${Lvcsr:Basic} include [終わ,おわ,中止]</situation>
+        <situation priority="75" topic_id="t1" trigger="user-word">${Lvcsr:Basic} include [やめ,またこんど,だめ,よくない]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
