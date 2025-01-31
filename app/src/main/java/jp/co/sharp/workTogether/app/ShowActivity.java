@@ -138,10 +138,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //アクティビティ起動時の発話
-<<<<<<< HEAD
         Log.v(TAG, "start.accost.t1 Accosted");
-=======
->>>>>>> d064f0c845a737591b8afe0da8e0557fde478903
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの起動時シナリオを起動する
 
         //アクティビティ起動後一定時間ごとに発話
