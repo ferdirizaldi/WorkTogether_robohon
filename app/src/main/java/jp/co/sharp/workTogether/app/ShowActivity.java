@@ -93,12 +93,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         showProjectorButton.setOnClickListener(view -> {
             //ShowDrawingActivityに移動
             navigateToActivity(this, ShowDrawingActivity.class, null);
-<<<<<<< HEAD
-=======
-            finish();
-            //プロジェクターを起動する
-            //startProjector(); //ShowDrawingActivityに移動
->>>>>>> d0be5ec9645e83825a781572f1ad7a4fd1b4c107
         });
 
     }
@@ -186,12 +180,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //ホームボタンの検知破棄.
         this.unregisterReceiver(mHomeEventReceiver);
 
-<<<<<<< HEAD
-=======
-        //プロジェクタイベントの検知破棄.
-        //this.unregisterReceiver(mProjectorEventReceiver);
-
->>>>>>> d0be5ec9645e83825a781572f1ad7a4fd1b4c107
         //インスタンスのごみ掃除.
         mVUIManager = null;
         mVUIListener = null;
@@ -210,11 +198,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive Projector Voice Command heard");
                     //ShowDrawingActivityに移動
                     navigateToActivity(this, ShowDrawingActivity.class, null);
-<<<<<<< HEAD
-=======
-                    //startProjector();//プロジェクターを起動する関数
-                    finish();
->>>>>>> d0be5ec9645e83825a781572f1ad7a4fd1b4c107
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
                     Log.v(TAG, "Receive End Voice Command heard");
