@@ -71,6 +71,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンするタイマー
     private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンするタイマー
     private int sessionLength;//meinActivityから送られてくる、セッション終了までの時間
+    private int totalTimer;//全体のカウントアップタイマー
     private String startTime;//セッション開始時の時刻
 
     @Override
@@ -157,6 +158,13 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     }
 
     private void updateSessionOutputTime(int sessionLength, TextView sessionOutputTime) {
+
+        //現在時刻取得
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        // Format the calculated end time to HH:mm:ss
+        startTime = timeFormat.format(Calendar.getInstance().getTime());
+        Log.v("startTime",startTime);
+
         // Get the current time
         Calendar calendar = Calendar.getInstance();
 
@@ -168,9 +176,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             calendar.add(Calendar.HOUR_OF_DAY, sessionLength);
         }
 
-        // Format the calculated end time to HH:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        startTime = timeFormat.format(Calendar.getInstance().getTime());
         String endTime = timeFormat.format(calendar.getTime());
 
         // Update the TextViews on the UI thread
@@ -381,6 +386,30 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }
             }
         }
+
+        // 4. Clock Logic 全体カウントアップタイマー更新
+        totalTimer++;
+        String timeString = formatTime(totalTimer);
+        Log.v(TAG, "Current Time: " + timeString); // Log or update UI with the time string
+        // 休憩に入る、UI更新
+        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value2);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sessionOutputStatus.setText(timeString);
+            }
+        });
+
+    }
+
+    /*
+    秒からhh:mm:ssに変更する関数
+     */
+    private String formatTime(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     /*
