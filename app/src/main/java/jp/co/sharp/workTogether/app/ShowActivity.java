@@ -148,7 +148,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             }
         };
         Timer t = new Timer();
-        t.scheduleAtFixedRate(task, 0, 10000);//10秒ごとにrunが実行される
+        t.scheduleAtFixedRate(task, 10000, 10000);//10秒ごとにrunが実行される
     }
 
     @Override
