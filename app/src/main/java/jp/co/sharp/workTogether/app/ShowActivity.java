@@ -55,7 +55,9 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+    private Handler handler;//一定間隔で呼び出される発話スレッドの制御に使用
+    private Runnable runnable;//一定間隔で呼び出される発話スレッドの制御に使用
+    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //過ぎた時間表示を更新
         TextView resultTimePassed = (TextView) findViewById(R.id.showActivity_output_text_value);
-        String FinalElapsedTime = getElapsedTime(getIntentDataByKey("sessionStartTime"));
+        String FinalElapsedTime = getElapsedTime(getIntentStringDataByKey("sessionStartTime"));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -92,6 +94,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         showProjectorButton.setOnClickListener(view -> {
             //ShowDrawingActivityに移動
             navigateToActivity(this, ShowDrawingActivity.class, null);
+            finish();
         });
 
     }
@@ -117,38 +120,32 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //アクティビティ起動時の発話
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if(extras.getBoolean("checkFirst",true)) {
-            Log.v(TAG, "start.accost.t1 Accosted");
+        String cF = getIntentStringDataByKey("checkFirst");
+        if(Objects.equals(cF, "first")) {
+            Log.v(TAG, "show.accosts.t1 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの初回起動時シナリオを起動する
-        }else{
-            Log.v(TAG, "start.accost.t3 Accosted");
+        }else if(Objects.equals(cF, "not first")){
+            Log.v(TAG, "show.accosts.t3 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t3");//showActivityの二回目以降起動時シナリオを起動する
+        }else{
+            Log.v(TAG, "cannot get intentData");
         }
 
         //アクティビティ起動後一定時間ごとに発話
-        accostStopFrag = false;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
-        //Handlerインスタンスの生成
-        final Handler handler = new Handler();
-        TimerTask task = new TimerTask() {
-            //int count = 0;
+        accostStopFrag = false;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
+        handler = new Handler();
+        runnable = new Runnable() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //スレッドの処理
-                        if(!accostStopFrag) {
-                            Log.v(TAG, "show.accost.t2 Accosted");
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t2");
-                        }
-                    }
-                });
+                // UIスレッド
+                if(!accostStopFrag) {
+                    Log.v(TAG, "show.accost.t2 Accosted");
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t2");
+                    handler.postDelayed(this, 15000);
+                }
             }
         };
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(task, 10000, 10000);//10秒ごとにrunが実行される
+        handler.postDelayed(runnable, 15000);
     }
 
     @Override
@@ -166,7 +163,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
-        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
+        handler.removeCallbacks(runnable);//一定間隔で呼び出される発話スレッドの呼び出し予約を破棄する
 
         //プロジェクターが終わっても戻ってこないので終了する
         finish();
@@ -198,6 +196,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     Log.v(TAG, "Receive Projector Voice Command heard");
                     //ShowDrawingActivityに移動
                     navigateToActivity(this, ShowDrawingActivity.class, null);
+                    finish();
                 }
                 if(ScenarioDefinitions.FUNC_END_APP.equals(function)){//show_endシナリオのshow_end関数
                     Log.v(TAG, "Receive End Voice Command heard");
@@ -227,23 +226,23 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
     /**
-     * Retrieves the extras from the intent and returns them as an array of strings.
+     * Retrieves the extras from the intent and returns them
      *
-     * @return A string data containing the session data or null if no extras exist by key.
-     * //Intentからの変数を受け取る関数
+     * @return A string data is the session data or error massage if no extras exist by key.
+     * //IntentからのString型変数を受け取る関数
      */
-    private String getIntentDataByKey(String key) {
+    private String getIntentStringDataByKey(String key) {
         Intent intent = getIntent();
-        if (intent != null && intent.getExtras() != null) {
+        if (intent != null) {
             Bundle extras = intent.getExtras();
-            String intentExtraData = extras.getString(key, "wrongKey"); // Default value if not provided
-            System.out.println(intentExtraData);
-            // Return the data as an array of strings
-            return intentExtraData;
+            if (extras != null) {
+                return extras.getString(key, "wrongKey");
+            }
         }
 
-        // Return null if no extras are found
-        return null;
+        // Return it if no extras are found
+        Log.v("Show Activity", "No Extras Are Found");
+        return "no extras are found";
     }
 
     /**

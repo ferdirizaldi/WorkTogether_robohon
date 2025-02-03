@@ -49,7 +49,9 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+    private Handler handler;//一定間隔で呼び出される発話スレッドの制御に使用
+    private Runnable runnable;//一定間隔で呼び出される発話スレッドの制御に使用
+    private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
 
 
     @Override
@@ -65,9 +67,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mHomeEventReceiver, filterHome);
-
-        // Prevent the keyboard from showing up on app start
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // UI表示
         initializeMainUI();
@@ -125,32 +124,24 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_START);
 
         //アプリ起動時に発話
-        Log.v(TAG, "start.accost.t1 Accosted");
+        Log.v(TAG, "start.accosts.t1 Accosted");
         VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t1");
 
         //アプリ起動後一定時間ごとに発話
-        accostStopFrag = false;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
-        //Handlerインスタンスの生成
-        final Handler handler = new Handler();
-        TimerTask task = new TimerTask() {
-            //int count = 0;
+        accostStopFrag = false;
+        handler = new Handler();
+        runnable = new Runnable() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //スレッドの処理
-                        if(!accostStopFrag) {
-                            Log.v(TAG, "start.accost.t2 Accosted");
-                            VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t2");
-                        }
-                    }
-                });
+                // UIスレッド
+                if(!accostStopFrag) {
+                    Log.v(TAG, "start.accosts.t2 Accosted");
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t2");
+                    handler.postDelayed(this, 15000);
+                }
             }
         };
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(task, 10000, 10000);//10秒ごとにrunが実行される
-
+        handler.postDelayed(runnable, 15000);
     }
 
     @Override
@@ -168,7 +159,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
-        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止中かを表すフラグ(false:動作中 true:停止中)
+        accostStopFrag = true;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
+        handler.removeCallbacks(runnable);//一定間隔で呼び出される発話スレッドの呼び出し予約を破棄する
 
         //単一Activityの場合はonPauseでアプリを終了する.
         finish();

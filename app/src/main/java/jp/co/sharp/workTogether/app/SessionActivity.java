@@ -55,7 +55,9 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-
+    private Handler handler;//毎秒呼び出されるスレッドの制御に使用
+    private Runnable runnable;//毎秒呼び出されるスレッドの制御に使用
+    private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     final private int workSuggestTimeFirst = 60 * 25;//初回の作業中止の提案までの時間(秒)
     final private int workSuggestTime = 60 * 5;//作業中止の提案の周期(秒)
     final private int workActionTimeFirst = 7;//初回の作業動作までの時間(秒)
@@ -64,7 +66,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     final private int breakSuggestTime = 60 * 5;//休憩中止の提案の周期(秒)
     final private int breakActionTimeFirst = 7;//初回の休憩動作までの時間(秒)
     final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
-    private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
     private int alertTimer;//終了予定時刻までの時間をカウントダウンするタイマー
@@ -86,7 +87,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
 
         //セッションの予定時間sessionLengthを受け取る
-        sessionLength = getExtras();
+        sessionLength = getIntentIntDataByKey("sessionLength");
         Log.v("Session Activity", "Session Length:" + sessionLength);
 
         // UI表示
@@ -95,21 +96,21 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     }
 
     /**
-     * Retrieves the extras from the intent and returns them as an array of strings.
+     * Retrieves the extras from the intent and returns them
      *
-     * @return A string array containing the session data or null if no extras exist.
+     * @return A int data is the session data or 0 if no extras exist by key.
+     * //Intentからのint型変数を受け取る関数
      */
-    private int getExtras() {
+    private int getIntentIntDataByKey(String key) {
         Intent intent = getIntent();
-
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                // Extract specific data and return the data
-                return extras.getInt("sessionLength", 0); // Default value if not provided
+                return extras.getInt(key, 0);
             }
         }
-        // Return 0 if no extras are found
+
+        // Return null if no extras are found
         Log.v("Session Activity", "No Extras Are Found");
         return 0;
     }
@@ -223,28 +224,21 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
 
-        //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)　もしかしたらAsyncTaskクラスを使ったほうが楽かもしれない
-        timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止中かを表すフラグ(false:動作中 true:停止中)
-        //Handlerインスタンスの生成
-        final Handler handler = new Handler();
-        TimerTask task = new TimerTask() {
-            //int count = 0;
+        //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)
+        timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
+        handler = new Handler();
+        runnable = new Runnable() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //スレッドの処理
-                        if(!timerStopFrag) {
-                            Log.v(TAG, "onTimeEvent Called");
-                            onTimeEvent();//毎秒の処理をこの関数内で行う
-                        }
-                    }
-                });
+                // UIスレッド
+                if(!timerStopFrag) {
+                    Log.v(TAG, "onTimeEvent Called");
+                    onTimeEvent();//毎秒の処理をこの関数内で行う
+                    handler.postDelayed(this, 1000);
+                }
             }
         };
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(task, 0, 1000);//1秒ごとにrunが実行される
+        handler.post(runnable);
     }
 
     @Override
@@ -264,7 +258,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
 
-        timerStopFrag = true;//タイマースレッド内の処理を止める　スレッド自体は残り続けてしまうのを解決したいが方法がわからない
+        timerStopFrag = true;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
+        handler.removeCallbacks(runnable);//毎秒呼び出されるスレッドの呼び出し予約を破棄する
 
         //単一Activityの場合はonPauseでアプリを終了する.
         finish();
@@ -474,7 +469,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         Bundle extras = new Bundle();
         extras.putString("sessionStartTime", startTime);
-        extras.putBoolean("checkFirst", true);
+        extras.putString("checkFirst", "first");
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する
