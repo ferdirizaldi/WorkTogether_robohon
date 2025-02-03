@@ -81,9 +81,11 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
+
+            // Projector also needs to end button process
+            stopProjector();
             endShowDrawing();
         });
-
     }
 
     @Override
@@ -341,5 +343,21 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         // Return null if no extras are found
         return null;
+    }
+
+    /**
+     * Stops the projector using ProjectorManagerServiceUtil.
+     */
+    private void stopProjector() {
+        Log.v(TAG, "Stopping Projector");
+
+        Intent intent = new Intent();
+        ComponentName componentName = new ComponentName(
+                ProjectorManagerServiceUtil.PACKAGE_NAME,
+                ProjectorManagerServiceUtil.CLASS_NAME);
+        intent.setComponent(componentName);
+        intent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+
+        startService(intent);
     }
 }
