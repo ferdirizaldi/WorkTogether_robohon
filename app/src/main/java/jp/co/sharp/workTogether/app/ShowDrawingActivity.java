@@ -324,27 +324,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         }
         context.startActivity(intent);
     }
-
-    /**
-     * Retrieves the extras from the intent and returns them as an array of strings.
-     *
-     * @return A string data containing the session data or null if no extras exist by key.
-     * //Intentからの変数を受け取る関数
-     */
-    private String getIntentDataByKey(String key) {
-        Intent intent = getIntent();
-        if (intent != null && intent.getExtras() != null) {
-            Bundle extras = intent.getExtras();
-            String intentExtraData = extras.getString(key, "wrongKey"); // Default value if not provided
-            System.out.println(intentExtraData);
-            // Return the data as an array of strings
-            return intentExtraData;
-        }
-
-        // Return null if no extras are found
-        return null;
-    }
-
+    
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
