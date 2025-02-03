@@ -43,6 +43,7 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+
         <receiver android:name=".voiceui.RequestScenarioReceiver" >
             <intent-filter>
                 <action android:name="jp.co.sharp.android.voiceui.REQUEST_SCENARIO" />

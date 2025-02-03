@@ -328,16 +328,29 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
-    private void stopProjector() {
+    public void stopProjector() {
         Log.v(TAG, "Stopping Projector");
 
-        Intent intent = new Intent();
+        // プロジェクター終了通知.
+        Intent notifyEndIntent = new Intent();
         ComponentName componentName = new ComponentName(
                 ProjectorManagerServiceUtil.PACKAGE_NAME,
                 ProjectorManagerServiceUtil.CLASS_NAME);
-        intent.setComponent(componentName);
-        intent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
 
-        startService(intent);
+        notifyEndIntent.setComponent(componentName);
+        notifyEndIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+
+        startService(notifyEndIntent);  //プロジェクター終了通知.
+
+        // プロジェクター終了処理開始通知.
+        Intent terminateIntent = new Intent();
+        terminateIntent.setComponent(componentName);
+        terminateIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
+
+        startService(terminateIntent);  // プロジェクター終了処理開始通知.
     }
+
+
+
+
 }
