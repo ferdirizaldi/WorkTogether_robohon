@@ -295,7 +295,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
     public void endShowDrawing() {
         Bundle extras = new Bundle();
-        extras.putString("checkFirst", "not first");
+        extras.putString("checkFirst", "no");
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する

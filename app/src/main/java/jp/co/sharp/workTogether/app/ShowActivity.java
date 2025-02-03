@@ -124,7 +124,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         if(Objects.equals(cF, "first")) {
             Log.v(TAG, "show.accosts.t1 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t1");//showActivityの初回起動時シナリオを起動する
-        }else if(Objects.equals(cF, "not first")){
+        }else if(Objects.equals(cF, "no")){
             Log.v(TAG, "show.accosts.t3 Accosted");
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SHOW_ACCOSTS + ".t3");//showActivityの二回目以降起動時シナリオを起動する
         }else{
