@@ -324,7 +324,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         }
         context.startActivity(intent);
     }
-    
+
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
