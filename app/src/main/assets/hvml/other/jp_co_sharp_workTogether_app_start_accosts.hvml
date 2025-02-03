@@ -11,7 +11,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>作業時間は決めてる？</speech>
+                <speech>作業時間は、決めてる？</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>

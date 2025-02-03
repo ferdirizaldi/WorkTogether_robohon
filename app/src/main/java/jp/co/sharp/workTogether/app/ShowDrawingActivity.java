@@ -169,11 +169,13 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
     }
 
     public void startProjector(){
-        Log.v(TAG, "Try Start Projector");
         //プロジェクターでできあがあった絵を見せる
         if(!isProjected) {//すでにプロジェクターが起動済みでなければ
+            Log.v(TAG, "Try Start Projector");
             //プロジェクター起動
             startService(getIntentForProjector());
+        }else{
+            Log.v(TAG, "Try Start Projector,But Projector Is Already Started");
         }
     }
 
@@ -255,21 +257,33 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "ProjectorEventReceiver#onReceive():" + intent.getAction());
             switch (intent.getAction()) {
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE:
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE:
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE://プロジェクター照射準備通知
+                    //Log.v(TAG, "プロジェクター照射準備通知");
                     break;
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START:
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE://プロジェクター照射一時停止通知
+                    //Log.v(TAG, "プロジェクター照射一時停止通知");
+                    break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME://プロジェクター照射再開通知
+                    //Log.v(TAG, "プロジェクター照射再開通知");
+                    break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START://プロジェクター照射開始通知
                     acquireWakeLock();
                     Log.v(TAG, "Projector Is Started");
                     isProjected = true;
                     break;
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END:
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR:
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR:
-                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE:
-                    releaseWakeLock();
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE://プロジェクター終了処理開始通知
+                    //Log.v(TAG, "プロジェクター終了処理開始通知");
+                    break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END://プロジェクター終了通知
+                    //Log.v(TAG, "プロジェクター終了処理通知");
+                    //break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR://プロジェクター異常終了通知
+                    //Log.v(TAG, "プロジェクター異常終了通知");
+                    //break;
+                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR://プロジェクター異常終了通知（復旧不可能）
+                    //Log.v(TAG, "プロジェクター異常終了通知(復旧不可能)");
                     Log.v(TAG, "Projector Is Ended");
+                    releaseWakeLock();
                     isProjected = false;
                     endShowDrawing();
                     break;

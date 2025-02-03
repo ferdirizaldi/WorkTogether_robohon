@@ -24,7 +24,7 @@
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
-                <speech>もう一度プロジェクタを起動したいときは、オッケーって答えてね</speech>
+                <speech>もう一度プロジェクタで見たいときは、見せてって言ってね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
