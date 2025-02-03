@@ -81,6 +81,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
             // Finish the current activity
+
             endShowDrawing();
         });
 
