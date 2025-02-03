@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Button;
@@ -84,7 +86,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
             // Projector also needs to end button process
             stopProjector();
-            endShowDrawing();
+            //endShowDrawing();
         });
     }
 
@@ -345,26 +347,27 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
     public void stopProjector() {
         Log.v(TAG, "Stopping Projector");
 
-        // プロジェクター終了通知.
-        Intent notifyEndIntent = new Intent();
+        // Step 1: Notify the projector to stop
+        Intent notifyEndIntent = new Intent(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+        sendBroadcast(notifyEndIntent);
+        Log.v(TAG, "Sent ACTION_PROJECTOR_END");
+
+        // Step 2: Wait before stopping the service
+        Intent stopIntent = new Intent();
         ComponentName componentName = new ComponentName(
                 ProjectorManagerServiceUtil.PACKAGE_NAME,
                 ProjectorManagerServiceUtil.CLASS_NAME);
 
-        notifyEndIntent.setComponent(componentName);
-        notifyEndIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+        stopIntent.setComponent(componentName);
 
-        startService(notifyEndIntent);  //プロジェクター終了通知.
+        Log.v(TAG, "Attempting to stop projector service...");
+        boolean stopped = stopService(stopIntent);
 
-        // プロジェクター終了処理開始通知.
-        Intent terminateIntent = new Intent();
-        terminateIntent.setComponent(componentName);
-        terminateIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
-
-        startService(terminateIntent);  // プロジェクター終了処理開始通知.
+        if (stopped) {
+            Log.v(TAG, "Projector service stopped successfully.");
+            isProjected = false; // Update state to prevent restart
+        } else {
+            Log.e(TAG, "Failed to stop projector service.");
+        }
     }
-
-
-
-
 }

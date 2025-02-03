@@ -169,7 +169,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         handler.removeCallbacks(runnable);//一定間隔で呼び出される発話スレッドの呼び出し予約を破棄する
 
         //プロジェクターが終わっても戻ってこないので終了する
-        finish();
+        //finish();
     }
 
     @Override
