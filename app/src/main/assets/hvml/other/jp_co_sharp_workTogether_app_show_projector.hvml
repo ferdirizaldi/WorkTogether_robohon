@@ -15,8 +15,6 @@
                 <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
             </action>
             <action index="2">
-                <speech>プロジェクターを使うよ</speech>
-                <behavior id="assign" type="normal"/>
                 <control function="use_projector" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>

@@ -88,7 +88,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //セッションの予定時間sessionLengthを受け取る
         sessionLength = getIntentIntDataByKey("sessionLength");
-        Log.v("Session Activity", "Session Length:" + sessionLength);
+        Log.v(TAG, "Session Length:" + sessionLength);
 
         // UI表示
         initializeSessionUI();
@@ -164,7 +164,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         // Format the calculated end time to HH:mm:ss
         startTime = timeFormat.format(Calendar.getInstance().getTime());
-        Log.v("startTime",startTime);
+        Log.v(TAG,"startTime is " + startTime);
 
         // Get the current time
         Calendar calendar = Calendar.getInstance();
@@ -210,7 +210,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
         //meinActivityのintentからextrasを取得し、アラートタイマーを設定し、そのフラグを設定
         alertTimer = 3600 * sessionLength;//単位を時間から秒に変換
-        Log.v("Session Activity", "Session AlertTime:" + alertTimer);
+        Log.v(TAG, "Session AlertTime:" + alertTimer);
         alertFrag = (alertTimer == 0);//アラートまでの時間が未定義等により0秒になった時は、すでにアラート済みということにしてタイマーを止める
 
         //セッション開始の発話

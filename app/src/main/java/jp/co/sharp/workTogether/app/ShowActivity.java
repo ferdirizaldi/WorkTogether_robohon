@@ -241,7 +241,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
 
         // Return it if no extras are found
-        Log.v("Show Activity", "No Extras Are Found");
+        Log.v(TAG, "No Extras Are Found");
         return "no extras are found";
     }
 
@@ -279,6 +279,14 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         } catch (ParseException e) {
             return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
         }
+    }
+
+    public void startShowDrawing() {//TASK elapsedtimeの情報を通す必要がある
+        Bundle extras = new Bundle();
+        extras.putString("checkFirst", "not");
+        navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
+
+        finish();//ShowActivityを呼んだらすぐに終了する
     }
 
     /**
