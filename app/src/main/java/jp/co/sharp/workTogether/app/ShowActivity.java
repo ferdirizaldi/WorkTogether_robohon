@@ -97,6 +97,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             finish();
         });
 
+        //落書の画像の配列を作成、その後、ランダムに選んで表示させる
+
     }
 
     @Override
