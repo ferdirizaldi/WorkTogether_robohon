@@ -87,7 +87,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
             // Projector also needs to end button process
             stopProjector();
-            //endShowDrawing();
+            //endShowDrawing();レシーバーと二重でendしてしまいそう
         });
     }
 
@@ -406,35 +406,5 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         }
         context.startActivity(intent);
     }
-
-    /**
-     * Stops the projector using ProjectorManagerServiceUtil.
-     */
-//    public void stopProjector() {
-//        Log.v(TAG, "Stopping Projector");
-//
-//        // Step 1: Notify the projector to stop
-//        Intent notifyEndIntent = new Intent(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
-//        sendBroadcast(notifyEndIntent);
-//        Log.v(TAG, "Sent ACTION_PROJECTOR_END");
-//
-//        // Step 2: Wait before stopping the service
-//        Intent stopIntent = new Intent();
-//        ComponentName componentName = new ComponentName(
-//                ProjectorManagerServiceUtil.PACKAGE_NAME,
-//                ProjectorManagerServiceUtil.CLASS_NAME);
-//
-//        stopIntent.setComponent(componentName);
-//
-//        Log.v(TAG, "Attempting to stop projector service...");
-//        boolean stopped = stopService(stopIntent);
-//
-//        if (stopped) {
-//            Log.v(TAG, "Projector service stopped successfully.");
-//            isProjected = false; // Update state to prevent restart
-//        } else {
-//            Log.e(TAG, "Failed to stop projector service.");
-//        }
-//    }
 
 }
