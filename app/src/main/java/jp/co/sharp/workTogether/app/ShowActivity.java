@@ -319,7 +319,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    public void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
+    public void startShowDrawing() {
         startProjector();
         Bundle extras = new Bundle();
         extras.putString("finalElapsedTimeLog",finalElapsedTime);
