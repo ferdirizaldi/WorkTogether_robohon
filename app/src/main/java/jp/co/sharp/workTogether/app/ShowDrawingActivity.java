@@ -175,7 +175,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             //その場合でもこの関数(ボタンからのみ呼ばれる)を使わず音声コマンドで終了させることは可能
         }
     }
-    
+
     /**
      * プロジェクターマネージャーの開始/停止用のIntentを設定する.
      */
