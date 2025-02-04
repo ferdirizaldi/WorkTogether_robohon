@@ -272,7 +272,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * @param startTime 開始時刻の文字列 (フォーマット: HH:mm:ss)
      * @return 経過時間の文字列 (フォーマット: HH:mm:ss)、または無効な場合は "無効な時間形式"
      */
-    public static String getElapsedTime(String startTime) {
+    private static String getElapsedTime(String startTime) {
         try {
             // 現在の時刻を取得 (Calendar → Date)
             Calendar calendar = Calendar.getInstance();
@@ -302,7 +302,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    public void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
+    private void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
         startProjector();
         Bundle extras = new Bundle();
         extras.putString("finalElapsedTimeLog",finalElapsedTime);
@@ -335,7 +335,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         context.startActivity(intent);
     }
 
-    public void startProjector(){
+    private void startProjector(){
         if(!isProjecting) {//すでにプロジェクターが起動中でなければ
             Log.v(TAG, "Try Start Projector");
             //プロジェクター起動
