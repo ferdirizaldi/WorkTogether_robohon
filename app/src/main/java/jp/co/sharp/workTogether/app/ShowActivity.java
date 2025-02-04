@@ -14,16 +14,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -105,8 +108,34 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
 
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
-
+        ImageView imageView = (ImageView) findViewById(R.id.output_image);
+        // Set a random image
+        imageView.setImageResource(getRandomImage());
     }
+
+    // Function to dynamically get all images with numeric names from drawable
+    private int[] getImageArray() {
+        List<Integer> imageList = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) { // Assuming you have images from 1.jpg to 10.jpg
+            int resId = getResources().getIdentifier("output_image_" + i, "drawable", getPackageName());
+            if (resId != 0) { // If resource exists, add it
+                imageList.add(resId);
+            }
+        }
+        // Convert List<Integer> to int[]
+        int[] imageArray = new int[imageList.size()];
+        for (int i = 0; i < imageList.size(); i++) {
+            imageArray[i] = imageList.get(i);
+        }
+        return imageArray;
+    }
+
+    // Function to select a random image from the array
+    private int getRandomImage() {
+        int[] images = getImageArray();
+        return images[new Random().nextInt(images.length)];
+    }
+
 
     @Override
     public void onResume() {
