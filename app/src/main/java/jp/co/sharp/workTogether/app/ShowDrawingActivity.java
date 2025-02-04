@@ -207,8 +207,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 //
 //        startService(terminateIntent);  // プロジェクター終了処理開始通知.
 //    }
-
-    private void stopProjector() {
+    public void stopProjector() {
         if(isProjected) {//すでにプロジェクターが起動済みなら
             Log.v(TAG, "Try Stop Projector");
             //プロジェクター終了

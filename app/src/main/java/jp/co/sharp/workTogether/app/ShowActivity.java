@@ -302,7 +302,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-    private void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
+    public void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
         startProjector();
         Bundle extras = new Bundle();
         extras.putString("finalElapsedTimeLog",finalElapsedTime);
@@ -335,7 +335,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         context.startActivity(intent);
     }
 
-    private void startProjector(){
+    public void startProjector(){
         if(!isProjecting) {//すでにプロジェクターが起動中でなければ
             Log.v(TAG, "Try Start Projector");
             //プロジェクター起動
