@@ -87,20 +87,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
             // Projector also needs to end button process
             stopProjector();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             //endShowDrawing();
-
-=======
-            //endShowDrawing();レシーバーと二重でendしてしまいそう
->>>>>>> Stashed changes
-=======
-            //endShowDrawing();レシーバーと二重でendしてしまいそう
->>>>>>> Stashed changes
-=======
-            //endShowDrawing();レシーバーと二重でendしてしまいそう
->>>>>>> Stashed changes
         });
     }
 
@@ -220,20 +207,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 //
 //        startService(terminateIntent);  // プロジェクター終了処理開始通知.
 //    }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
     private void stopProjector() {
-=======
-    public void stopProjector() {
->>>>>>> Stashed changes
-=======
-    public void stopProjector() {
->>>>>>> Stashed changes
-=======
-    public void stopProjector() {
->>>>>>> Stashed changes
         if(isProjected) {//すでにプロジェクターが起動済みなら
             Log.v(TAG, "Try Stop Projector");
             //プロジェクター終了
@@ -433,9 +408,6 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         context.startActivity(intent);
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
@@ -466,10 +438,4 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 //        }
 //    }
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
