@@ -16,7 +16,8 @@
     <string name="default_input_text">入力単語</string>
     <string name="oneHourButton_text">1時間</string>
     <string name="twoHoursButton_text">2時間</string>
-    <string name="threeHoursButton_text">自由時間</string>
+    <string name="noLimitButton_text">時間指定無し</string>
+    <string name="selectButton_text">決定</string>
     <string name="mainactivity_content_text1">セッション時間を選択してね！</string>
     <string name="sessionactivity_text1">今のフェーズ</string>
     <string name="sessionactivity_text2">予定終了時刻</string>

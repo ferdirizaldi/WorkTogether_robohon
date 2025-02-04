@@ -15,7 +15,6 @@
         <situation priority="74" topic_id="7" trigger="user-word">${Lvcsr:Basic} include [7,なな,七]</situation>
         <situation priority="74" topic_id="8" trigger="user-word">${Lvcsr:Basic} include [8,はち,八]</situation>
         <situation priority="74" topic_id="9" trigger="user-word">${Lvcsr:Basic} include [9,きゅう,九]</situation>
-        <situation priority="74" topic_id="10" trigger="user-word">${Lvcsr:Basic} include [10,じゅう,十]</situation>
     </head>
     <body>
         <topic id="0" listen="false">
@@ -85,13 +84,6 @@
             <action index="1">
                 <control function="send_length" target="jp.co.sharp.workTogether.app">
                     <data key="Session_Length" value="9"/>
-                </control>
-            </action>
-        </topic>
-        <topic id="10" listen="false">
-            <action index="1">
-                <control function="send_length" target="jp.co.sharp.workTogether.app">
-                    <data key="Session_Length" value="10"/>
                 </control>
             </action>
         </topic>

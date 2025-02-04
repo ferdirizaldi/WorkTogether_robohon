@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -77,22 +78,31 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      */
     private void initializeMainUI() {
         // Button references
-        Button oneHour_button = (Button) findViewById(R.id.oneHour_button);
-        Button twoHours_button = (Button) findViewById(R.id.twoHours_button);
+//        Button oneHour_button = (Button) findViewById(R.id.oneHour_button);
+//        Button twoHours_button = (Button) findViewById(R.id.twoHours_button);
         Button noLimit_button = (Button) findViewById(R.id.noLimit_button);
+        Button selectButton = (Button) findViewById(R.id.select_button);
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
+        NumberPicker numPicker = (NumberPicker)findViewById(R.id.numPicker);
 
-        // Set click listeners
-        oneHour_button.setOnClickListener(v -> {
-            startSession(1);//一時間のセッションを開始
-        });
-
-        twoHours_button.setOnClickListener(v -> {
-            startSession(2);//二時間のセッションを開始
-        });
-
+//        // Set click listeners
+//        oneHour_button.setOnClickListener(v -> {
+//            startSession(1);//一時間のセッションを開始
+//        });
+//
+//        twoHours_button.setOnClickListener(v -> {
+//            startSession(2);//二時間のセッションを開始
+//        });
         noLimit_button.setOnClickListener(v -> {
             startSession(0);//時間指定せずにセッションを開始
+        });
+
+        numPicker.setMaxValue(9);
+        numPicker.setMinValue(1);
+
+        // Set click listeners
+        selectButton.setOnClickListener(v -> {
+            startSession(numPicker.getValue());//1~10時間のセッションを開始
         });
 
         finishButton.setOnClickListener(v -> {

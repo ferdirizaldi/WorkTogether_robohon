@@ -6,19 +6,20 @@
     tools:showIn="@layout/main_activity" tools:context=".MainActivity">
 
     <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/default_mode_text"
                 android:id="@+id/mode_value"
-                android:textSize="24sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/default_mode_text"
+                android:textSize="24sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -27,13 +28,13 @@
                 android:background="#666666" />
 
             <TextView
-                android:text="@string/mainactivity_content_text1"
                 android:id="@+id/input_text"
-                android:textSize="24sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/mainactivity_content_text1"
+                android:textSize="24sp" />
 
-            <Button
+            <!--<Button
                 android:id="@+id/oneHour_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +62,22 @@
                 android:layout_marginTop="0dp"
                 android:singleLine="false"
                 android:text="@string/threeHoursButton_text"
+                android:textSize="32sp" />-->
+
+            <NumberPicker
+                android:id="@+id/numPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="102dp"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/select_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:singleLine="false"
+                android:text="@string/selectButton_text"
                 android:textSize="32sp" />
 
 
@@ -68,16 +85,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/finish_app_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_finish_app"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginTop="0dp"
-                android:layout_alignParentEnd="true" />
+                <Button
+                    android:id="@+id/finish_app_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:singleLine="false"
+                    android:text="@string/button_finish_app"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/noLimit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="0dp"
+                    android:singleLine="false"
+                    android:text="@string/noLimitButton_text"
+                    android:textSize="32sp" />
+
             </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
