@@ -12,7 +12,7 @@
     <body>
         <topic id="t1" listen="false">
             <action index="1">
-                <speech>お疲れ様！完成した絵をプロジェクタで映してもいいかな？</speech>
+                <speech>お疲れ様！僕が描いた絵をプロジェクタで映してもいいかな？</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
