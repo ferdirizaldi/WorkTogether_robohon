@@ -69,6 +69,10 @@ public class ScenarioDefinitions {
      */
     public static final String SCENE_SHOW = PACKAGE + ".scene_show";
     /**
+     * scene名: DRAWINGシーン
+     */
+    public static final String SCENE_DRAWING = PACKAGE + ".scene_drawing";
+    /**
      * accost名: アプリ開始時の発話シナリオ
      */
     public static final String ACC_START_ACCOSTS = PACKAGE + ".start.accosts";
@@ -100,6 +104,11 @@ public class ScenarioDefinitions {
      * accost名: 出来上がった絵を見せるシナリオ
      */
     public static final String ACC_SHOW_ACCOSTS = PACKAGE + ".show.accosts";
+    /**
+     * accost名: 出来上がった絵を照射し始めたときのシナリオ
+     */
+    public static final String ACC_DRAWING_ACCOSTS = PACKAGE + ".showDrawing.accosts";
+    /**
     /**
      * 関数名：shift_phase work_startBreakシナリオ及びbreak_startWorkシナリオからSessionActivityに送る
      */

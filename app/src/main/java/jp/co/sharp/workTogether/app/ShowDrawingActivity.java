@@ -105,6 +105,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_DRAWING);
 
     }
 
@@ -118,6 +119,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
+        VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_DRAWING);
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
@@ -267,6 +269,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
                     Log.v(TAG, "プロジェクター照射開始通知");
                     acquireWakeLock();
                     isProjected = true;
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_DRAWING_ACCOSTS + ".t1");//照射開始時シナリオを起動する
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE://プロジェクター終了処理開始通知
                     Log.v(TAG, "プロジェクター終了処理開始通知");

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<hvml version="2.0">
+    <head>
+        <producer>jp.co.sharp.workTogether.app</producer>
+        <description>showDrawingActivityの発話シナリオ</description>
+        <scene value="jp.co.sharp.workTogether.app.scene_drawing"/>
+        <version value="1.0"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.showDrawing.accosts.t1"/>
+        <situation priority="75" topic_id="t2" trigger="user-word">${Lvcsr:Basic} include [上手]</situation>
+    </head>
+    <body>
+        <topic id="t1" listen="false">
+            <action index="1">
+                <speech>上手に描けてるかな？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>ありがとう！</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+    </body>
+</hvml>
