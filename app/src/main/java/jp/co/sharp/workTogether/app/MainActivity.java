@@ -9,10 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;//追加1/17 multilingualからのコピペ
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;//追加1/17 multilingualからのコピペ
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -27,7 +26,7 @@ import jp.co.sharp.android.voiceui.VoiceUIVariable;
 import jp.co.sharp.workTogether.app.voiceui.ScenarioDefinitions;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIListenerImpl;
 import jp.co.sharp.workTogether.app.voiceui.VoiceUIManagerUtil;
-import jp.co.sharp.workTogether.app.voiceui.VoiceUIVariableUtil;//追加1/17 multilingualからのコピペ
+import jp.co.sharp.workTogether.app.voiceui.VoiceUIVariableUtil;
 
 
 /**

@@ -2,13 +2,13 @@ package jp.co.sharp.workTogether.app;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;//追加日1/28
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;//追加日1/28
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,18 +55,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * ホームボタンイベント検知.
      */
     private HomeEventReceiver mHomeEventReceiver;
-    /**
-     * プロジェクター状態変化イベント検知.
-     */
-    //private ShowActivity.ProjectorEventReceiver mProjectorEventReceiver;
-    /**
-     * プロジェクタ照射中のWakelock.
-     */
-    //private PowerManager.WakeLock mWakelock;
-    /**
-     * 排他制御用.
-     */
-    //private Object mLock = new Object();
     /**
      * プロジェクタ照射状態.
      */
@@ -188,7 +176,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         handler.removeCallbacks(runnable);//一定間隔で呼び出される発話スレッドの呼び出し予約を破棄する
 
         //プロジェクターが終わっても戻ってこないので終了する
-        //finish();
+        finish();
     }
 
     @Override
@@ -346,17 +334,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
     }
 
-//    public void stopProjector() {
-//        if(isProjected) {//すでにプロジェクターが起動済みなら
-//            Log.v(TAG, "Try Stop Projector");
-//            //プロジェクター終了
-//            stopService(getIntentForProjector());
-//        }else{
-//            Log.v(TAG, "Try Stop Projector,But Projector Have Not Started Yet");
-//        }
-//
-//    }
-
     /**
      * プロジェクターマネージャーの開始/停止用のIntentを設定する.
      */
@@ -372,103 +349,5 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         intent.setComponent(componentName);
         return intent;
     }
-
-    /**
-     * プロジェクターの状態変化イベントを受け取るためのレシーバーをセットする.
-     */
-//    private void setProjectorEventReceiver() {
-//        Log.v(TAG, "setProjectorEventReceiver()");
-//        if (mProjectorEventReceiver == null) {
-//            mProjectorEventReceiver = new ShowActivity.ProjectorEventReceiver();
-//        } else {
-//            return;
-//        }
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_START);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR);
-//        intentFilter.addAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
-//        registerReceiver(mProjectorEventReceiver, intentFilter);
-//    }
-//
-//    /**
-//     * WakeLockを取得する.
-//     */
-//    private void acquireWakeLock() {
-//        Log.v(TAG, "acquireWakeLock()");
-//        PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
-//        synchronized (mLock) {
-//            if (mWakelock == null || !mWakelock.isHeld()) {
-//                mWakelock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
-//                        | PowerManager.ACQUIRE_CAUSES_WAKEUP
-//                        | PowerManager.ON_AFTER_RELEASE, MainActivity.class.getName());
-//                mWakelock.acquire();
-//            }
-//        }
-//    }
-//
-//    /**
-//     * WakeLockを開放する.
-//     */
-//    private void releaseWakeLock() {
-//        Log.v(TAG, "releaseWakeLock()");
-//        synchronized (mLock) {
-//            if (mWakelock != null && mWakelock.isHeld()) {
-//                mWakelock.release();
-//                mWakelock = null;
-//            }
-//        }
-//    }
-//
-//    /**
-//     * プロジェクターの状態変化時のイベントを受け取るためのBroadcastレシーバークラス.<br>
-//     * <p/>
-//     * 照射開始時にはWakeLockの取得、終了時にはWakeLockの開放する.<br>
-//     * アプリ仕様に応じて必要な処理があれば実装すること.
-//     */
-//    private class ProjectorEventReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            Log.v(TAG, "ProjectorEventReceiver#onReceive():" + intent.getAction());
-//            switch (intent.getAction()) {
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE://プロジェクター照射準備通知
-//                    Log.v(TAG, "プロジェクター照射準備通知");
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE://プロジェクター照射一時停止通知
-//                    Log.v(TAG, "プロジェクター照射一時停止通知");
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME://プロジェクター照射再開通知
-//                    Log.v(TAG, "プロジェクター照射再開通知");
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START://プロジェクター照射開始通知
-//                    acquireWakeLock();
-//                    Log.v(TAG, "プロジェクター照射開始通知");
-//                    isProjected = true;
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE://プロジェクター終了処理開始通知
-//                    Log.v(TAG, "プロジェクター終了処理開始通知");
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END://プロジェクター終了通知
-//                    Log.v(TAG, "プロジェクター終了処理通知");
-//                    releaseWakeLock();
-//                    isProjected = false;
-//                    //endShowDrawing();
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR://プロジェクター異常終了通知
-//                    Log.v(TAG, "プロジェクター異常終了通知");
-//                    break;
-//                case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR://プロジェクター異常終了通知（復旧不可能）
-//                    Log.v(TAG, "プロジェクター異常終了通知(復旧不可能)");
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
-
 
 }

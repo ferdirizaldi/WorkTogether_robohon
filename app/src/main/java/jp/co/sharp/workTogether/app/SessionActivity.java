@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;//追加日1/24
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;//追加日1/24
-import java.util.concurrent.ScheduledExecutorService;//追加日1/24
-import java.util.concurrent.TimeUnit;//追加日1/24
-import java.util.Timer;//追加日1/24
-import java.util.TimerTask;//追加日1/24
-import java.util.Random;//追加日1/27
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Random;
 
 import jp.co.sharp.android.voiceui.VoiceUIManager;
 import jp.co.sharp.android.voiceui.VoiceUIVariable;
@@ -84,7 +84,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //ホームボタンの検知登録.
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        registerReceiver(mHomeEventReceiver, filterHome);//mainActivityでも同様の警告が出ている
+        registerReceiver(mHomeEventReceiver, filterHome);
 
         //セッションの予定時間sessionLengthを受け取る
         sessionLength = getIntentIntDataByKey("sessionLength");
@@ -485,7 +485,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "Receive Home button pressed");
             // ホームボタン押下でアプリ終了する.
-            finish();//mainActivityがSessionActivityを呼び出した後に速やかに終了していればブロードキャストを用いる必要もない
+            finish();
         }
     }
 

@@ -83,11 +83,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
         // 終了ボタンの処理
         finishButton.setOnClickListener(view -> {
-            // Finish the current activity
-
-            // Projector also needs to end button process
             stopProjector();
-            //endShowDrawing();レシーバーと二重でendしてしまいそう
         });
     }
 
@@ -109,11 +105,6 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene有効化.
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
-        //VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
-
-
-        //Show Projector関数で画像表示
-        //startProjector();
 
     }
 
@@ -127,7 +118,6 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
         //Scene無効化.
         VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
-        //VoiceUIManagerUtil.disableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
         //VoiceUIListenerの解除.
         VoiceUIManagerUtil.unregisterVoiceUIListener(mVUIManager, mVUIListener);
@@ -172,41 +162,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         }
     }
 
-//    public void startProjector() {
-//        //プロジェクターでできあがあった絵を見せる
-//        if (!isProjected) {//すでにプロジェクターが起動済みでなければ
-//            Log.v(TAG, "Try Start Projector");
-//            //プロジェクター起動
-//            startService(getIntentForProjector());
-//        } else {
-//            Log.v(TAG, "Try Start Projector,But Projector Is Already Started");
-//        }
-//    }
 
-    /**
-     * Stops the projector using ProjectorManagerServiceUtil.
-     */
-//    public void stopProjector() {
-//        Log.v(TAG, "Stopping Projector");
-//
-//        // プロジェクター終了通知.
-//        Intent notifyEndIntent = new Intent();
-//        ComponentName componentName = new ComponentName(
-//                ProjectorManagerServiceUtil.PACKAGE_NAME,
-//                ProjectorManagerServiceUtil.CLASS_NAME);
-//
-//        notifyEndIntent.setComponent(componentName);
-//        notifyEndIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
-//
-//        startService(notifyEndIntent);  //プロジェクター終了通知.
-//
-//        // プロジェクター終了処理開始通知.
-//        Intent terminateIntent = new Intent();
-//        terminateIntent.setComponent(componentName);
-//        terminateIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
-//
-//        startService(terminateIntent);  // プロジェクター終了処理開始通知.
-//    }
     public void stopProjector() {
         if(isProjected) {//すでにプロジェクターが起動済みなら
             Log.v(TAG, "Try Stop Projector");
@@ -219,8 +175,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             //その場合でもこの関数(ボタンからのみ呼ばれる)を使わず音声コマンドで終了させることは可能
         }
     }
-
-
+    
     /**
      * プロジェクターマネージャーの開始/停止用のIntentを設定する.
      */
