@@ -12,14 +12,17 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import jp.co.sharp.android.rb.projectormanager.ProjectorManagerServiceUtil;
 import jp.co.sharp.android.voiceui.VoiceUIManager;
@@ -85,6 +88,17 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         finishButton.setOnClickListener(view -> {
             stopProjector();
         });
+
+        //落書の画像の配列を作成、その後、ランダムに選んで表示させる
+        ImageView imageView = (ImageView) findViewById(R.id.output_image);
+        // Get the passed image index from Intent
+        int imageIndex = getIntent().getIntExtra("show_image_index", -1);
+
+        // Check if the index is valid
+        if (imageIndex != -1) {
+            int[] images = getImageArray();
+            imageView.setImageResource(images[imageIndex]); // Set the same image
+        }
     }
 
     @Override
@@ -363,6 +377,23 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             intent.putExtras(extras);
         }
         context.startActivity(intent);
+    }
+
+    // Function to dynamically get all images with numeric names from drawable
+    private int[] getImageArray() {
+        List<Integer> imageList = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) { // Assuming you have images from 1.jpg to 10.jpg
+            int resId = getResources().getIdentifier("output_image_" + i, "drawable", getPackageName());
+            if (resId != 0) { // If resource exists, add it
+                imageList.add(resId);
+            }
+        }
+        // Convert List<Integer> to int[]
+        int[] imageArray = new int[imageList.size()];
+        for (int i = 0; i < imageList.size(); i++) {
+            imageArray[i] = imageList.get(i);
+        }
+        return imageArray;
     }
 
 }

@@ -66,6 +66,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private Runnable runnable;//一定間隔で呼び出される発話スレッドの制御に使用
     private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     private String finalElapsedTime;//セッション中に経過した時間
+    private int selectedImageIndex = -1; // Store the selected image index
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +110,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
         ImageView imageView = (ImageView) findViewById(R.id.output_image);
+
         // Set a random image
-        imageView.setImageResource(getRandomImage());
+        selectedImageIndex = new Random().nextInt(getImageArray().length);
+        int randomImageResId = getImageArray()[selectedImageIndex];
+        imageView.setImageResource(randomImageResId);
     }
 
     // Function to dynamically get all images with numeric names from drawable
@@ -323,6 +327,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         startProjector();
         Bundle extras = new Bundle();
         extras.putString("finalElapsedTimeLog",finalElapsedTime);
+        extras.putInt("show_image_index", selectedImageIndex);
         navigateToActivity(this, ShowDrawingActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowDrawingActivityを呼んだらすぐに終了する
