@@ -89,8 +89,12 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             stopProjector();
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             //endShowDrawing();
 
+=======
+            //endShowDrawing();レシーバーと二重でendしてしまいそう
+>>>>>>> Stashed changes
 =======
             //endShowDrawing();レシーバーと二重でendしてしまいそう
 >>>>>>> Stashed changes
@@ -218,8 +222,12 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 //    }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
     private void stopProjector() {
+=======
+    public void stopProjector() {
+>>>>>>> Stashed changes
 =======
     public void stopProjector() {
 >>>>>>> Stashed changes
@@ -427,6 +435,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
@@ -457,6 +466,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 //        }
 //    }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======

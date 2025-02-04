@@ -304,7 +304,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
+=======
+    public void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
+>>>>>>> Stashed changes
 =======
     public void startShowDrawing() {//TASK showDrawingにelapsedtimeの情報を通してまた戻して、とする必要がある
 >>>>>>> Stashed changes
@@ -345,7 +349,11 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private void startProjector(){
+=======
+    public void startProjector(){
+>>>>>>> Stashed changes
 =======
     public void startProjector(){
 >>>>>>> Stashed changes
