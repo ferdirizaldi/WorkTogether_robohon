@@ -35,7 +35,6 @@
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/stop_projector_button" />
             </RelativeLayout>
-
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
