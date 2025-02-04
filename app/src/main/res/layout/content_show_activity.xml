@@ -40,7 +40,6 @@
                 android:id="@+id/output_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@drawable/output_image_1"
                 android:contentDescription="@string/showactivity_imgdsc"
                 android:layout_marginTop="16dp" />
 
