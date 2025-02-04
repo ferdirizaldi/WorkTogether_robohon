@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import jp.co.sharp.android.rb.projectormanager.ProjectorManagerServiceUtil;
 import jp.co.sharp.android.voiceui.VoiceUIManager;
@@ -86,7 +87,11 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
 
             // Projector also needs to end button process
             stopProjector();
+<<<<<<< Updated upstream
             //endShowDrawing();
+=======
+            //endShowDrawing();レシーバーと二重でendしてしまいそう
+>>>>>>> Stashed changes
         });
     }
 
@@ -110,8 +115,9 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_COMMON);
         //VoiceUIManagerUtil.enableScene(mVUIManager, ScenarioDefinitions.SCENE_SHOW);
 
+
         //Show Projector関数で画像表示
-        startProjector();
+        //startProjector();
 
     }
 
@@ -170,16 +176,54 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         }
     }
 
-    public void startProjector(){
-        //プロジェクターでできあがあった絵を見せる
-        if(!isProjected) {//すでにプロジェクターが起動済みでなければ
-            Log.v(TAG, "Try Start Projector");
-            //プロジェクター起動
-            startService(getIntentForProjector());
+//    public void startProjector() {
+//        //プロジェクターでできあがあった絵を見せる
+//        if (!isProjected) {//すでにプロジェクターが起動済みでなければ
+//            Log.v(TAG, "Try Start Projector");
+//            //プロジェクター起動
+//            startService(getIntentForProjector());
+//        } else {
+//            Log.v(TAG, "Try Start Projector,But Projector Is Already Started");
+//        }
+//    }
+
+    /**
+     * Stops the projector using ProjectorManagerServiceUtil.
+     */
+//    public void stopProjector() {
+//        Log.v(TAG, "Stopping Projector");
+//
+//        // プロジェクター終了通知.
+//        Intent notifyEndIntent = new Intent();
+//        ComponentName componentName = new ComponentName(
+//                ProjectorManagerServiceUtil.PACKAGE_NAME,
+//                ProjectorManagerServiceUtil.CLASS_NAME);
+//
+//        notifyEndIntent.setComponent(componentName);
+//        notifyEndIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_END);
+//
+//        startService(notifyEndIntent);  //プロジェクター終了通知.
+//
+//        // プロジェクター終了処理開始通知.
+//        Intent terminateIntent = new Intent();
+//        terminateIntent.setComponent(componentName);
+//        terminateIntent.setAction(ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE);
+//
+//        startService(terminateIntent);  // プロジェクター終了処理開始通知.
+//    }
+    public void stopProjector() {
+        if(isProjected) {//すでにプロジェクターが起動済みなら
+            Log.v(TAG, "Try Stop Projector");
+            //プロジェクター終了
+            stopService(getIntentForProjector());
         }else{
-            Log.v(TAG, "Try Start Projector,But Projector Is Already Started");
+            Log.v(TAG, "Try Stop Projector,But Projector Have Not Started Yet");
+            //ありえないとは思うが、プロジェクタが素早く起動し、このアクティビティのレシーバーがセットされるより前に照射開始通知が出た場合、
+            //それを受け取れずisProjectedがtrueになっていないのにプロジェクタが起動している状態になるかもしれない。
+            //その場合でもこの関数(ボタンからのみ呼ばれる)を使わず音声コマンドで終了させることは可能
         }
     }
+
 
     /**
      * プロジェクターマネージャーの開始/停止用のIntentを設定する.
@@ -260,31 +304,36 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             Log.v(TAG, "ProjectorEventReceiver#onReceive():" + intent.getAction());
             switch (intent.getAction()) {
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE://プロジェクター照射準備通知
-                    //Log.v(TAG, "プロジェクター照射準備通知");
+                    Log.v(TAG, "プロジェクター照射準備通知");
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PAUSE://プロジェクター照射一時停止通知
-                    //Log.v(TAG, "プロジェクター照射一時停止通知");
+                    Log.v(TAG, "プロジェクター照射一時停止通知");
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_RESUME://プロジェクター照射再開通知
-                    //Log.v(TAG, "プロジェクター照射再開通知");
+                    Log.v(TAG, "プロジェクター照射再開通知");
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_START://プロジェクター照射開始通知
+                    Log.v(TAG, "プロジェクター照射開始通知");
                     acquireWakeLock();
-                    Log.v(TAG, "Projector Is Started");
                     isProjected = true;
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE://プロジェクター終了処理開始通知
-                    //Log.v(TAG, "プロジェクター終了処理開始通知");
+                    Log.v(TAG, "プロジェクター終了処理開始通知");
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END://プロジェクター終了通知
-                    //Log.v(TAG, "プロジェクター終了処理通知");
-                    //break;
+                    Log.v(TAG, "プロジェクター終了処理通知");
+                    releaseWakeLock();
+                    isProjected = false;
+                    endShowDrawing();
+                    break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_ERROR://プロジェクター異常終了通知
-                    //Log.v(TAG, "プロジェクター異常終了通知");
-                    //break;
+                    Log.v(TAG, "プロジェクター異常終了通知");
+                    releaseWakeLock();
+                    isProjected = false;
+                    endShowDrawing();
+                    break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_END_FATAL_ERROR://プロジェクター異常終了通知（復旧不可能）
-                    //Log.v(TAG, "プロジェクター異常終了通知(復旧不可能)");
-                    Log.v(TAG, "Projector Is Ended");
+                    Log.v(TAG, "プロジェクター異常終了通知(復旧不可能)");
                     releaseWakeLock();
                     isProjected = false;
                     endShowDrawing();
@@ -312,9 +361,30 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
     public void endShowDrawing() {
         Bundle extras = new Bundle();
         extras.putString("checkFirst", "not");
+        extras.putString("finalElapsedTimeLog", getIntentStringDataByKey("finalElapsedTimeLog"));
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する
+    }
+
+    /**
+     * Retrieves the extras from the intent and returns them
+     *
+     * @return A string data is the session data or error massage if no extras exist by key.
+     * //IntentからのString型変数を受け取る関数
+     */
+    private String getIntentStringDataByKey(String key) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                return extras.getString(key, "wrongKey");
+            }
+        }
+
+        // Return it if no extras are found
+        Log.v(TAG, "No Extras Are Found");
+        return "no extras are found";
     }
 
     /**
@@ -341,6 +411,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         context.startActivity(intent);
     }
 
+<<<<<<< Updated upstream
     /**
      * Stops the projector using ProjectorManagerServiceUtil.
      */
@@ -370,4 +441,6 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
             Log.e(TAG, "Failed to stop projector service.");
         }
     }
+=======
+>>>>>>> Stashed changes
 }
