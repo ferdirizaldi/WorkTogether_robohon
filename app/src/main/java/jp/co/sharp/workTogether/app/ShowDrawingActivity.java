@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -82,12 +83,16 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         //プロジェクタイベントの検知登録.
         setProjectorEventReceiver();
 
-        // 終了ボタン取得
-        Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        // 終了ボタンの処理
-        finishButton.setOnClickListener(view -> {
-            stopProjector();
-        });
+//        // 終了ボタン取得
+//        Button finishButton = (Button) findViewById(R.id.finish_app_button);
+//        // 終了ボタンの処理
+//        finishButton.setOnClickListener(view -> {
+//            stopProjector();
+//        });
+        ImageButton finishProjectorButton = (ImageButton)findViewById(R.id.finish_projector_button);
+            finishProjectorButton.setOnClickListener(view -> {
+                stopProjector();
+            });
 
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
         ImageView imageView = (ImageView) findViewById(R.id.output_image);

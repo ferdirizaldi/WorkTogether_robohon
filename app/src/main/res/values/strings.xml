@@ -30,4 +30,6 @@
     <string name="button_finish_session">セッション終了</string>
     <string name="button_show_result">プロジェクター表示</string>
     <string name="showactivity_default_text2">00:00:00</string>
+    <string name="start_projector_button">プロジェクター開始ボタン</string>
+    <string name="stop_projector_button">プロジェクター停止ボタン</string>
 </resources>

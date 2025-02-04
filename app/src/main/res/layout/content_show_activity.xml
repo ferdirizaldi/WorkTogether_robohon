@@ -47,16 +47,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
+                <ImageButton
                     android:id="@+id/show_result_button"
-                    android:layout_width="280dp"
-                    android:layout_height="60dp"
-                    android:text="@string/button_show_result"
-                    android:singleLine="false"
-                    android:textSize="23sp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginTop="0dp"
-                    android:layout_toStartOf="@id/finish_app_button"
-                    android:layout_marginEnd="20dp" /> <!-- Optional spacing between buttons -->
+                    android:background="@drawable/ic_projector_start"
+                    android:contentDescription="@string/start_projector_button"
+                    android:singleLine="false"
+                    android:textSize="23sp" /> <!-- Optional spacing between buttons -->
                 <Button
                     android:id="@+id/finish_app_button"
                     android:layout_width="100dp"

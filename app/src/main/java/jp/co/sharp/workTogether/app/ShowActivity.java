@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -100,13 +101,23 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             }
         });
 
-        //プロジェクター使用ボタン取得
-        Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
-        //プロジェクター使用ボタンの処理
-        showProjectorButton.setOnClickListener(view -> {
+//        //プロジェクター使用ボタン取得
+//        Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
+//        //プロジェクター使用ボタンの処理
+//        showProjectorButton.setOnClickListener(view -> {
+//            //ShowDrawingActivityに移動
+//            startShowDrawing();
+//        });
+        ImageButton showProjectorButton = (ImageButton)findViewById(R.id.show_result_button);
+        //第1世代ロボホンのみプロジェクターボタンを表示する.
+        if(getRobohonGeneration() == 1){
+            showProjectorButton.setOnClickListener(view -> {
             //ShowDrawingActivityに移動
             startShowDrawing();
         });
+        }else{
+            showProjectorButton.setVisibility(View.INVISIBLE);
+        }
 
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
         ImageView imageView = (ImageView) findViewById(R.id.output_image);
@@ -382,6 +393,32 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         intent.putExtra(ProjectorManagerServiceUtil.EXTRA_PROJECTOR_DIRECTION, ProjectorManagerServiceUtil.EXTRA_PROJECTOR_DIRECTION_VAL_UNDER);
         intent.setComponent(componentName);
         return intent;
+    }
+
+    /**
+     * ロボホンの世代番号を取得(SDKバージョンより判定).
+     */
+    private int getRobohonGeneration() {
+        Log.d(TAG, "getRobohonGeneration <");
+
+        int ret = -1;
+        try {
+            switch (android.os.Build.VERSION.SDK_INT){
+                case 21:
+                    ret = 1;
+                    break;
+                case 27:
+                    ret = 2;
+                    break;
+                default:
+                    ret = -1;
+                    break;
+            }
+        } catch(Exception e) {
+            Log.e(TAG, "Exception : " + e.getMessage());
+        }
+        Log.d(TAG, "getRobohonGeneration : ret= " + ret + " >");
+        return ret;
     }
 
 }

@@ -24,15 +24,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/finish_app_button"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_finish_app"
+                <ImageButton
+                    android:id="@+id/finish_projector_button"
+                    android:layout_width="52dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/ic_projector_stop"
                     android:singleLine="false"
                     android:textSize="32sp"
                     android:layout_marginTop="0dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/stop_projector_button" />
             </RelativeLayout>
 
         </LinearLayout>
