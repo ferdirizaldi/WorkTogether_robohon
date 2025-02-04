@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         // Set click listeners
         selectButton.setOnClickListener(v -> {
-            startSession(numPicker.getValue());//1~10時間のセッションを開始
+            startSession(numPicker.getValue());//1~9時間のセッションを開始
         });
 
         finishButton.setOnClickListener(v -> {
