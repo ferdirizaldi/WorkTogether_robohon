@@ -5,102 +5,110 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/session_activity" tools:context=".SessionActivity">
 
-    <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/session_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sessionactivity_text2"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/sessionOutput_text2_value"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/text_box_border"
+            android:padding="8dp"
+            android:text="@string/default_timeroutput_text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/session_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sessionactivity_text1"
+            android:textSize="24sp" />
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="@string/sessionactivity_text1"
-                android:id="@+id/session_text1"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
+                android:id="@+id/sessionOutput_text1_value"
+                android:layout_width="70sp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center">
+                android:background="@drawable/text_box_border"
+                android:padding="8dp"
+                android:text="@string/sessionActivity_defShowStatus_text"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/sessionOutput_text1_value"
-                    android:layout_width="70sp"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/sessionActivity_defShowStatus_text"
-                    android:textSize="18sp"
-                    android:background="@drawable/text_box_border"
-                    android:layout_gravity="center_horizontal"/>
-                <TextView
-                    android:id="@+id/sessionOutput_text1_value2"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="@string/showactivity_default_text2"
-                    android:textSize="18sp"
-                    android:background="@drawable/text_box_border"
-                    android:layout_marginStart="16dp"/> <!-- Add margin between the two TextViews -->
-            </LinearLayout>
+            <TextView
+                android:id="@+id/sessionOutput_text1_value2"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/text_box_border"
+                android:padding="8dp"
+                android:text="@string/showactivity_default_text2"
+                android:textSize="18sp" /> <!-- Add margin between the two TextViews -->
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/shift_phase_button"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:singleLine="false"
+            android:text="@string/sessionActivity_ShiftPhaseText"
+            android:textSize="26sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/shift_phase_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sessionActivity_ShiftPhaseText"
+                android:id="@+id/finish_session_button"
+                android:layout_width="220dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="0dp"
+                android:gravity="center"
                 android:singleLine="false"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal" />
-
-            <TextView
-                android:text="@string/sessionactivity_text2"
-                android:id="@+id/session_text2"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"/>
-
-            <TextView
-                android:id="@+id/sessionOutput_text2_value"
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/default_timeroutput_text"
-                android:textSize="18sp"
-                android:background="@drawable/text_box_border"
-                android:layout_gravity="center_horizontal"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/finish_session_button"
-                    android:layout_width="200dp"
-                    android:layout_height="60dp"
-                    android:text="@string/button_finish_session"
-                    android:singleLine="false"
-                    android:textSize="25sp"
-                    android:layout_marginTop="0dp"
-                    android:layout_toStartOf="@id/finish_app_button"
-                    android:layout_marginEnd="50dp" /> <!-- Optional spacing between buttons -->
-                <Button
-                    android:id="@+id/finish_app_button"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_finish_app"
-                    android:singleLine="false"
-                    android:textSize="32sp"
-                    android:layout_marginTop="0dp"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
+                android:text="@string/button_finish_session"
+                android:textSize="25sp" /> <!-- Optional spacing between buttons -->
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/finish_app_button"
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:singleLine="false"
+                android:text="@string/button_finish_app"
+                android:textSize="32sp" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

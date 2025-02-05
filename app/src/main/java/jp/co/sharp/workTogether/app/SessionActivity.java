@@ -72,7 +72,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private int suggestTimer;//フェイズの終了を提案するまでの時間をカウントダウンするタイマー
     private int actionTimer;//フェイズごとの動作を行うまでの時間をカウントダウンするタイマー
     private int sessionLength;//meinActivityから送られてくる、セッション終了までの時間
-    private int totalTimer;//全体のカウントアップタイマー
+    private int phaseTimer;//フェイズ中の経過時間を表すカウントアップタイマー
     private String startTime;//セッション開始時の時刻
 
     @Override
@@ -121,31 +121,31 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private void initializeSessionUI() {
         // Button references
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
+        //Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
         Button sessionFinishButton = (Button) findViewById(R.id.finish_session_button);
 
         // Text Areas
-        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+        //TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
         TextView sessionOutputTime = (TextView) findViewById(R.id.sessionOutput_text2_value);
 
 
         //タイマー値の設定
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //現在のフェイズを表す
-                sessionOutputStatus.setText("作業中");
-                //終了予定時刻を表す
-                sessionOutputTime.setText("∞");
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //現在のフェイズを表す
+//                sessionOutputStatus.setText("作業中");
+//                //終了予定時刻を表す
+//                sessionOutputTime.setText("∞");
+//            }
+//        });
 
         updateSessionOutputTime(sessionLength, sessionOutputTime);
 
-        shiftPhaseButton.setOnClickListener(v -> {
-            //作業フェイズと休憩フェイズを切り替えるボタン
-            shiftPhase();
-        });
+//        shiftPhaseButton.setOnClickListener(v -> {
+//            //作業フェイズと休憩フェイズを切り替えるボタン
+//            shiftPhase();
+//        });
 
         sessionFinishButton.setOnClickListener(v -> {
             // セッションを終了させるボタン
@@ -166,26 +166,30 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         startTime = timeFormat.format(Calendar.getInstance().getTime());
         Log.v(TAG,"startTime is " + startTime);
 
-        // Get the current time
-        Calendar calendar = Calendar.getInstance();
-
-        // Add the session duration in hours to the current time
         if (sessionLength == 0) {
             // Handle the default case (e.g., infinite session)
-            return;
-        } else{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sessionOutputTime.setText("時間指定無し");
+                }
+            });
+        } else {
+            // Get the current time
+            Calendar calendar = Calendar.getInstance();
+
+            // Add the session duration in hours to the current time
             calendar.add(Calendar.HOUR_OF_DAY, sessionLength);
+            String endTime = timeFormat.format(calendar.getTime());
+
+            // Update the TextViews on the UI thread
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    sessionOutputTime.setText(endTime);
+                }
+            });
         }
-
-        String endTime = timeFormat.format(calendar.getTime());
-
-        // Update the TextViews on the UI thread
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                sessionOutputTime.setText(endTime);
-            }
-        });
     }
 
     @Override
@@ -382,16 +386,16 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             }
         }
 
-        // 4. Clock Logic 全体カウントアップタイマー更新
-        totalTimer++;
-        String timeString = formatTime(totalTimer);
-        Log.v(TAG, "Current Time: " + timeString); // Log or update UI with the time string
-        // 休憩に入る、UI更新
-        TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value2);
+        // 4. Clock Logic フェイズ中経過時間カウントアップタイマー更新
+        phaseTimer++;
+        String timeString = formatTime(phaseTimer);
+        //Log.v(TAG, "Current Time: " + timeString); // Log or update UI with the time string
+        //UI更新
+        TextView sessionOutputStatus2 = (TextView) findViewById(R.id.sessionOutput_text1_value2);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sessionOutputStatus.setText(timeString);
+                sessionOutputStatus2.setText(timeString);
             }
         });
 
@@ -422,17 +426,25 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             //タイマー更新
             suggestTimer = breakSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
             actionTimer = breakActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
-
+            //フェイズ中の経過時間を表すカウントアップタイマーを初期化
+            phaseTimer = 0;
 
             // 休憩に入る、UI更新
             TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+            Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
+            shiftPhaseButton.setOnClickListener(v -> {
+                //作業フェイズと休憩フェイズを切り替えるボタン
+                shiftPhase();
+            });
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     sessionOutputStatus.setText("休憩");
                     sessionOutputStatus.setTextColor(Color.YELLOW);
+                    shiftPhaseButton.setText("作業を再開する");
                 }
             });
+
         }else{//現在breakフェイズならworkフェイズを開始する
             Log.v(TAG, "Start Work Phase");
             phaseFrag = true;//フラグをwork状態にする
@@ -444,14 +456,22 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             //タイマー更新
             suggestTimer = workSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
             actionTimer = workActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
+            //フェイズ中の経過時間を表すカウントアップタイマーを初期化
+            phaseTimer = 0;
 
             // 作業に入る、UI更新
             TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
+            Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
+            shiftPhaseButton.setOnClickListener(v -> {
+                //作業フェイズと休憩フェイズを切り替えるボタン
+                shiftPhase();
+            });
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     sessionOutputStatus.setText("作業中");
                     sessionOutputStatus.setTextColor(Color.GREEN);
+                    shiftPhaseButton.setText("休憩を開始する");
                 }
             });
         }
