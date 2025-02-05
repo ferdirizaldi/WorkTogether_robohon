@@ -5,28 +5,26 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/show_activity" tools:context=".ShowActivity">
 
-    <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="20dp"
-                android:background="#666666" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:text="@string/showactivity_text1"
+        <!--<View
+               android:layout_width="match_parent"
+               android:layout_height="2dp"
+               android:layout_marginTop="20dp"
+               android:background="#666666" />-->
+
+        <TextView
                 android:id="@+id/output_text"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/showactivity_text1"
+                android:textSize="24sp" />
 
-            <!--<TextView
+        <!--<TextView
                 android:id="@+id/showActivity_output_text_value"
                 android:layout_width="200sp"
                 android:layout_height="wrap_content"
@@ -36,37 +34,39 @@
                 android:background="@drawable/text_box_border"
                 android:layout_gravity="center_horizontal"/>-->
 
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
             <ImageView
                 android:id="@+id/output_image"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:contentDescription="@string/showactivity_imgdsc"
-                android:layout_marginTop="16dp" />
+                android:layout_height="333dp"
+                android:layout_marginTop="0dp"
+                android:contentDescription="@string/showactivity_imgdsc" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/show_result_button"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_projector_start"
+                android:contentDescription="@string/start_projector_button"
+                android:singleLine="false"
+                android:layout_gravity="end"
+                android:textSize="23sp" />
 
-                <ImageButton
-                    android:id="@+id/show_result_button"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/ic_projector_start"
-                    android:contentDescription="@string/start_projector_button"
-                    android:singleLine="false"
-                    android:textSize="23sp" /> <!-- Optional spacing between buttons -->
-                <Button
-                    android:id="@+id/finish_app_button"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_finish_app"
-                    android:singleLine="false"
-                    android:textSize="32sp"
-                    android:layout_marginTop="0dp"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
+            <Button
+                android:id="@+id/finish_app_button"
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:text="@string/button_finish_app"
+                android:singleLine="false"
+                android:textSize="32sp"
+                android:layout_marginTop="0dp"
+                android:layout_gravity="end|bottom"/>
 
-        </LinearLayout>
-    </ScrollView>
+        </FrameLayout>
+    </LinearLayout>
 </RelativeLayout>
