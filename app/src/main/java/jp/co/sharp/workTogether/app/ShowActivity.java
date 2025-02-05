@@ -89,7 +89,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         });
 
         //過ぎた時間表示を更新
-        TextView resultTimePassed = (TextView) findViewById(R.id.showActivity_output_text_value);
+        TextView resultTimePassed = (TextView) findViewById(R.id.output_text);
         finalElapsedTime = getElapsedTime(getIntentStringDataByKey("sessionStartTime"));
         if(Objects.equals(finalElapsedTime, "無効な時間形式")){
             finalElapsedTime = getIntentStringDataByKey("finalElapsedTimeLog");
@@ -328,7 +328,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             long seconds = (elapsedMillis / 1000) % 60;
 
             //文字列に変換
-            String elapsedTime = "";
+            String elapsedTime = "作業した時間:";
             if(hours != 0){
                 elapsedTime = elapsedTime + String.format("%d時間",hours);
             }
