@@ -342,12 +342,22 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         if (actionTimer < 0) {
             int result;
             if (phaseFrag) {//work状態のとき
-                int rnd = new Random().nextInt(2) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
-                if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
-                    Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
-                } else {
-                    actionTimer = workActionTime;
+                if(phaseTimer>alertTimer*0.8){//もうちょっと終了時間になる時(80％以上)はt8~t10で発話させる
+                    int rnd = new Random().nextInt(3) + 8;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
+                    result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
+                    if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
+                        Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
+                    } else {
+                        actionTimer = workActionTime;
+                    }
+                }else{
+                    int rnd = new Random().nextInt(7) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
+                    result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
+                    if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
+                        Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
+                    } else {
+                        actionTimer = workActionTime;
+                    }
                 }
             } else {//break状態のとき
                 int rnd = new Random().nextInt(6) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
@@ -486,7 +496,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     showActivityを呼び出す
     アクティビティを終了する
      */
-
         Bundle extras = new Bundle();
         extras.putString("sessionStartTime", startTime);
         extras.putString("checkFirst", "first");
