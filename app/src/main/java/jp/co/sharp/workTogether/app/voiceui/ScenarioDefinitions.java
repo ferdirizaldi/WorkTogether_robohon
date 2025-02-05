@@ -109,6 +109,21 @@ public class ScenarioDefinitions {
      */
     public static final String ACC_DRAWING_ACCOSTS = PACKAGE + ".showDrawing.accosts";
     /**
+     * 関数名：work_actioned work_actionsシナリオからSessionActivityに送る
+     */
+    public static final String FUNC_WORK_ACTIONED = "work_actioned";
+    /**
+     * 関数名：break_actioned break_actionsシナリオからSessionActivityに送る
+     */
+    public static final String FUNC_BREAK_ACTIONED = "break_actioned";
+    /**
+     * 関数名：work_suggested work_suggestBreakシナリオからSessionActivityに送る
+     */
+    public static final String FUNC_WORK_SUGGESTED = "work_suggested";
+    /**
+     * 関数名：break_suggested break_suggestWorkシナリオからSessionActivityに送る
+     */
+    public static final String FUNC_BREAK_SUGGESTED = "break_suggested";
     /**
      * 関数名：shift_phase work_startBreakシナリオ及びbreak_startWorkシナリオからSessionActivityに送る
      */
@@ -117,6 +132,10 @@ public class ScenarioDefinitions {
      * 関数名：end_session session_endシナリオからSessionActivityに送る
      */
     public static final String FUNC_END_SESSION = "end_session";
+    /**
+     * 関数名：alert_end session_alertシナリオからSessionActivityに送る
+     */
+    public static final String FUNC_ALERTED = "alerted";
     /**
      * 関数名：end_app show_endシナリオからShowActivityに送る。start_endシナリオからMainActivityにも送る
      */

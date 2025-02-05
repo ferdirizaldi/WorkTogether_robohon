@@ -12,6 +12,7 @@
             <action index="1">
                 <speech>そろそろ再開するのはどうかな？</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>

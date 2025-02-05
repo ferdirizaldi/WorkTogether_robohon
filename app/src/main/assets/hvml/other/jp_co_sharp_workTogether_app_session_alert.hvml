@@ -12,6 +12,7 @@
             <action index="1">
                 <speech>終わるって言ってた時間になったよ。</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="alerted" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>

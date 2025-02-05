@@ -14,6 +14,11 @@
         <accost priority="75" topic_id="t7" word="jp.co.sharp.workTogether.app.work.actions.t7"/>
     </head>
     <body>
+        <topic id="actioned" listen="false">
+            <action index="1">
+                <control function="work_actioned" target="jp.co.sharp.workTogether.app"/>
+            </action>
+        </topic>
         <topic id="t1" listen="false">
             <action index="1">
                 <speech>どう塗ろうかな</speech>
@@ -25,60 +30,70 @@
             <action index="3">
                 <behavior id="0x060011" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
                 <speech>どんな色にしようかな</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
                 <speech>集中、集中…！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t4" listen="false">
             <action index="1">
                 <speech>よし、丁寧に仕上げよう</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t5" listen="false">
             <action index="1">
                 <speech>この色の組み合わせ、いい感じかも！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t6" listen="false">
             <action index="1">
                 <speech>細かい部分にこだわりたいな</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t7" listen="false">
             <action index="1">
                 <speech>おっと…ちょっとミスったかも</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t8" listen="false">
             <action index="1">
                 <speech>あとちょっと！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t9" listen="false">
             <action index="1">
                 <speech>おお、いい感じになってきた！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t10" listen="false">
             <action index="1">
                 <speech>「完成まであと少し！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
     </body>
 </hvml>

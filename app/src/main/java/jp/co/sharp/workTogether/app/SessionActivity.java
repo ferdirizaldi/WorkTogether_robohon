@@ -60,11 +60,11 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private boolean timerStopFrag;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
     final private int workSuggestTimeFirst = 60 * 25;//初回の作業中止の提案までの時間(秒)
     final private int workSuggestTime = 60 * 5;//作業中止の提案の周期(秒)
-    final private int workActionTimeFirst = 7;//初回の作業動作までの時間(秒)
+    final private int workActionTimeFirst = 10;//初回の作業動作までの時間(秒)
     final private int workActionTime = 60 * 1;//作業中の動作の周期(秒)
     final private int breakSuggestTimeFirst = 60 * 5;//初回の休憩中止の提案までの時間(秒)
     final private int breakSuggestTime = 60 * 5;//休憩中止の提案の周期(秒)
-    final private int breakActionTimeFirst = 7;//初回の休憩動作までの時間(秒)
+    final private int breakActionTimeFirst = 10;//初回の休憩動作までの時間(秒)
     final private int breakActionTime = 60 * 1;//休憩中の動作の周期(秒)
     private boolean phaseFrag;//現在のフェイズを表すフラグ(false:break true:work)
     private boolean alertFrag;//終了予定時刻の通知が済んだかを示すフラグ(false:未　true:済)
@@ -297,6 +297,21 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 if(ScenarioDefinitions.FUNC_END_SESSION.equals(function)) {//work_endシナリオかbreak_endシナリオからの呼び出し
                     endSession();//セッションを終了させる関数
                 }
+                if(ScenarioDefinitions.FUNC_ALERTED.equals(function)) {//session_alertシナリオからの呼び出し
+                    alertFrag = true;//アラートが発話済みなのでフラグを立てる
+                }
+                if(ScenarioDefinitions.FUNC_WORK_ACTIONED.equals(function)) {//work_actionsシナリオからの呼び出し
+                    actionTimer = workActionTime;//動作を終えたので次の動作までのタイマーをセット
+                }
+                if(ScenarioDefinitions.FUNC_BREAK_ACTIONED.equals(function)) {//break_actionsシナリオからの呼び出し
+                    actionTimer = breakActionTime;//動作を終えたので次の動作までのタイマーをセット
+                }
+                if(ScenarioDefinitions.FUNC_WORK_SUGGESTED.equals(function)) {//work_suggestBreakシナリオからの呼び出し
+                    suggestTimer = workSuggestTime;//提案シナリオを発話し終えたので次の発話までのタイマーをセット
+                }
+                if(ScenarioDefinitions.FUNC_BREAK_SUGGESTED.equals(function)) {//break_suggestBreakシナリオからの呼び出し
+                    suggestTimer = breakSuggestTime;//提案シナリオを発話し終えたので次の発話までのタイマーをセット
+                }
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
@@ -317,7 +332,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             alertTimer--
             if 一定時間を超過
                 alertのシナリオをよぶ
-                終わったらフラグを立てる
          */
         if (!alertFrag) {
             alertTimer--;
@@ -326,8 +340,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ALERT);//アラートシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_ALERT Failed");
-                } else {
-                    alertFrag = true;
                 }
             }
         }
@@ -347,16 +359,12 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                     if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                         Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
-                    } else {
-                        actionTimer = workActionTime;
                     }
                 }else{
                     int rnd = new Random().nextInt(7) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
                     result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                     if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                         Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
-                    } else {
-                        actionTimer = workActionTime;
                     }
                 }
             } else {//break状態のとき
@@ -364,8 +372,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_ACTION Failed");
-                } else {
-                    actionTimer = breakActionTime;
                 }
             }
         }
@@ -377,21 +383,19 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             suggestTimerをセット
          */
         suggestTimer--;
+        Log.v(TAG, "SuggestTimer:"+suggestTimer);
         if (suggestTimer < 0) {
             int result;
             if (phaseFrag) {//work状態のとき
+                Log.v(TAG, "Try To Start Speech ACC_WORK_SUGGEST");
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST);//サジェストシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_SUGGEST Failed");
-                } else {
-                    suggestTimer = workSuggestTime;
                 }
             } else {//break状態のとき
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_SUGGEST);//サジェストンシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_SUGGEST Failed");
-                } else {
-                    suggestTimer = breakSuggestTime;
                 }
             }
         }

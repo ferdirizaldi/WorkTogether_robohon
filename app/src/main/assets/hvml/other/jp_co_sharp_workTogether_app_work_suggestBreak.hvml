@@ -12,6 +12,7 @@
             <action index="1">
                 <speech>そろそろ休憩するのはどうかな？</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="work_suggested" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>

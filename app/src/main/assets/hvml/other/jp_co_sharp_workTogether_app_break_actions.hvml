@@ -14,41 +14,52 @@
 
     </head>
     <body>
+        <topic id="actioned" listen="false">
+            <action index="1">
+                <control function="break_actioned" target="jp.co.sharp.workTogether.app"/>
+            </action>
+        </topic>
         <topic id="t1" listen="false">
             <action index="1">
                 <speech>ふーーー</speech>
                 <behavior id="0x060001" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
                 <speech>しっかり休むのも大事だよね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
                 <speech>少し休んで、気持ちをリフレッシュしよう</speech>
                 <behavior id="0x060001" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t4" listen="false">
             <action index="1">
                 <speech>休憩すると、頭がスッキリするよ</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t5" listen="false">
             <action index="1">
                 <speech>ちょっと休んで、また頑張ろう</speech>
                 <behavior id="0x060001" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
         <topic id="t6" listen="false">
             <action index="1">
                 <speech>ふぅ…休憩時間は大事だね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <next href="#actioned" type="default" />
         </topic>
     </body>
 </hvml>
