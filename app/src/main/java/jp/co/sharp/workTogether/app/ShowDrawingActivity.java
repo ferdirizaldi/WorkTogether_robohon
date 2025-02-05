@@ -69,6 +69,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
      */
     private boolean isProjected = false;
 
+    int imageIndex = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +99,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
         ImageView imageView = (ImageView) findViewById(R.id.output_image);
         // Get the passed image index from Intent
-        int imageIndex = getIntent().getIntExtra("show_image_index", -1);
+        imageIndex = getIntent().getIntExtra("show_image_index", -1);
 
         // Check if the index is valid
         if (imageIndex != -1) {
@@ -335,8 +337,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         Bundle extras = new Bundle();
         extras.putString("checkFirst", "not");
         extras.putString("finalElapsedTimeLog", getIntentStringDataByKey("finalElapsedTimeLog"));
-        navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
-
+        extras.putInt("show_image_index", imageIndex);
+        navigateToActivity(this, ShowActivity.class, extras);//ShowActiviityを呼び出す
         finish();//ShowActivityを呼んだらすぐに終了する
     }
 

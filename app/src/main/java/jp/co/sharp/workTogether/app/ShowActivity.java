@@ -123,9 +123,18 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         ImageView imageView = (ImageView) findViewById(R.id.output_image);
 
         // Set a random image
-        selectedImageIndex = new Random().nextInt(getImageArray().length);
-        int randomImageResId = getImageArray()[selectedImageIndex];
-        imageView.setImageResource(randomImageResId);
+        // Get the passed image index from Intent
+        int imageIndex = getIntent().getIntExtra("show_image_index", -1);
+        if(imageIndex==-1){
+            selectedImageIndex = new Random().nextInt(getImageArray().length);
+            int randomImageResId = getImageArray()[selectedImageIndex];
+            imageView.setImageResource(randomImageResId);
+        }else{
+            selectedImageIndex = imageIndex;
+            int[] images = getImageArray();
+            imageView.setImageResource(images[imageIndex]);
+        }
+
     }
 
     // Function to dynamically get all images with numeric names from drawable
