@@ -360,7 +360,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                         Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
                     }
-                }else{
+                }else{//通常の時
                     int rnd = new Random().nextInt(7) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
                     result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                     if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
