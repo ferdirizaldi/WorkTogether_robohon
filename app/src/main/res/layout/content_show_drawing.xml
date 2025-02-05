@@ -6,35 +6,26 @@
     tools:showIn="@layout/show_drawing" tools:context=".ShowDrawingActivity"
     android:layout_gravity="center_horizontal">
 
-    <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-        <LinearLayout
-            android:orientation="vertical"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/output_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="345dp"
+            android:contentDescription="@string/showactivity_imgdsc"
+            android:layout_marginTop="8dp" />
 
-            <ImageView
-                android:id="@+id/output_image"
-                android:layout_width="match_parent"
-                android:layout_height="290dp"
-                android:contentDescription="@string/showactivity_imgdsc"
-                android:layout_marginTop="16dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageButton
-                    android:id="@+id/finish_projector_button"
-                    android:layout_width="52dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/ic_projector_stop"
-                    android:singleLine="false"
-                    android:textSize="32sp"
-                    android:layout_marginTop="0dp"
-                    android:layout_centerHorizontal="true"
-                    android:contentDescription="@string/stop_projector_button" />
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+        <ImageButton
+            android:id="@+id/finish_projector_button"
+            android:layout_width="52dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_projector_stop"
+            android:contentDescription="@string/stop_projector_button"
+            android:singleLine="false"
+            android:layout_gravity="end"
+            android:textSize="32sp" />
+    </FrameLayout>
 </RelativeLayout>
