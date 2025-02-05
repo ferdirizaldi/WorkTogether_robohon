@@ -65,7 +65,7 @@
                 android:text="@string/button_finish_app"
                 android:singleLine="false"
                 android:textSize="32sp"
-                android:layout_marginTop="0dp"
+                android:layout_marginBottom="30dp"
                 android:layout_gravity="end|bottom"/>
 
         </FrameLayout>

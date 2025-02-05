@@ -61,7 +61,7 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         setContentView(R.layout.main_activity);
 
         //タイトルバー設定.
-        setupTitleBar();
+        //setupTitleBar();
 
         //ホームボタンの検知登録.
         mHomeEventReceiver = new HomeEventReceiver();
@@ -255,10 +255,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
     /**
      * タイトルバーを設定する.
      */
-    private void setupTitleBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-    }
+//    private void setupTitleBar() {
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setActionBar(toolbar);
+//    }
 
     /**
      * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>
