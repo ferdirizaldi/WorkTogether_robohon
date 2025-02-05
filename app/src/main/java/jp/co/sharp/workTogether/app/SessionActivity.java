@@ -342,8 +342,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         if (actionTimer < 0) {
             int result;
             if (phaseFrag) {//work状態のとき
-                if(phaseTimer>alertTimer*0.8){//もうちょっと終了時間になる時(80％以上)はt8~t10で発話させる
-                    int rnd = new Random().nextInt(3) + 8;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
+                if(phaseTimer>alertTimer*0.8){//もうちょっと終了時間になる時(80％以上)は"work_actions"のt8~t10で発話させる
+                    int rnd = new Random().nextInt(3) + 8;//"work_actions"のt8~t10のうちランダムの数字を出す
                     result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd);//アクションシナリオを起動する
                     if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                         Log.v(TAG, "Start Speech ACC_WORK_ACTION Failed");
