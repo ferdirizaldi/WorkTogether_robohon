@@ -327,8 +327,20 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             long minutes = (elapsedMillis / (1000 * 60)) % 60;
             long seconds = (elapsedMillis / 1000) % 60;
 
-            // hh:mm:ss 形式の文字列を作成
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            //文字列に変換
+            String elapsedTime = "";
+            if(hours != 0){
+                elapsedTime = elapsedTime + String.format("%d時間",hours);
+            }
+            if(minutes != 0){
+                elapsedTime = elapsedTime + String.format("%d分",minutes);
+            }
+            if(seconds != 0){
+                elapsedTime = elapsedTime + String.format("%d秒",seconds);
+            }
+
+            return elapsedTime;
+
         } catch (ParseException e) {
             return "無効な時間形式"; // 入力が不正な場合のエラーハンドリング
         }
