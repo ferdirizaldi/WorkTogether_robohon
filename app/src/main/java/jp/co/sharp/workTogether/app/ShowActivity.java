@@ -94,6 +94,8 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         if(Objects.equals(finalElapsedTime, "無効な時間形式")){
             finalElapsedTime = getIntentStringDataByKey("finalElapsedTimeLog");
         }
+        Log.v(TAG,"getIntentStringDataByKey(\"sessionStartTime\"):" + getIntentStringDataByKey("sessionStartTime"));
+        Log.v(TAG,"finalElapsedTime:" + finalElapsedTime);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
