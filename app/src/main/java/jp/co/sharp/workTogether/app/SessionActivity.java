@@ -440,7 +440,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             Log.v(TAG, "Try To SUGGEST");
             if (phaseFrag) {//work状態のとき
                 int rnd = new Random().nextInt(3) + 1;
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST);//サジェストシナリオを起動する
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST + "t." + rnd);//サジェストシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_SUGGEST Failed");
                 }else{
