@@ -12,6 +12,9 @@
         <accost priority="75" topic_id="t5" word="jp.co.sharp.workTogether.app.work.actions.t5"/>
         <accost priority="75" topic_id="t6" word="jp.co.sharp.workTogether.app.work.actions.t6"/>
         <accost priority="75" topic_id="t7" word="jp.co.sharp.workTogether.app.work.actions.t7"/>
+        <accost priority="75" topic_id="t8" word="jp.co.sharp.workTogether.app.work.actions.t8"/>
+        <accost priority="75" topic_id="t9" word="jp.co.sharp.workTogether.app.work.actions.t9"/>
+        <accost priority="75" topic_id="t10" word="jp.co.sharp.workTogether.app.work.actions.t10"/>
     </head>
     <body>
         <topic id="actioned" listen="false">

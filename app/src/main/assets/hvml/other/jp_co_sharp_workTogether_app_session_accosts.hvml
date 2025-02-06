@@ -17,6 +17,7 @@
             <action index="2">
                 <speech>僕といっしょに${memory_p:jp.co.sharp.workTogether.app.session_length}頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="null" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
         <topic id="t2" listen="false">
@@ -27,6 +28,7 @@
             <action index="2">
                 <speech>僕といっしょに頑張ろう！</speech>
                 <behavior id="assign" type="normal"/>
+                <control function="null" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
     </body>
