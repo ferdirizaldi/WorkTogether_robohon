@@ -85,16 +85,11 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         //プロジェクタイベントの検知登録.
         setProjectorEventReceiver();
 
-//        // 終了ボタン取得
-//        Button finishButton = (Button) findViewById(R.id.finish_app_button);
-//        // 終了ボタンの処理
-//        finishButton.setOnClickListener(view -> {
-//            stopProjector();
-//        });
+        // 終了ボタン取得
         ImageButton finishProjectorButton = (ImageButton)findViewById(R.id.finish_projector_button);
-            finishProjectorButton.setOnClickListener(view -> {
-                stopProjector();
-            });
+        finishProjectorButton.setOnClickListener(view -> {
+            stopProjector();
+        });
 
         //落書の画像の配列を作成、その後、ランダムに選んで表示させる
         ImageView imageView = (ImageView) findViewById(R.id.output_image);
@@ -174,7 +169,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         Log.v(TAG, "onScenarioEvent() : " + event);
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
-                String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
+                //String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);
                 break;
             case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
@@ -245,7 +240,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
         synchronized (mLock) {
             if (mWakelock == null || !mWakelock.isHeld()) {
-                mWakelock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                mWakelock = Objects.requireNonNull(pm).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
                         | PowerManager.ACQUIRE_CAUSES_WAKEUP
                         | PowerManager.ON_AFTER_RELEASE, MainActivity.class.getName());
                 mWakelock.acquire();
@@ -276,7 +271,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.v(TAG, "ProjectorEventReceiver#onReceive():" + intent.getAction());
-            switch (intent.getAction()) {
+            switch (Objects.requireNonNull(intent.getAction())) {
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_PREPARE://プロジェクター照射準備通知
                     Log.v(TAG, "プロジェクター照射準備通知");
                     break;
@@ -339,7 +334,7 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
         extras.putString("checkFirst", "not");
         extras.putString("finalElapsedTimeLog", getIntentStringDataByKey("finalElapsedTimeLog"));
         extras.putInt("show_image_index", imageIndex);
-        navigateToActivity(this, ShowActivity.class, extras);//ShowActiviityを呼び出す
+        navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
         finish();//ShowActivityを呼んだらすぐに終了する
     }
 

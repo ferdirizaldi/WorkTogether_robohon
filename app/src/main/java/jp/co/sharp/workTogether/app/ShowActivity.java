@@ -94,8 +94,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         if(Objects.equals(finalElapsedTime, "無効な時間形式")){
             finalElapsedTime = getIntentStringDataByKey("finalElapsedTimeLog");
         }
-        Log.v(TAG,"getIntentStringDataByKey(\"sessionStartTime\"):" + getIntentStringDataByKey("sessionStartTime"));
-        Log.v(TAG,"finalElapsedTime:" + finalElapsedTime);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -103,20 +102,14 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             }
         });
 
-//        //プロジェクター使用ボタン取得
-//        Button showProjectorButton = (Button) findViewById(R.id.show_result_button);
-//        //プロジェクター使用ボタンの処理
-//        showProjectorButton.setOnClickListener(view -> {
-//            //ShowDrawingActivityに移動
-//            startShowDrawing();
-//        });
+        //プロジェクターボタンを作成
         ImageButton showProjectorButton = (ImageButton)findViewById(R.id.show_result_button);
         //第1世代ロボホンのみプロジェクターボタンを表示する.
         if(getRobohonGeneration() == 1){
             showProjectorButton.setOnClickListener(view -> {
-            //ShowDrawingActivityに移動
-            startShowDrawing();
-        });
+                //ShowDrawingActivityに移動
+                startShowDrawing();
+            });
         }else{
             showProjectorButton.setVisibility(View.INVISIBLE);
         }
@@ -155,13 +148,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
         return imageArray;
     }
-
-    // Function to select a random image from the array
-    private int getRandomImage() {
-        int[] images = getImageArray();
-        return images[new Random().nextInt(images.length)];
-    }
-
 
     @Override
     public void onResume() {
@@ -341,13 +327,13 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             //文字列に変換
             String elapsedTime = "作業した時間:";
             if(hours != 0){
-                elapsedTime = elapsedTime + String.format("%d時間",hours);
+                elapsedTime = elapsedTime + hours + "時間";
             }
             if(minutes != 0){
-                elapsedTime = elapsedTime + String.format("%d分",minutes);
+                elapsedTime = elapsedTime + minutes + "分";
             }
             if(seconds != 0){
-                elapsedTime = elapsedTime + String.format("%d秒",seconds);
+                elapsedTime = elapsedTime + seconds + "秒";
             }
 
             return elapsedTime;
@@ -434,7 +420,6 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
                     ret = 2;
                     break;
                 default:
-                    ret = -1;
                     break;
             }
         } catch(Exception e) {

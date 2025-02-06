@@ -60,9 +60,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         Log.v(TAG, "onCreate()");
         setContentView(R.layout.main_activity);
 
-        //タイトルバー設定.
-        //setupTitleBar();
-
         //ホームボタンの検知登録.
         mHomeEventReceiver = new HomeEventReceiver();
         IntentFilter filterHome = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -77,25 +74,11 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
      * Initializes buttons and their click listeners.
      */
     private void initializeMainUI() {
-        // Button references
-//        Button oneHour_button = (Button) findViewById(R.id.oneHour_button);
-//        Button twoHours_button = (Button) findViewById(R.id.twoHours_button);
-        Button noLimit_button = (Button) findViewById(R.id.noLimit_button);
-        Button selectButton = (Button) findViewById(R.id.select_button);
-        Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        NumberPicker numPicker = (NumberPicker)findViewById(R.id.numPicker);
 
-//        // Set click listeners
-//        oneHour_button.setOnClickListener(v -> {
-//            startSession(1);//一時間のセッションを開始
-//        });
-//
-//        twoHours_button.setOnClickListener(v -> {
-//            startSession(2);//二時間のセッションを開始
-//        });
-        noLimit_button.setOnClickListener(v -> {
-            startSession(0);//時間指定せずにセッションを開始
-        });
+        NumberPicker numPicker = (NumberPicker)findViewById(R.id.numPicker);
+        Button selectButton = (Button) findViewById(R.id.select_button);
+        Button noLimit_button = (Button) findViewById(R.id.noLimit_button);
+        Button finishButton = (Button) findViewById(R.id.finish_app_button);
 
         numPicker.setMaxValue(9);
         numPicker.setMinValue(1);
@@ -103,6 +86,10 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // Set click listeners
         selectButton.setOnClickListener(v -> {
             startSession(numPicker.getValue());//1~9時間のセッションを開始
+        });
+
+        noLimit_button.setOnClickListener(v -> {
+            startSession(0);//時間指定せずにセッションを開始
         });
 
         finishButton.setOnClickListener(v -> {
@@ -251,14 +238,6 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
         }
         context.startActivity(intent);
     }
-
-    /**
-     * タイトルバーを設定する.
-     */
-//    private void setupTitleBar() {
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setActionBar(toolbar);
-//    }
 
     /**
      * ホームボタンの押下イベントを受け取るためのBroadcastレシーバークラス.<br>

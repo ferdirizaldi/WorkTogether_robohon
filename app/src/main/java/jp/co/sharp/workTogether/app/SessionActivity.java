@@ -123,31 +123,12 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private void initializeSessionUI() {
         // Button references
         Button finishButton = (Button) findViewById(R.id.finish_app_button);
-        //Button shiftPhaseButton = (Button) findViewById(R.id.shift_phase_button);
         Button sessionFinishButton = (Button) findViewById(R.id.finish_session_button);
 
         // Text Areas
-        //TextView sessionOutputStatus = (TextView) findViewById(R.id.sessionOutput_text1_value);
         TextView sessionOutputTime = (TextView) findViewById(R.id.sessionOutput_text2_value);
 
-
-        //タイマー値の設定
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //現在のフェイズを表す
-//                sessionOutputStatus.setText("作業中");
-//                //終了予定時刻を表す
-//                sessionOutputTime.setText("∞");
-//            }
-//        });
-
         updateSessionOutputTime(sessionLength, sessionOutputTime);
-
-//        shiftPhaseButton.setOnClickListener(v -> {
-//            //作業フェイズと休憩フェイズを切り替えるボタン
-//            shiftPhase();
-//        });
 
         sessionFinishButton.setOnClickListener(v -> {
             // セッションを終了させるボタン
@@ -224,12 +205,10 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t2");
             accostingFrag = true;//発話中であることを表すフラグ
             accostingName = ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t2";//発話中のシナリオの名前
-            Log.v(TAG, "accostingFrag:" + accostingFrag);
         }else{//時間が設定されているときは発話内容に時間の含まれているトピックを呼び出す
             VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t1");
             accostingFrag = true;//発話中であることを表すフラグ
             accostingName = ScenarioDefinitions.ACC_SESSION_ACCOSTS + ".t1";//発話中のシナリオの名前
-            Log.v(TAG, "accostingFrag:" + accostingFrag);
         }
 
         //breakフェイズからフェイズ移行させることでworkフェイズを開始
@@ -299,6 +278,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         switch (event) {
             case VoiceUIListenerImpl.ACTION_END:
                 String function = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.ATTR_FUNCTION);//ここで関数名を格納し、以下のif文で何の関数が呼ばれているのか判定する
+                accostingFrag = false;//発話中であることを表すフラグ
+                accostingName = "";//発話中のシナリオの名前
                 if(ScenarioDefinitions.FUNC_SHIFT_PHASE.equals(function)) {//work_startBreakシナリオかbreak_startWorkシナリオからの呼び出し
                     shiftPhase();//フェイズを移行させる関数
                 }
@@ -311,55 +292,37 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 if(ScenarioDefinitions.FUNC_WORK_ACTIONED.equals(function)) {//work_actionsシナリオからの呼び出し
                     if(phaseFrag) {//workフェイズ中なら
                         actionTimer = workActionTime;//動作を終えたので次の動作までのタイマーをセット
-                        Log.v(TAG,"FUNC_WORK_ACTIONED");
                     }
                 }
                 if(ScenarioDefinitions.FUNC_BREAK_ACTIONED.equals(function)) {//break_actionsシナリオからの呼び出し
                     if(!phaseFrag) {//breakフェイズ中なら
                         actionTimer = breakActionTime;//動作を終えたので次の動作までのタイマーをセット
-                        Log.v(TAG, "FUNC_BREAK_ACTIONED");
                     }
                 }
                 if(ScenarioDefinitions.FUNC_WORK_SUGGESTED.equals(function)) {//work_suggestBreakシナリオからの呼び出し
                     if(phaseFrag) {//workフェイズ中なら
                         suggestTimer = workSuggestTime;//提案シナリオを発話し終えたので次の発話までのタイマーをセット
-                        Log.v(TAG, "FUNC_WORK_SUGGESTED");
                     }
                 }
                 if(ScenarioDefinitions.FUNC_BREAK_SUGGESTED.equals(function)) {//break_suggestBreakシナリオからの呼び出し
                     if(!phaseFrag) {//breakフェイズ中なら
                         suggestTimer = breakSuggestTime;//提案シナリオを発話し終えたので次の発話までのタイマーをセット
-                        Log.v(TAG, "FUNC_BREAK_SUGGESTED");
                     }
                 }
-                accostingFrag = false;//発話中であることを表すフラグ
-                accostingName = "";//発話中のシナリオの名前
-                Log.v(TAG, "accostingFrag:" + accostingFrag);
                 break;
-            case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             case VoiceUIListenerImpl.ACTION_START:
                 accostingFrag = true;//発話中であることを表すフラグ
                 accostingName = VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST);//発話中のシナリオの名前
-                Log.v(TAG, "accostingFrag:" + accostingFrag);
                 break;
             case VoiceUIListenerImpl.ACTION_CANCELLED:
-                Log.v(TAG, "Cancelled Scenario is " + VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST));
-                if(Objects.equals(accostingName, VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST))){//発話が棄却された場合は立てたフラグ等を戻す
-                    accostingFrag = false;//発話中であることを表すフラグ
-                    accostingName = "";//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
-                }
-                //他のシナリオの発話中に発話が棄却された場合は何もしない
-                break;
             case VoiceUIListenerImpl.ACTION_REJECTED:
-                Log.v(TAG, "Rejected Scenario is " + VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST));
-                if(Objects.equals(accostingName, VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST))){//発話が棄却された場合は立てたフラグ等を戻す
+                if(Objects.equals(accostingName, VoiceUIVariableUtil.getVariableData(variables, ScenarioDefinitions.TAG_ACCOST))){//発話が棄却やキャンセルされた場合は立てたフラグ等を戻す
                     accostingFrag = false;//発話中であることを表すフラグ
                     accostingName = "";//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
                 //他のシナリオの発話中に発話が棄却された場合は何もしない
                 break;
+            case VoiceUIListenerImpl.RESOLVE_VARIABLE:
             default:
                 break;
         }
@@ -367,7 +330,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
     /*
     毎秒呼ばれるタイムイベント関数
-    それぞれが同時に起きた時の処理順をどうするかを考える必要あり
      */
     public void onTimeEvent() {
           /*終了予定時刻超過で呼ばれるalert
@@ -377,6 +339,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 alertのシナリオをよぶ
          */
         if (!alertFrag) {
+            Log.v(TAG, "AlertTimer:"+alertTimer);
             alertTimer--;
             if (alertTimer < 0 && !accostingFrag) {
                 int result;
@@ -386,7 +349,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }else {
                     accostingFrag = true;//発話中であることを表すフラグ
                     accostingName = ScenarioDefinitions.ACC_SESSION_ALERT;//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
             }
         }
@@ -401,7 +363,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         Log.v(TAG, "ActionTimer:"+actionTimer);
         if (actionTimer < 0 && !accostingFrag) {
             int result;
-            Log.v(TAG, "Try To ACTION");
             if (phaseFrag) {//work状態のとき
                 if(alertTimer < (3600 * sessionLength) * 0.2){//もうちょっとで終了時間になる時(残り時間がセッション時間の20％未満の時)は"work_actions"のt8~t10で発話させる
                     int rnd = new Random().nextInt(3) + 8;//"work_actions"のt8~t10のうちランダムの数字を出す
@@ -411,7 +372,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     }else{
                         accostingFrag = true;//発話中であることを表すフラグ
                         accostingName = ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd;//発話中のシナリオの名前
-                        Log.v(TAG, "accostingFrag:" + accostingFrag);
                     }
                 }else{//通常の時
                     int rnd = new Random().nextInt(7) + 1;//複数あるトピックのうち一つをランダムに選んで呼ぶ(0~指定した数未満の整数がかえってくるので1足している)
@@ -421,7 +381,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     }else{
                         accostingFrag = true;//発話中であることを表すフラグ
                         accostingName = ScenarioDefinitions.ACC_WORK_ACTIONS + ".t" + rnd;//発話中のシナリオの名前
-                        Log.v(TAG, "accostingFrag:" + accostingFrag);
                     }
                 }
             } else {//break状態のとき
@@ -432,7 +391,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }else{
                     accostingFrag = true;//発話中であることを表すフラグ
                     accostingName = ScenarioDefinitions.ACC_BREAK_ACTIONS + ".t" + rnd;//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
             }
         }
@@ -447,7 +405,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         Log.v(TAG, "SuggestTimer:"+suggestTimer);
         if (suggestTimer < 0 && !accostingFrag) {
             int result;
-            Log.v(TAG, "Try To SUGGEST");
             if (phaseFrag) {//work状態のとき
                 int rnd = new Random().nextInt(3) + 1;
                 result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST + "t." + rnd);//サジェストシナリオを起動する
@@ -456,7 +413,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }else{
                     accostingFrag = true;//発話中であることを表すフラグ
                     accostingName = ScenarioDefinitions.ACC_WORK_SUGGEST;//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
             } else {//break状態のとき
                 int rnd = new Random().nextInt(3) + 1;
@@ -466,7 +422,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 }else{
                     accostingFrag = true;//発話中であることを表すフラグ
                     accostingName = ScenarioDefinitions.ACC_BREAK_SUGGEST;//発話中のシナリオの名前
-                    Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
             }
         }
