@@ -339,7 +339,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 alertのシナリオをよぶ
          */
         if (!alertFrag) {
-            Log.v(TAG, "AlertTimer:"+alertTimer);
             alertTimer--;
             if (alertTimer < 0 && !accostingFrag) {
                 int result;
@@ -360,7 +359,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             actionTimerをリセット
          */
         actionTimer--;
-        Log.v(TAG, "ActionTimer:"+actionTimer);
         if (actionTimer < 0 && !accostingFrag) {
             int result;
             if (phaseFrag) {//work状態のとき
@@ -402,7 +400,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             suggestTimerをセット
          */
         suggestTimer--;
-        Log.v(TAG, "SuggestTimer:"+suggestTimer);
         if (suggestTimer < 0 && !accostingFrag) {
             int result;
             if (phaseFrag) {//work状態のとき
