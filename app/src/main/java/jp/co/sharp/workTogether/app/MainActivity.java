@@ -18,6 +18,7 @@ import android.widget.Toolbar;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -121,7 +122,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //アプリ起動時に発話
         Log.v(TAG, "start.accosts.t1 Accosted");
-        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t1");
+        int rnd = new Random().nextInt(3)+1;
+        VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t" + rnd);
 
         //アプリ起動後一定時間ごとに発話
         accostStopFrag = false;
@@ -131,8 +133,8 @@ public class MainActivity extends Activity implements VoiceUIListenerImpl.Scenar
             public void run() {
                 // UIスレッド
                 if(!accostStopFrag) {
-                    Log.v(TAG, "start.accosts.t2 Accosted");
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t2");
+                    Log.v(TAG, "start.accosts.t4 Accosted");
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_START_ACCOSTS + ".t4");
                     handler.postDelayed(this, 15000);
                 }
             }
