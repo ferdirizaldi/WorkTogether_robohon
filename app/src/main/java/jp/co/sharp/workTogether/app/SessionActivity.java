@@ -449,7 +449,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             int result;
             Log.v(TAG, "Try To SUGGEST");
             if (phaseFrag) {//work状態のとき
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST);//サジェストシナリオを起動する
+                int rnd = new Random().nextInt(3) + 1;
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_WORK_SUGGEST + "t." + rnd);//サジェストシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_WORK_SUGGEST Failed");
                 }else{
@@ -458,7 +459,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                     Log.v(TAG, "accostingFrag:" + accostingFrag);
                 }
             } else {//break状態のとき
-                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_SUGGEST);//サジェストンシナリオを起動する
+                int rnd = new Random().nextInt(3) + 1;
+                result = VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_BREAK_SUGGEST + "t." + rnd);//サジェストンシナリオを起動する
                 if (Objects.equals(result, VoiceUIManager.VOICEUI_ERROR)) {
                     Log.v(TAG, "Start Speech ACC_BREAK_SUGGEST Failed");
                 }else{
