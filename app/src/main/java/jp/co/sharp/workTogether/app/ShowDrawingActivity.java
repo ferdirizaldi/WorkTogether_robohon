@@ -290,7 +290,8 @@ public class ShowDrawingActivity extends Activity implements VoiceUIListenerImpl
                     Log.v(TAG, "プロジェクター照射開始通知");
                     acquireWakeLock();
                     isProjected = true;
-                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_DRAWING_ACCOSTS + ".t1");//照射開始時シナリオを起動する
+                    int rnd = new Random().nextInt(3) + 1;//"work_actions"のt8~t10のうちランダムの数字を出す
+                    VoiceUIManagerUtil.startSpeech(mVUIManager, ScenarioDefinitions.ACC_DRAWING_ACCOSTS + ".t" +rnd);//照射開始時シナリオを起動する
                     break;
                 case ProjectorManagerServiceUtil.ACTION_PROJECTOR_TERMINATE://プロジェクター終了処理開始通知
                     Log.v(TAG, "プロジェクター終了処理開始通知");

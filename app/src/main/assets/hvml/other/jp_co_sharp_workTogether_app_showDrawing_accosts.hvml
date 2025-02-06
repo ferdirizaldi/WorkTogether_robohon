@@ -6,7 +6,7 @@
         <scene value="jp.co.sharp.workTogether.app.scene_drawing"/>
         <version value="1.0"/>
         <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.showDrawing.accosts.t1"/>
-        <situation priority="75" topic_id="t2" trigger="user-word">${Lvcsr:Basic} include [上手]</situation>
+        <situation priority="75" topic_id="t4" trigger="user-word">${Lvcsr:Basic} include [上手]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
@@ -16,6 +16,18 @@
             </action>
         </topic>
         <topic id="t2" listen="false">
+            <action index="1">
+                <speech>いい感じに書けてるかな？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t3" listen="false">
+            <action index="1">
+                <speech>きれいに書けてるかな？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t4" listen="false">
             <action index="1">
                 <speech>ありがとう！</speech>
                 <behavior id="assign" type="normal"/>
