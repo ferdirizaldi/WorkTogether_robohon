@@ -5,12 +5,28 @@
         <description>作業再開を促すシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_break"/>
         <version value="1.0"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t1"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t2"/>
+        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t3"/>
     </head>
     <body>
         <topic id="t1" listen="false">
             <action index="1">
                 <speech>そろそろ再開するのはどうかな？</speech>
+                <behavior id="assign" type="normal"/>
+                <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
+            </action>
+        </topic>
+        <topic id="t2" listen="false">
+            <action index="1">
+                <speech>そろそろ作業を続けようか？</speech>
+                <behavior id="assign" type="normal"/>
+                <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
+            </action>
+        </topic>
+        <topic id="t3" listen="false">
+            <action index="1">
+                <speech>リフレッシュできた？じゃあ再開しよう！</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
             </action>
