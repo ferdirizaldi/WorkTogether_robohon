@@ -479,7 +479,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    sessionOutputStatus.setText("休憩");
+                    sessionOutputStatus.setText("休憩中");
                     sessionOutputStatus.setTextColor(Color.YELLOW);
                     shiftPhaseButton.setText("作業を再開する");
                 }

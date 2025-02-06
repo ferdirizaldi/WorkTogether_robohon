@@ -12,20 +12,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_mode_text"
-        android:textSize="24sp" />
+        android:textSize="32sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="27dp">
 
         <NumberPicker
             android:id="@+id/numPicker"
             android:layout_width="60dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginStart="149dp"
+            android:layout_marginStart="110dp"
             android:scaleX="1.6"
             android:scaleY="1.6" />
 
@@ -33,9 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="20dp"
             android:text="@string/hours"
-            android:textSize="32sp" />
+            android:textSize="40sp" />
     </LinearLayout>
 
     <Button
@@ -43,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="0dp"
         android:singleLine="false"
         android:text="@string/selectButton_text"
         android:textSize="40sp" />
@@ -52,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="30dp">
 
         <Button
             android:id="@+id/noLimit_button"
