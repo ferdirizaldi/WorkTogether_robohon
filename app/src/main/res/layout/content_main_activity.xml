@@ -1,130 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/main_activity"
+    tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn="@layout/main_activity" tools:context=".MainActivity">
+    android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/mode_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_mode_text"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+
+        <NumberPicker
+            android:id="@+id/numPicker"
+            android:layout_width="60dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="149dp"
+            android:scaleX="1.6"
+            android:scaleY="1.6" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:text="@string/hours"
+            android:textSize="32sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/mode_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/default_mode_text"
-                android:textSize="24sp" />
+    <Button
+        android:id="@+id/select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:singleLine="false"
+        android:text="@string/selectButton_text"
+        android:textSize="40sp" />
 
-            <!--<View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="20dp"
-                android:background="#666666" />-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
 
-            <!--<TextView
-                android:id="@+id/input_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mainactivity_content_text1"
-                android:textSize="24sp" />-->
-
-            <!--<Button
-                android:id="@+id/oneHour_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:singleLine="false"
-                android:text="@string/oneHourButton_text"
-                android:textSize="32sp" />
-
-            <Button
-                android:id="@+id/twoHours_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:singleLine="false"
-                android:text="@string/twoHoursButton_text"
-                android:textSize="32sp" />
-
-            <Button
-                android:id="@+id/noLimit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:singleLine="false"
-                android:text="@string/threeHoursButton_text"
-                android:textSize="32sp" />-->
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="30dp">
-
-                    <NumberPicker
-                        android:id="@+id/numPicker"
-                        android:layout_width="60dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="149dp"
-                        android:scaleX="1.6"
-                        android:scaleY="1.6" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="40dp"
-                        android:text="@string/hours"
-                        android:textSize="32sp" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/select_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:singleLine="false"
-                    android:text="@string/selectButton_text"
-                    android:textSize="40sp" />
-
-            </FrameLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:id="@+id/noLimit_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="0dp"
-                    android:singleLine="false"
-                    android:text="@string/noLimitButton_text"
-                    android:textSize="32sp" />
-                <Button
-                    android:id="@+id/finish_app_button"
-                    android:layout_width="88dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginLeft="50dp"
-                    android:singleLine="false"
-                    android:text="@string/button_finish_app"
-                    android:textSize="32sp" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-</RelativeLayout>
+        <Button
+            android:id="@+id/noLimit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="0dp"
+            android:singleLine="false"
+            android:text="@string/noLimitButton_text"
+            android:textSize="32sp" />
+        <Button
+            android:id="@+id/finish_app_button"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="50dp"
+            android:singleLine="false"
+            android:text="@string/button_finish_app"
+            android:textSize="32sp" />
+    </LinearLayout>
+</LinearLayout>

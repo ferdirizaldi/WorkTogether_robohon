@@ -1,73 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:showIn="@layout/show_activity" tools:context=".ShowActivity">
+    tools:showIn="@layout/show_activity"
+    tools:context=".ShowActivity"
+    android:orientation="vertical">
 
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/output_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="@string/showactivity_text1"
+        android:textSize="24sp" />
 
-        <!--<View
-               android:layout_width="match_parent"
-               android:layout_height="2dp"
-               android:layout_marginTop="20dp"
-               android:background="#666666" />-->
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <TextView
-                android:id="@+id/output_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/showactivity_text1"
-                android:textSize="24sp" />
+        <ImageView
+            android:id="@+id/output_image"
+            android:layout_width="319dp"
+            android:layout_height="333dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/showactivity_imgdsc" />
 
-        <!--<TextView
-                android:id="@+id/showActivity_output_text_value"
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/showactivity_default_text"
-                android:textSize="18sp"
-                android:background="@drawable/text_box_border"
-                android:layout_gravity="center_horizontal"/>-->
+        <ImageButton
+            android:id="@+id/show_result_button"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_projector_start"
+            android:contentDescription="@string/start_projector_button"
+            android:singleLine="false"
+            android:layout_gravity="end"
+            android:textSize="23sp" />
 
-        <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-            <ImageView
-                android:id="@+id/output_image"
-                android:layout_width="270dp"
-                android:layout_height="333dp"
-                android:layout_marginTop="0dp"
-                android:layout_gravity="start"
-                android:contentDescription="@string/showactivity_imgdsc" />
-
-            <ImageButton
-                android:id="@+id/show_result_button"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/ic_projector_start"
-                android:contentDescription="@string/start_projector_button"
-                android:singleLine="false"
-                android:layout_gravity="end"
-                android:textSize="23sp" />
-
-            <Button
-                android:id="@+id/finish_app_button"
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:text="@string/button_finish_app"
-                android:singleLine="false"
-                android:textSize="32sp"
-                android:layout_marginBottom="30dp"
-                android:layout_gravity="end|bottom"/>
-
-        </FrameLayout>
-    </LinearLayout>
-</RelativeLayout>
+        <Button
+            android:id="@+id/finish_app_button"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_finish_app"
+            android:singleLine="false"
+            android:textSize="32sp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="end|bottom"/>
+    </FrameLayout>
+</LinearLayout>
