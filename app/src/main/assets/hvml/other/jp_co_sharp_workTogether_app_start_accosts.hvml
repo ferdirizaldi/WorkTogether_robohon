@@ -7,6 +7,8 @@
         <version value="1.0"/>
         <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.start.accosts.t1"/>
         <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.start.accosts.t2"/>
+        <accost priority="75" topic_id="t3" word="jp.co.sharp.workTogether.app.start.accosts.t3"/>
+        <accost priority="75" topic_id="t4" word="jp.co.sharp.workTogether.app.start.accosts.t4"/>
     </head>
     <body>
         <topic id="t1" listen="false">
@@ -16,6 +18,18 @@
             </action>
         </topic>
         <topic id="t2" listen="false">
+            <action index="1">
+                <speech>何時間くらいがちょうどいいかな？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t3" listen="false">
+            <action index="1">
+                <speech>作業時間は何時間がいい？</speech>
+                <behavior id="assign" type="normal"/>
+            </action>
+        </topic>
+        <topic id="t4" listen="false">
             <action index="1">
                 <speech>時間で答えるか、決まってないって答えてね</speech>
                 <behavior id="assign" type="normal"/>
