@@ -11,7 +11,7 @@
         android:layout_width="665dp"
         android:layout_height="345dp"
         android:contentDescription="@string/showactivity_imgdsc"
-        android:layout_marginTop="7dp" />
+        android:layout_marginTop="5dp" />
 
     <ImageButton
         android:id="@+id/finish_projector_button"

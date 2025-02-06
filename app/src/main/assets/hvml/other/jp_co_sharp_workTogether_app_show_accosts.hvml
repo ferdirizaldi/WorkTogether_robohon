@@ -18,7 +18,7 @@
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
-                <speech>オッケーか、また今度って答えてね</speech>
+                <speech>見せて、か、また今度って答えてね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
         </topic>
