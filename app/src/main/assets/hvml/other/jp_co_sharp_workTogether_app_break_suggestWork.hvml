@@ -6,8 +6,8 @@
         <scene value="jp.co.sharp.workTogether.app.scene_break"/>
         <version value="1.0"/>
         <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t1"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t2"/>
-        <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.break.suggestWork.t3"/>
+        <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.break.suggestWork.t2"/>
+        <accost priority="75" topic_id="t3" word="jp.co.sharp.workTogether.app.break.suggestWork.t3"/>
     </head>
     <body>
         <topic id="t1" listen="false">
