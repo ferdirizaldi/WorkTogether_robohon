@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/output_image"
-            android:layout_width="match_parent"
+            android:layout_width="665dp"
             android:layout_height="345dp"
             android:contentDescription="@string/showactivity_imgdsc"
             android:layout_marginTop="8dp" />
