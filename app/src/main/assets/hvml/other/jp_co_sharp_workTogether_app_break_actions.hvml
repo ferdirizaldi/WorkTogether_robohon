@@ -56,7 +56,7 @@
         </topic>
         <topic id="t6" listen="false">
             <action index="1">
-                <speech>ふぅ…休憩時間は大事だね</speech>
+                <speech>ふぅーーー、休憩時間は大事だね</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#actioned" type="default" />

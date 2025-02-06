@@ -41,7 +41,7 @@
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
-                <speech>集中、集中…！</speech>
+                <speech>集中しよう！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#actioned" type="default" />
@@ -58,6 +58,9 @@
                 <speech>この色の組み合わせ、いい感じかも！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
+            <action index="2">
+                <behavior id="0x060022" type="normal"/>
+            </action>
             <next href="#actioned" type="default" />
         </topic>
         <topic id="t6" listen="false">
@@ -69,15 +72,15 @@
         </topic>
         <topic id="t7" listen="false">
             <action index="1">
-                <speech>おっと…ちょっとミスったかも</speech>
-                <behavior id="assign" type="normal"/>
+                <speech>おっと、ちょっとミスったかも</speech>
+                <behavior id="0x060043" type="normal"/>
             </action>
             <next href="#actioned" type="default" />
         </topic>
         <topic id="t8" listen="false">
             <action index="1">
                 <speech>あとちょっと！</speech>
-                <behavior id="assign" type="normal"/>
+                <behavior id="0x060001" type="normal"/>
             </action>
             <next href="#actioned" type="default" />
         </topic>
