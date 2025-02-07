@@ -5,7 +5,7 @@
         <description>終了予定時間を聞き取るシナリオ</description>
         <scene value="jp.co.sharp.workTogether.app.scene_start"/>
         <version value="1.0"/>
-        <situation priority="74" topic_id="0" trigger="user-word">${Lvcsr:Basic} include [無限,むげん,決めてない,決まってない,きめてな,きまってな,わからない,なし]</situation>
+        <situation priority="74" topic_id="0" trigger="user-word">${Lvcsr:Basic} include [無限,むげん,決めてな,決まってな,きめてな,きまってな,わからない,なし,無し,未定,みてい,予定なし]</situation>
         <situation priority="74" topic_id="1" trigger="user-word">${Lvcsr:Basic} include [1,いち,一]</situation>
         <situation priority="74" topic_id="2" trigger="user-word">${Lvcsr:Basic} include [2,に,二]</situation>
         <situation priority="74" topic_id="3" trigger="user-word">${Lvcsr:Basic} include [3,さん,三]</situation>
