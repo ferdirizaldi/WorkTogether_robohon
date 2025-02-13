@@ -16,7 +16,7 @@
                 <behavior id="${resolver:motion_ok(${resolver:ok_id})}" type="normal"/>
             </action>
             <action index="2">
-                <speech>一緒に作業アプリを起動するね</speech>
+                <speech>隣で作業アプリを起動するね</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="start_activity" target="home">
                     <data key="package_name" value="jp.co.sharp.workTogether.app"/>

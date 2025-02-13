@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">いっしょに作業</string>
-    <string name="hello">RoBoHoN いっしょに作業</string>
+    <string name="app_name">隣で作業</string>
+    <string name="hello">RoBoHoN 隣で作業</string>
     <string name="default_mode_text">作業時間を入力してね!</string>
     <string name="recog_label_text">入力</string>
     <string name="default_text">--RECOG_TEXT--</string>
