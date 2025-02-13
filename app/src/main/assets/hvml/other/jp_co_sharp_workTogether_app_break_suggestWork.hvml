@@ -19,14 +19,14 @@
         </topic>
         <topic id="t2" listen="false">
             <action index="1">
-                <speech>そろそろ作業を続けようか？</speech>
+                <speech>そろそろ作業に戻る？</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
             </action>
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
-                <speech>リフレッシュできた？じゃあ再開しよう！</speech>
+                <speech>じゅうぶんリフレッシュできたら、再開しよう！</speech>
                 <behavior id="assign" type="normal"/>
                 <control function="break_suggested" target="jp.co.sharp.workTogether.app"/>
             </action>

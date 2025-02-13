@@ -44,7 +44,7 @@
         </topic>
         <topic id="t3" listen="false">
             <action index="1">
-                <speech>集中しよう！</speech>
+                <speech>集中してがんばるぞ！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <next href="#actioned" type="default" />
@@ -96,7 +96,7 @@
         </topic>
         <topic id="t10" listen="false">
             <action index="1">
-                <speech>「完成まであと少し！</speech>
+                <speech>完成まであと少し！</speech>
                 <behavior id="assign" type="normal"/>
             </action>
             <action index="2">

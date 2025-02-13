@@ -8,7 +8,7 @@
         <accost priority="75" topic_id="t1" word="jp.co.sharp.workTogether.app.showDrawing.accosts.t1"/>
         <accost priority="75" topic_id="t2" word="jp.co.sharp.workTogether.app.showDrawing.accosts.t2"/>
         <accost priority="75" topic_id="t3" word="jp.co.sharp.workTogether.app.showDrawing.accosts.t3"/>
-        <situation priority="75" topic_id="t4" trigger="user-word">${Lvcsr:Basic} include [上手]</situation>
+        <situation priority="75" topic_id="t4" trigger="user-word">${Lvcsr:Basic} include [上手,じょうす,うま,きれい,きれえ]</situation>
     </head>
     <body>
         <topic id="t1" listen="false">
