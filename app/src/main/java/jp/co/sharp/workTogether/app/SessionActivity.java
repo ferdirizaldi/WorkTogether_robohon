@@ -154,7 +154,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    sessionOutputTime.setText("時間指定無し");
+                    sessionOutputTime.setText("指定無し");
                 }
             });
         } else {
@@ -163,7 +163,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
 
             // Add the session duration in hours to the current time
             calendar.add(Calendar.HOUR_OF_DAY, sessionLength);
-            String endTime = timeFormat.format(calendar.getTime());
+            //String endTime = timeFormat.format(calendar.getTime());
+            String endTime = calendar.get(Calendar.HOUR_OF_DAY) + "時" + calendar.get(Calendar.MINUTE) + "分";
 
             // Update the TextViews on the UI thread
             runOnUiThread(new Runnable() {

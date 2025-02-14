@@ -7,48 +7,57 @@
     tools:context=".SessionActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/session_text2"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/sessionactivity_text2"
-        android:textSize="27sp" />
+        android:layout_marginTop="10dp">
 
-    <TextView
-        android:id="@+id/sessionOutput_text2_value"
-        android:layout_width="130sp"
-        android:layout_height="45sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/text_box_border"
-        android:padding="0dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/default_timeroutput_text"
-        android:textSize="27sp" />
+        <TextView
+            android:id="@+id/session_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/sessionactivity_text2"
+            android:textSize="27sp" />
+
+        <TextView
+            android:id="@+id/sessionOutput_text2_value"
+            android:layout_width="130sp"
+            android:layout_height="45sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="90dp"
+            android:background="@drawable/text_box_border"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="@string/default_timeroutput_text2"
+            android:textSize="27sp" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/session_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:text="@string/sessionactivity_text1"
         android:textSize="27sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="302dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="1dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/sessionOutput_text1_value"
             android:layout_width="100sp"
             android:layout_height="45sp"
-            android:gravity="center"
-            android:background="@drawable/text_box_border"
             android:layout_marginStart="54dp"
+            android:background="@drawable/text_box_border"
+            android:gravity="center"
             android:padding="0dp"
             android:text="@string/sessionActivity_defShowStatus_text"
             android:textSize="27sp" />
@@ -70,7 +79,7 @@
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="13dp"
         android:singleLine="false"
         android:text="@string/sessionActivity_ShiftPhaseText"
         android:textSize="27sp" />
@@ -91,7 +100,7 @@
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:singleLine="false"
         android:text="@string/button_finish_app"
         android:textSize="32sp" />
