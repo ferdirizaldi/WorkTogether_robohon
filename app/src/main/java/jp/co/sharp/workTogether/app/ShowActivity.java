@@ -66,7 +66,7 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
     private Handler handler;//一定間隔で呼び出される発話スレッドの制御に使用
     private Runnable runnable;//一定間隔で呼び出される発話スレッドの制御に使用
     private boolean accostStopFrag;//一定間隔で呼び出される発話スレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
-    private String finalElapsedTime;//セッション中に経過した時間
+    private String finalElapsedTime;//セッション中に作業した合計時間
     private int selectedImageIndex = -1; // Store the selected image index
 
     @Override

@@ -529,10 +529,10 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     アクティビティを終了する
      */
         if(phaseFrag) {//workフェイズ中なら
-            totalWorkTime += phaseTimer;
+            totalWorkTime += phaseTimer;//総作業時間にphaseTimerの数値を加算
         }
         Bundle extras = new Bundle();
-        extras.putString("sessionStartTime", startTime);
+        //extras.putString("sessionStartTime", startTime);//時間差で経過時間を計算する旧プログラムで使用していた
         extras.putString("checkFirst", "first");
         extras.putInt("totalWorkTime", totalWorkTime);
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す

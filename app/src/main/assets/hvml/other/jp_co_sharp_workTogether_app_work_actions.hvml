@@ -75,7 +75,7 @@
         </topic>
         <topic id="t7" listen="false">
             <action index="1">
-                <speech>おっと、ちょっとミスったかも</speech>
+                <speech>おっと、ちょっと間違えたかも</speech>
                 <behavior id="0x060043" type="normal"/>
             </action>
             <next href="#actioned" type="default" />
