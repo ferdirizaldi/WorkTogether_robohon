@@ -76,6 +76,7 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     private String startTime;//セッション開始時の時刻
     private boolean accostingFrag;//発話中であることを表すフラグ
     private String accostingName;//発話中のシナリオの名前
+    private int totalWorkTime;//総作業時間
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +216,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
         //breakフェイズからフェイズ移行させることでworkフェイズを開始
         phaseFrag = false;//現在のフェイズを表すフラグ(false:break true:work)
         shiftPhase();
+
+        totalWorkTime = 0;//総作業時間を初期化
 
         //毎秒起動するタイマースレッド(https://qiita.com/aftercider/items/81edf35993c2df3de353)
         timerStopFrag = false;//毎秒呼び出されるタイマースレッドが停止しているかを表すフラグ(false:動作中 true:停止中)
@@ -436,7 +439,6 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
                 sessionOutputStatus2.setText(timeString);
             }
         });
-
     }
 
     /*
@@ -464,6 +466,8 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
             //タイマー更新
             suggestTimer = breakSuggestTimeFirst;//フェイズの終了を提案するまでの時間をカウントダウンする
             actionTimer = breakActionTimeFirst;//フェイズごとの初めての動作を行うまでの時間をカウントダウンする
+            //総作業時間にphaseTimerの数値を加算
+            totalWorkTime += phaseTimer;
             //フェイズ中の経過時間を表すカウントアップタイマーを初期化
             phaseTimer = 0;
 
@@ -524,9 +528,13 @@ public class SessionActivity extends Activity implements VoiceUIListenerImpl.Sce
     showActivityを呼び出す
     アクティビティを終了する
      */
+        if(phaseFrag) {//workフェイズ中なら
+            totalWorkTime += phaseTimer;
+        }
         Bundle extras = new Bundle();
         extras.putString("sessionStartTime", startTime);
         extras.putString("checkFirst", "first");
+        extras.putInt("totalWorkTime", totalWorkTime);
         navigateToActivity(this, ShowActivity.class, extras);//ShowActivityを呼び出す
 
         finish();//ShowActivityを呼んだらすぐに終了する

@@ -90,10 +90,33 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
 
         //過ぎた時間表示を更新
         TextView resultTimePassed = (TextView) findViewById(R.id.output_text);
-        finalElapsedTime = getElapsedTime(getIntentStringDataByKey("sessionStartTime"));
-        if(Objects.equals(finalElapsedTime, "無効な時間形式")){
+
+        if(Objects.equals(getIntentStringDataByKey("checkFirst"), "first")){//アクティビティが初めて起動したなら
+            // finalElapsedTime = getElapsedTime(getIntentStringDataByKey("sessionStartTime"));//時間差で経過時間を計算する旧プログラム(休憩時間も含んだ時間になる)
+
+            int elapsedSeconds = getIntentIntDataByKey("totalWorkTime");
+            // 秒を時間、分、秒に変換
+            long hours = (elapsedSeconds / (60 * 60)) % 24; // 24時間を超えないように
+            long minutes = (elapsedSeconds / 60) % 60;
+            long seconds = (elapsedSeconds) % 60;
+
+            //文字列に変換
+            String elapsedTime = "作業した時間:";
+            if(hours != 0){
+                elapsedTime = elapsedTime + hours + "時間";
+            }
+            if(minutes != 0){
+                elapsedTime = elapsedTime + minutes + "分";
+            }
+            if(seconds != 0){
+                elapsedTime = elapsedTime + seconds + "秒";
+            }
+
+            finalElapsedTime = elapsedTime;
+        }else {//二回目以降の起動なら
             finalElapsedTime = getIntentStringDataByKey("finalElapsedTimeLog");
         }
+
 
         runOnUiThread(new Runnable() {
             @Override
@@ -293,6 +316,26 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
         // Return it if no extras are found
         Log.v(TAG, "No Extras Are Found");
         return "no extras are found";
+    }
+
+    /**
+     * Retrieves the extras from the intent and returns them
+     *
+     * @return A int data is the session data or 0 if no extras exist by key.
+     * //Intentからのint型変数を受け取る関数
+     */
+    private int getIntentIntDataByKey(String key) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                return extras.getInt(key, 0);
+            }
+        }
+
+        // Return null if no extras are found
+        Log.v("Session Activity", "No Extras Are Found");
+        return 0;
     }
 
     /**
