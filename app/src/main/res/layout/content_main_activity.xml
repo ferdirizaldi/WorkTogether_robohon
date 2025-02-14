@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="0dp"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="100dp"
             android:singleLine="false"
             android:text="@string/button_finish_app"
             android:textSize="32sp" />

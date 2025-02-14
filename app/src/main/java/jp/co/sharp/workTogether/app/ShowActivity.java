@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -122,8 +123,10 @@ public class ShowActivity extends Activity implements VoiceUIListenerImpl.Scenar
             @Override
             public void run() {
                 resultTimePassed.setText(finalElapsedTime);
+                resultTimePassed.setTypeface(null, Typeface.BOLD); // Set bold text
             }
         });
+
 
         //プロジェクターボタンを作成
         ImageButton showProjectorButton = (ImageButton)findViewById(R.id.show_result_button);
